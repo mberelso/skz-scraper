@@ -24,6 +24,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
                 d.original_filename,
                 d.reporting_year,
                 d.created_at,
+                COALESCE(d.reporting_year, em.year) as sort_year,
                 em.id as mix_id,
                 em.year as mix_year,
                 em.renewable_percentage,
@@ -52,6 +53,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
                 NULL as original_filename,
                 em.year as reporting_year,
                 em.created_at,
+                em.year as sort_year,
                 em.id as mix_id,
                 em.year as mix_year,
                 em.renewable_percentage,
@@ -69,7 +71,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
             FROM energy_mix em
             WHERE em.provider_id = ? AND em.document_id IS NULL
 
-            ORDER BY COALESCE(reporting_year, mix_year) DESC, created_at DESC
+            ORDER BY sort_year DESC, created_at DESC
         `,
             [providerId, providerId]
         );
