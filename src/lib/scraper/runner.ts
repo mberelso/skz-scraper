@@ -73,7 +73,7 @@ export async function runScrapeJob(providerId: number, providerName: string, ove
 
         if (!scrapeResult) {
             const errorMsg = lastError?.message || 'Keine Ergebnisse gefunden';
-            await query('UPDATE scrape_jobs SET status = "failed", log_message = ?, finished_at = NOW() WHERE id = ?', [
+            await query("UPDATE scrape_jobs SET status = 'failed', log_message = ?, finished_at = NOW() WHERE id = ?", [
                 errorMsg.substring(0, 255),
                 jobId,
             ]);
@@ -121,7 +121,7 @@ export async function runScrapeJob(providerId: number, providerName: string, ove
                 if (reportingYear) {
                     await query('UPDATE documents SET reporting_year = ? WHERE id = ?', [reportingYear, documentId]);
                     await query(
-                        'UPDATE scrape_jobs SET status = "success", log_message = ?, finished_at = NOW() WHERE id = ?',
+                        "UPDATE scrape_jobs SET status = 'success', log_message = ?, finished_at = NOW() WHERE id = ?",
                         [
                             `✅ Daten extrahiert aus PDF (Jahr: ${reportingYear}). Quelle: ${sourceUrl || 'unbekannt'}`,
                             jobId,
@@ -129,7 +129,7 @@ export async function runScrapeJob(providerId: number, providerName: string, ove
                     );
                 } else {
                     await query(
-                        'UPDATE scrape_jobs SET status = "partial", log_message = ?, finished_at = NOW() WHERE id = ?',
+                        "UPDATE scrape_jobs SET status = 'partial', log_message = ?, finished_at = NOW() WHERE id = ?",
                         [
                             `⚠️ PDF gespeichert, aber keine Daten extrahierbar. Quelle: ${sourceUrl || 'unbekannt'}`,
                             jobId,
@@ -138,7 +138,7 @@ export async function runScrapeJob(providerId: number, providerName: string, ove
                 }
             } else {
                 await query(
-                    'UPDATE scrape_jobs SET status = "partial", log_message = ?, finished_at = NOW() WHERE id = ?',
+                    "UPDATE scrape_jobs SET status = 'partial', log_message = ?, finished_at = NOW() WHERE id = ?",
                     [`⚠️ PDF gefunden aber nicht gespeichert. Quelle: ${sourceUrl || 'unbekannt'}`, jobId]
                 );
             }
@@ -186,7 +186,7 @@ export async function runScrapeJob(providerId: number, providerName: string, ove
                 if (reportingYear) {
                     await query('UPDATE documents SET reporting_year = ? WHERE id = ?', [reportingYear, documentId]);
                     await query(
-                        'UPDATE scrape_jobs SET status = "success", log_message = ?, finished_at = NOW() WHERE id = ?',
+                        "UPDATE scrape_jobs SET status = 'success', log_message = ?, finished_at = NOW() WHERE id = ?",
                         [
                             `✅ Daten aus SKZ-Bild extrahiert (Jahr: ${reportingYear}). Quelle: ${sourceUrl || 'unbekannt'}`,
                             jobId,
@@ -194,7 +194,7 @@ export async function runScrapeJob(providerId: number, providerName: string, ove
                     );
                 } else {
                     await query(
-                        'UPDATE scrape_jobs SET status = "partial", log_message = ?, finished_at = NOW() WHERE id = ?',
+                        "UPDATE scrape_jobs SET status = 'partial', log_message = ?, finished_at = NOW() WHERE id = ?",
                         [
                             `⚠️ SKZ-Bild gespeichert, keine Daten extrahierbar. Quelle: ${sourceUrl || 'unbekannt'}`,
                             jobId,
@@ -203,7 +203,7 @@ export async function runScrapeJob(providerId: number, providerName: string, ove
                 }
             } else {
                 await query(
-                    'UPDATE scrape_jobs SET status = "partial", log_message = ?, finished_at = NOW() WHERE id = ?',
+                    "UPDATE scrape_jobs SET status = 'partial', log_message = ?, finished_at = NOW() WHERE id = ?",
                     [
                         `⚠️ SKZ-Bild gefunden aber nicht gespeichert (Duplikat?). Quelle: ${sourceUrl || 'unbekannt'}`,
                         jobId,
@@ -253,18 +253,18 @@ export async function runScrapeJob(providerId: number, providerName: string, ove
                 if (reportingYear) {
                     await query('UPDATE documents SET reporting_year = ? WHERE id = ?', [reportingYear, documentId]);
                     await query(
-                        'UPDATE scrape_jobs SET status = "success", log_message = ?, finished_at = NOW() WHERE id = ?',
+                        "UPDATE scrape_jobs SET status = 'success', log_message = ?, finished_at = NOW() WHERE id = ?",
                         [`HTML analysiert: ${sourceUrl || 'unbekannt'}`, jobId]
                     );
                 } else {
                     await query(
-                        'UPDATE scrape_jobs SET status = "partial", log_message = ?, finished_at = NOW() WHERE id = ?',
+                        "UPDATE scrape_jobs SET status = 'partial', log_message = ?, finished_at = NOW() WHERE id = ?",
                         [`HTML-Seite gespeichert, keine Daten extrahierbar. Quelle: ${sourceUrl || 'unbekannt'}`, jobId]
                     );
                 }
             } else {
                 await query(
-                    'UPDATE scrape_jobs SET status = "partial", log_message = ?, finished_at = NOW() WHERE id = ?',
+                    "UPDATE scrape_jobs SET status = 'partial', log_message = ?, finished_at = NOW() WHERE id = ?",
                     [`HTML-Seite gefunden, kein PDF. Quelle: ${sourceUrl || 'unbekannt'}`, jobId]
                 );
             }
@@ -272,7 +272,7 @@ export async function runScrapeJob(providerId: number, providerName: string, ove
     } catch (error: any) {
         console.error(`  [JOB] Failed: ${error.message}`);
         await query(
-            'UPDATE scrape_jobs SET status = "failed", log_message = ?, finished_at = NOW() WHERE id = ? AND status = "running"',
+            "UPDATE scrape_jobs SET status = 'failed', log_message = ?, finished_at = NOW() WHERE id = ? AND status = 'running'",
             [error.message?.substring(0, 255), jobId]
         );
         throw error;
