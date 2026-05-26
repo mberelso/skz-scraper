@@ -13,10 +13,10 @@ async function main() {
         const url = 'https://html.duckduckgo.com/html/?q=' + encodeURIComponent(query);
         console.log(`Navigating to: ${url}`);
         await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
-        
+
         console.log('Taking screenshot...');
         await page.screenshot({ path: 'ddg_search.png' });
-        
+
         const html = await page.content();
         await fs.writeFile('ddg_search.html', html);
         console.log('HTML saved to ddg_search.html, screenshot saved to ddg_search.png');

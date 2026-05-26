@@ -315,13 +315,19 @@ export default function DashboardClient({
                                     ? 'bg-indigo-50 border-indigo-200 text-indigo-700 hover:bg-indigo-100'
                                     : 'bg-slate-100 border-slate-200 text-slate-500 hover:bg-slate-200'
                             }`}
-                            title={livePollingEnabled ? 'Automatisches Laden deaktivieren' : 'Automatisches Laden aktivieren'}
+                            title={
+                                livePollingEnabled
+                                    ? 'Automatisches Laden deaktivieren'
+                                    : 'Automatisches Laden aktivieren'
+                            }
                         >
                             <span className="relative flex h-3 w-3">
                                 {livePollingEnabled && (
                                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
                                 )}
-                                <span className={`relative inline-flex rounded-full h-3 w-3 ${livePollingEnabled ? 'bg-indigo-500' : 'bg-slate-400'}`}></span>
+                                <span
+                                    className={`relative inline-flex rounded-full h-3 w-3 ${livePollingEnabled ? 'bg-indigo-500' : 'bg-slate-400'}`}
+                                ></span>
                             </span>
                             <span>Live-Update: {livePollingEnabled ? 'Aktiv' : 'Inaktiv'}</span>
                         </button>
