@@ -44,7 +44,6 @@ async function addFileNumber() {
         `);
 
         console.log('✅ Index idx_file_number added successfully');
-
     } catch (err: any) {
         console.error('❌ Migration failed:', err.message);
     } finally {

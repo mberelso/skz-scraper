@@ -20,11 +20,8 @@ async function findTestData() {
         ORDER BY id ASC
     `);
 
-    const testProviders = providers.filter(p =>
-        suspicious.some(keyword =>
-            p.name?.toLowerCase().includes(keyword) ||
-            p.city?.toLowerCase().includes(keyword)
-        )
+    const testProviders = providers.filter((p) =>
+        suspicious.some((keyword) => p.name?.toLowerCase().includes(keyword) || p.city?.toLowerCase().includes(keyword))
     );
 
     console.log('=== VERDÄCHTIGE PROVIDER (Karteileichen) ===\n');
@@ -32,7 +29,7 @@ async function findTestData() {
         console.log('Keine verdächtigen Provider gefunden.');
     } else {
         console.log(`Gefunden: ${testProviders.length} Provider\n`);
-        testProviders.forEach(p => {
+        testProviders.forEach((p) => {
             console.log(`ID: ${p.id}`);
             console.log(`  Name: ${p.name}`);
             console.log(`  Stadt: ${p.city || '-'}, PLZ: ${p.zip || '-'}`);
@@ -43,7 +40,7 @@ async function findTestData() {
         });
 
         console.log('\n=== LÖSCH-VORSCHLAG ===');
-        const ids = testProviders.map(p => p.id).join(', ');
+        const ids = testProviders.map((p) => p.id).join(', ');
         console.log('SQL DELETE Statement:');
         console.log(`DELETE FROM providers WHERE id IN (${ids});`);
         console.log('\nOder per Script:');

@@ -76,7 +76,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
 
         // Load HKN origins for all mix entries
         const mixIds = documents.filter((d) => d.mix_id).map((d) => d.mix_id);
-        let hknMap: Record<number, { country: string; percentage: number }[]> = {};
+        const hknMap: Record<number, { country: string; percentage: number }[]> = {};
         if (mixIds.length > 0) {
             const hknRows: any[] = await query(
                 `SELECT energy_mix_id, country, percentage FROM hkn_origins WHERE energy_mix_id IN (${mixIds.map(() => '?').join(',')}) ORDER BY percentage DESC`,

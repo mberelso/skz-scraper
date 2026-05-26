@@ -777,7 +777,9 @@ export default function ProviderModal({
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-xs font-bold text-slate-600 mb-1">SKZ-URL</label>
+                                            <label className="block text-xs font-bold text-slate-600 mb-1">
+                                                SKZ-URL
+                                            </label>
                                             <input
                                                 type="url"
                                                 value={providerFormData.skz_url}
@@ -872,7 +874,9 @@ export default function ProviderModal({
 
                                     {/* Review Status */}
                                     <div>
-                                        <label className="block text-xs font-bold text-slate-600 mb-1">Prüfstatus</label>
+                                        <label className="block text-xs font-bold text-slate-600 mb-1">
+                                            Prüfstatus
+                                        </label>
                                         <select
                                             value={providerFormData.review_status}
                                             onChange={(e) =>

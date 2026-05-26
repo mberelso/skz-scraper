@@ -57,18 +57,16 @@ export async function saveFile(
 ) {
     const year = reportingYear ? reportingYear.toString() : new Date().getFullYear().toString();
     const filename = `${jobIdOrPrefix}_${fileType}_${crypto.createHash('sha256').update(buffer).digest('hex').substring(0, 8)}.${extension}`;
-    
+
     // Relative path used both as local path and Supabase object path
     const relativePath = `data/storage/${providerSlug}/${year}/${filename}`;
 
     if (supabase) {
         console.log(`[STORAGE] Uploading ${relativePath} to Supabase...`);
-        const { error } = await supabase.storage
-            .from(BUCKET_NAME)
-            .upload(relativePath, buffer, {
-                contentType: getMimeType(extension),
-                upsert: true,
-            });
+        const { error } = await supabase.storage.from(BUCKET_NAME).upload(relativePath, buffer, {
+            contentType: getMimeType(extension),
+            upsert: true,
+        });
 
         if (error) {
             console.error('[STORAGE] Supabase upload failed:', error.message);
@@ -96,9 +94,7 @@ export async function saveFile(
 export async function readFile(filePath: string): Promise<Buffer> {
     if (supabase) {
         console.log(`[STORAGE] Downloading ${filePath} from Supabase...`);
-        const { data, error } = await supabase.storage
-            .from(BUCKET_NAME)
-            .download(filePath);
+        const { data, error } = await supabase.storage.from(BUCKET_NAME).download(filePath);
 
         if (error) {
             console.error('[STORAGE] Supabase download failed:', error.message);
@@ -120,9 +116,7 @@ export async function readFile(filePath: string): Promise<Buffer> {
 export async function deleteFile(filePath: string): Promise<void> {
     if (supabase) {
         console.log(`[STORAGE] Deleting ${filePath} from Supabase...`);
-        const { error } = await supabase.storage
-            .from(BUCKET_NAME)
-            .remove([filePath]);
+        const { error } = await supabase.storage.from(BUCKET_NAME).remove([filePath]);
 
         if (error) {
             console.error('[STORAGE] Supabase deletion failed:', error.message);
@@ -146,15 +140,13 @@ export async function fileExists(filePath: string): Promise<boolean> {
     if (supabase) {
         const dir = path.dirname(filePath);
         const base = path.basename(filePath);
-        
-        const { data, error } = await supabase.storage
-            .from(BUCKET_NAME)
-            .list(dir, {
-                search: base,
-            });
+
+        const { data, error } = await supabase.storage.from(BUCKET_NAME).list(dir, {
+            search: base,
+        });
 
         if (error || !data) return false;
-        return data.some(item => item.name === base);
+        return data.some((item) => item.name === base);
     } else {
         // Fallback: Local filesystem
         const absolutePath = path.join(process.cwd(), filePath);

@@ -11,9 +11,18 @@ dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
 
 async function findInvalidProviders() {
     const suspicious = [
-        'verordnung', 'gesetz', 'recht', 'paragraph', 'eigenbetrieb',
-        'anstalts', 'verwaltung', 'c/o', 'verbandsgemeindeverwaltung',
-        'ministerium', 'behörde', 'landesrecht'
+        'verordnung',
+        'gesetz',
+        'recht',
+        'paragraph',
+        'eigenbetrieb',
+        'anstalts',
+        'verwaltung',
+        'c/o',
+        'verbandsgemeindeverwaltung',
+        'ministerium',
+        'behörde',
+        'landesrecht',
     ];
 
     const providers: any[] = await query(`
@@ -22,10 +31,8 @@ async function findInvalidProviders() {
         ORDER BY id ASC
     `);
 
-    const invalidProviders = providers.filter(p =>
-        suspicious.some(keyword =>
-            p.name?.toLowerCase().includes(keyword)
-        )
+    const invalidProviders = providers.filter((p) =>
+        suspicious.some((keyword) => p.name?.toLowerCase().includes(keyword))
     );
 
     console.log('=== UNGÜLTIGE PROVIDER (Gesetze/Verwaltungen) ===\n');
@@ -33,14 +40,14 @@ async function findInvalidProviders() {
         console.log('✅ Keine ungültigen Provider gefunden.');
     } else {
         console.log(`⚠️  Gefunden: ${invalidProviders.length} ungültige Provider\n`);
-        invalidProviders.forEach(p => {
+        invalidProviders.forEach((p) => {
             console.log(`ID ${p.id}: ${p.name}`);
             console.log(`  Stadt: ${p.city || '-'}`);
             console.log(`  Aktiv: ${p.active ? 'JA' : 'Nein'}`);
             console.log('');
         });
 
-        const ids = invalidProviders.map(p => p.id).join(', ');
+        const ids = invalidProviders.map((p) => p.id).join(', ');
         console.log('=== LÖSUNG ===');
         console.log('Diese Provider deaktivieren:');
         console.log(`npx tsx scripts/deactivate-providers.ts ${ids}`);

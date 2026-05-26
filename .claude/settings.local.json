@@ -1,34 +1,34 @@
 {
-  "permissions": {
-    "allow": [
-      "Bash(npm run build:*)",
-      "Bash(npx tsx:*)",
-      "Bash(pgrep:*)",
-      "Bash(tasklist:*)",
-      "Bash(taskkill:*)",
-      "Bash(npm run dev:*)",
-      "Bash(netstat:*)",
-      "Bash(findstr:*)",
-      "Bash(powershell -Command:*)",
-      "Bash(curl:*)",
-      "Bash(ss -tlnp:*)",
-      "Bash(python3:*)",
-      "Bash(tr:*)",
-      "Bash(\"c:/Users/marti/Documents/CODE/SKZ-Scraper/scripts/check-hunxe.ts\":*)",
-      "Bash(npx tsc:*)",
-      "Bash(npx next dev:*)",
-      "Bash(npm install:*)",
-      "Bash(npx vitest run:*)",
-      "Bash(DOTENV_CONFIG_PATH=.env.local npx tsx:*)",
-      "Bash(ls:*)",
-      "Bash(node -e:*)",
-      "Bash(cmd.exe /c \"netstat -ano | findstr :3000 | findstr LISTEN\")",
-      "Bash(shuf:*)",
-      "Bash(/c/Users/marti/Documents/CODE/SKZ-Scraper/scripts/tmp-query.ts:*)",
-      "Bash(npx eslint:*)",
-      "Bash(npx prettier:*)",
-      "Bash(npx next build:*)",
-      "Bash(npm run test:*)"
-    ]
-  }
+    "permissions": {
+        "allow": [
+            "Bash(npm run build:*)",
+            "Bash(npx tsx:*)",
+            "Bash(pgrep:*)",
+            "Bash(tasklist:*)",
+            "Bash(taskkill:*)",
+            "Bash(npm run dev:*)",
+            "Bash(netstat:*)",
+            "Bash(findstr:*)",
+            "Bash(powershell -Command:*)",
+            "Bash(curl:*)",
+            "Bash(ss -tlnp:*)",
+            "Bash(python3:*)",
+            "Bash(tr:*)",
+            "Bash(\"c:/Users/marti/Documents/CODE/SKZ-Scraper/scripts/check-hunxe.ts\":*)",
+            "Bash(npx tsc:*)",
+            "Bash(npx next dev:*)",
+            "Bash(npm install:*)",
+            "Bash(npx vitest run:*)",
+            "Bash(DOTENV_CONFIG_PATH=.env.local npx tsx:*)",
+            "Bash(ls:*)",
+            "Bash(node -e:*)",
+            "Bash(cmd.exe /c \"netstat -ano | findstr :3000 | findstr LISTEN\")",
+            "Bash(shuf:*)",
+            "Bash(/c/Users/marti/Documents/CODE/SKZ-Scraper/scripts/tmp-query.ts:*)",
+            "Bash(npx eslint:*)",
+            "Bash(npx prettier:*)",
+            "Bash(npx next build:*)",
+            "Bash(npm run test:*)"
+        ]
+    }
 }

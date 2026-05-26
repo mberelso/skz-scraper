@@ -11,7 +11,10 @@ import path from 'path';
 dotenv.config({ path: path.resolve(process.cwd(), '.env.local') });
 
 async function deactivateProviders() {
-    const ids = process.argv.slice(2).map(id => parseInt(id, 10)).filter(id => !isNaN(id));
+    const ids = process.argv
+        .slice(2)
+        .map((id) => parseInt(id, 10))
+        .filter((id) => !isNaN(id));
 
     if (ids.length === 0) {
         console.error('❌ Keine gültigen IDs angegeben.');
@@ -32,7 +35,7 @@ async function deactivateProviders() {
     }
 
     console.log('Folgende Provider werden deaktiviert:');
-    providers.forEach(p => console.log(`  - ID ${p.id}: ${p.name}`));
+    providers.forEach((p) => console.log(`  - ID ${p.id}: ${p.name}`));
     console.log('');
 
     // Deactivate

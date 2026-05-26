@@ -29,13 +29,12 @@ async function fixStuckJobs() {
 
         if (runningJobs.length > 0) {
             console.log(`\n⚠️  Still ${runningJobs.length} job(s) running:`);
-            runningJobs.forEach(job => {
+            runningJobs.forEach((job) => {
                 console.log(`  - Job ${job.id} (Provider ${job.provider_id}): ${job.log_message}`);
             });
         } else {
             console.log('\n✅ No running jobs found');
         }
-
     } catch (err) {
         console.error('❌ Error:', err);
     } finally {

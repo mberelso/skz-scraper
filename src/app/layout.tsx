@@ -26,9 +26,7 @@ export default function RootLayout({
                     rel="stylesheet"
                 />
             </head>
-            <body className={`${publicSans.variable} font-display bg-background-light text-slate-900`}>
-                {children}
-            </body>
+            <body className={`${publicSans.variable} font-display bg-background-light text-slate-900`}>{children}</body>
         </html>
     );
 }

@@ -1,5 +1,5 @@
 import { runScrapeJob } from '../src/lib/scraper/runner';
-import pool from '../src/lib/db';
+import pool, { query } from '../src/lib/db';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '.env.local' });
@@ -10,10 +10,7 @@ async function testSingle() {
         console.log(`Testing scraper for: ${providerName}`);
 
         // Find ID
-        const mysql = require('mariadb');
-        const conn = await pool.getConnection();
-        const rows = await conn.query('SELECT id FROM providers WHERE name = ?', [providerName]);
-        await conn.release();
+        const rows = await query('SELECT id FROM providers WHERE name = ?', [providerName]);
 
         if (rows.length === 0) {
             console.error('Provider not found in DB');

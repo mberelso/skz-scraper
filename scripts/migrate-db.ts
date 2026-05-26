@@ -153,16 +153,21 @@ async function migrate() {
 
         // --- Verify ---
         console.log('\n[5/5] Schema-Verifizierung...');
-        const providerCols: any[] = await query("SELECT column_name FROM information_schema.columns WHERE table_name = 'providers'");
-        const docCols: any[] = await query("SELECT column_name FROM information_schema.columns WHERE table_name = 'documents'");
-        const mixCols: any[] = await query("SELECT column_name FROM information_schema.columns WHERE table_name = 'energy_mix'");
+        const providerCols: any[] = await query(
+            "SELECT column_name FROM information_schema.columns WHERE table_name = 'providers'"
+        );
+        const docCols: any[] = await query(
+            "SELECT column_name FROM information_schema.columns WHERE table_name = 'documents'"
+        );
+        const mixCols: any[] = await query(
+            "SELECT column_name FROM information_schema.columns WHERE table_name = 'energy_mix'"
+        );
 
         console.log(`  providers: ${providerCols.length} Spalten`);
         console.log(`  documents: ${docCols.length} Spalten`);
         console.log(`  energy_mix: ${mixCols.length} Spalten`);
 
         console.log('\n=== Migration abgeschlossen ===');
-
     } catch (err) {
         console.error('\nMigration fehlgeschlagen:', err);
     } finally {

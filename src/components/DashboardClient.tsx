@@ -292,7 +292,9 @@ export default function DashboardClient({
                 <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 z-10">
                     <div className="flex items-center gap-4 flex-1">
                         <div className="relative w-full max-w-md">
-                            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+                            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">
+                                search
+                            </span>
                             <input
                                 className="w-full pl-10 pr-4 py-2 rounded-lg bg-slate-100 border-none focus:ring-2 focus:ring-primary/50 text-sm"
                                 placeholder="Suche nach Name, Stadt, PLZ..."
@@ -367,7 +369,9 @@ export default function DashboardClient({
                                 <div className="p-2 bg-primary/10 rounded-lg">
                                     <span className="material-symbols-outlined text-primary">check_circle</span>
                                 </div>
-                                <span className="text-green-600 text-xs font-bold bg-green-50 px-2 py-1 rounded">Aktiv</span>
+                                <span className="text-green-600 text-xs font-bold bg-green-50 px-2 py-1 rounded">
+                                    Aktiv
+                                </span>
                             </div>
                             <p className="text-slate-500 text-sm font-medium">Erfolgreiche Scrapes</p>
                             <h3 className="text-2xl font-bold mt-1">{successCount}</h3>
@@ -377,7 +381,9 @@ export default function DashboardClient({
                                 <div className="p-2 bg-primary/10 rounded-lg">
                                     <span className="material-symbols-outlined text-primary">bolt</span>
                                 </div>
-                                <span className="text-green-600 text-xs font-bold bg-green-50 px-2 py-1 rounded">+{mixFoundCount}</span>
+                                <span className="text-green-600 text-xs font-bold bg-green-50 px-2 py-1 rounded">
+                                    +{mixFoundCount}
+                                </span>
                             </div>
                             <p className="text-slate-500 text-sm font-medium">Daten extrahiert</p>
                             <h3 className="text-2xl font-bold mt-1">{mixFoundCount}</h3>
@@ -388,11 +394,15 @@ export default function DashboardClient({
                                     <span className="material-symbols-outlined text-primary">pending_actions</span>
                                 </div>
                                 {hasRunningJob && (
-                                    <span className="text-primary text-xs font-bold bg-primary/10 px-2 py-1 rounded">Aktiv</span>
+                                    <span className="text-primary text-xs font-bold bg-primary/10 px-2 py-1 rounded">
+                                        Aktiv
+                                    </span>
                                 )}
                             </div>
                             <p className="text-slate-500 text-sm font-medium">Jobs in Warteschlange</p>
-                            <h3 className="text-2xl font-bold mt-1">{recentJobs.filter((j: any) => j.status === 'running').length}</h3>
+                            <h3 className="text-2xl font-bold mt-1">
+                                {recentJobs.filter((j: any) => j.status === 'running').length}
+                            </h3>
                         </div>
                     </div>
 
@@ -418,13 +428,18 @@ export default function DashboardClient({
                                                 Job {batchStatus.current} von {batchStatus.total}
                                             </span>
                                             {batchStatus.currentProvider && (
-                                                <span className="text-xs text-slate-500">→ {batchStatus.currentProvider}</span>
+                                                <span className="text-xs text-slate-500">
+                                                    → {batchStatus.currentProvider}
+                                                </span>
                                             )}
                                         </div>
                                         <div className="w-full bg-slate-200 rounded-full h-2">
                                             <div
                                                 className="h-2 rounded-full transition-all duration-300"
-                                                style={{ width: `${(batchStatus.current / batchStatus.total) * 100}%`, backgroundColor: '#d5781a' }}
+                                                style={{
+                                                    width: `${(batchStatus.current / batchStatus.total) * 100}%`,
+                                                    backgroundColor: '#d5781a',
+                                                }}
                                             ></div>
                                         </div>
                                     </div>
@@ -488,8 +503,14 @@ export default function DashboardClient({
                                     {hasRunningJob && (
                                         <div className="flex items-center gap-2">
                                             <span className="relative flex h-3 w-3">
-                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ backgroundColor: '#d5781a' }}></span>
-                                                <span className="relative inline-flex rounded-full h-3 w-3" style={{ backgroundColor: '#d5781a' }}></span>
+                                                <span
+                                                    className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+                                                    style={{ backgroundColor: '#d5781a' }}
+                                                ></span>
+                                                <span
+                                                    className="relative inline-flex rounded-full h-3 w-3"
+                                                    style={{ backgroundColor: '#d5781a' }}
+                                                ></span>
                                             </span>
                                             <span className="text-xs font-semibold text-[#d5781a]">Aktiv</span>
                                         </div>
@@ -498,7 +519,9 @@ export default function DashboardClient({
 
                                 <div className="space-y-2 max-h-[200px] overflow-y-auto">
                                     {recentJobs.length === 0 ? (
-                                        <p className="text-sm text-slate-400 text-center py-4">Keine Jobs in der Warteschlange</p>
+                                        <p className="text-sm text-slate-400 text-center py-4">
+                                            Keine Jobs in der Warteschlange
+                                        </p>
                                     ) : (
                                         recentJobs.slice(0, 5).map((job: any) => (
                                             <div
@@ -578,7 +601,10 @@ export default function DashboardClient({
                                 <option value="geprueft">Geprüft</option>
                                 <option value="beanstandet">Beanstandet</option>
                             </select>
-                            {(searchQuery || statusFilter !== 'all' || dataFilter !== 'all' || reviewFilter !== 'all') && (
+                            {(searchQuery ||
+                                statusFilter !== 'all' ||
+                                dataFilter !== 'all' ||
+                                reviewFilter !== 'all') && (
                                 <button
                                     onClick={() => {
                                         setSearchQuery('');
@@ -605,7 +631,10 @@ export default function DashboardClient({
                                 <span className="material-symbols-outlined text-primary">table_chart</span>
                                 Anbieter-Verwaltung
                             </h3>
-                            <button onClick={refreshData} className="text-primary text-sm font-semibold hover:underline flex items-center gap-1">
+                            <button
+                                onClick={refreshData}
+                                className="text-primary text-sm font-semibold hover:underline flex items-center gap-1"
+                            >
                                 <span className="material-symbols-outlined text-sm">refresh</span>
                                 Aktualisieren
                             </button>
@@ -618,31 +647,38 @@ export default function DashboardClient({
                                             onClick={() => handleSort('name')}
                                             className="px-6 py-4 cursor-pointer hover:text-primary"
                                         >
-                                            Anbieter / Stadt {sortColumn === 'name' && (sortDirection === 'asc' ? '↑' : '↓')}
+                                            Anbieter / Stadt{' '}
+                                            {sortColumn === 'name' && (sortDirection === 'asc' ? '↑' : '↓')}
                                         </th>
                                         <th
                                             onClick={() => handleSort('file_number')}
                                             className="px-6 py-4 cursor-pointer hover:text-primary"
                                         >
-                                            Aktenzeichen {sortColumn === 'file_number' && (sortDirection === 'asc' ? '↑' : '↓')}
+                                            Aktenzeichen{' '}
+                                            {sortColumn === 'file_number' && (sortDirection === 'asc' ? '↑' : '↓')}
                                         </th>
                                         <th
                                             onClick={() => handleSort('latest_job_status')}
                                             className="px-6 py-4 cursor-pointer hover:text-primary"
                                         >
-                                            Status {sortColumn === 'latest_job_status' && (sortDirection === 'asc' ? '↑' : '↓')}
+                                            Status{' '}
+                                            {sortColumn === 'latest_job_status' &&
+                                                (sortDirection === 'asc' ? '↑' : '↓')}
                                         </th>
                                         <th
                                             onClick={() => handleSort('last_renewable_percentage')}
                                             className="px-6 py-4 cursor-pointer hover:text-primary"
                                         >
-                                            Strommix {sortColumn === 'last_renewable_percentage' && (sortDirection === 'asc' ? '↑' : '↓')}
+                                            Strommix{' '}
+                                            {sortColumn === 'last_renewable_percentage' &&
+                                                (sortDirection === 'asc' ? '↑' : '↓')}
                                         </th>
                                         <th
                                             onClick={() => handleSort('review_status')}
                                             className="px-6 py-4 cursor-pointer hover:text-primary"
                                         >
-                                            Prüfung {sortColumn === 'review_status' && (sortDirection === 'asc' ? '↑' : '↓')}
+                                            Prüfung{' '}
+                                            {sortColumn === 'review_status' && (sortDirection === 'asc' ? '↑' : '↓')}
                                         </th>
                                         <th className="px-6 py-4 text-right">Aktion</th>
                                     </tr>
@@ -655,7 +691,9 @@ export default function DashboardClient({
                                             className={`transition-colors hover:bg-primary/5 ${index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}`}
                                         >
                                             <td className="px-6 py-4">
-                                                <div className="text-sm font-semibold text-slate-900">{provider.name}</div>
+                                                <div className="text-sm font-semibold text-slate-900">
+                                                    {provider.name}
+                                                </div>
                                                 <div className="text-xs text-slate-400">{provider.city || '-'}</div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
@@ -677,7 +715,9 @@ export default function DashboardClient({
                                                             }}
                                                         />
                                                         <button
-                                                            onClick={() => handleFileNumberEdit(provider.id, fileNumberValue)}
+                                                            onClick={() =>
+                                                                handleFileNumberEdit(provider.id, fileNumberValue)
+                                                            }
                                                             className="text-green-600 hover:text-green-800 text-xs font-bold"
                                                         >
                                                             ✓
@@ -722,7 +762,9 @@ export default function DashboardClient({
                                                                 ({provider.last_mix_year})
                                                             </span>
                                                             {provider.last_confidence != null && (
-                                                                <ConfidenceBadge confidence={provider.last_confidence} />
+                                                                <ConfidenceBadge
+                                                                    confidence={provider.last_confidence}
+                                                                />
                                                             )}
                                                         </div>
                                                     </div>
@@ -741,7 +783,9 @@ export default function DashboardClient({
                                                     onClick={() => setSelectedProvider(provider)}
                                                     className="text-primary hover:text-primary/80 font-medium text-sm border border-primary/20 hover:border-primary/40 px-3 py-1 rounded-lg transition-all shadow-sm bg-white flex items-center gap-1 ml-auto"
                                                 >
-                                                    <span className="material-symbols-outlined text-sm">open_in_new</span>
+                                                    <span className="material-symbols-outlined text-sm">
+                                                        open_in_new
+                                                    </span>
                                                     Details
                                                 </button>
                                             </td>
@@ -851,11 +895,7 @@ function StatusBadge({ status }: { status: string }) {
 
     const config = statusConfig[status] ?? { label: status, color: 'bg-slate-100 text-slate-600' };
 
-    return (
-        <span className={`px-3 py-1 rounded-full text-xs font-bold ${config.color}`}>
-            {config.label}
-        </span>
-    );
+    return <span className={`px-3 py-1 rounded-full text-xs font-bold ${config.color}`}>{config.label}</span>;
 }
 
 function ConfidenceBadge({ confidence }: { confidence: number }) {
@@ -875,7 +915,8 @@ const reviewStatusConfig: Record<string, { label: string; color: string }> = {
 };
 
 function ReviewStatusSelect({ status, onChange }: { status: string; onChange: (s: string) => void }) {
-    const config = reviewStatusConfig[status] ?? reviewStatusConfig['offen'] ?? { label: 'Offen', color: 'bg-slate-100 text-slate-600 border-slate-200' };
+    const config = reviewStatusConfig[status] ??
+        reviewStatusConfig['offen'] ?? { label: 'Offen', color: 'bg-slate-100 text-slate-600 border-slate-200' };
     return (
         <select
             value={status}

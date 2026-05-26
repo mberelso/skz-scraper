@@ -1,25 +1,25 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
-  --font-public-sans: 'Public Sans', sans-serif;
+    --font-public-sans: 'Public Sans', sans-serif;
 }
 
 body {
-  font-family: var(--font-public-sans);
+    font-family: var(--font-public-sans);
 }
 
 /* Material Symbols Outlined Icons */
 .material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
 }
 
 /* Sidebar Active State */
 .sidebar-active {
-  background-color: rgba(213, 120, 26, 0.1);
-  border-left: 4px solid #d5781a;
-  color: #d5781a;
+    background-color: rgba(213, 120, 26, 0.1);
+    border-left: 4px solid #d5781a;
+    color: #d5781a;
 }

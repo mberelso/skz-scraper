@@ -44,7 +44,6 @@ async function addPriority() {
         `);
 
         console.log('✅ Index idx_priority added successfully');
-
     } catch (err: any) {
         console.error('❌ Migration failed:', err.message);
     } finally {

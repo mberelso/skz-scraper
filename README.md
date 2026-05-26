@@ -17,6 +17,7 @@ Next.js App (Dashboard + API)
 ```
 
 ### Parsing-Kaskade
+
 1. **Gemini Vision** (Primär): PDF als Bild an Gemini 2.0 Flash senden
 2. **Gemini Text** (Fallback 1): Extrahierten Text an Gemini senden
 3. **Regex** (Fallback 2): Keyword-basierte Extraktion ohne API
@@ -24,6 +25,7 @@ Next.js App (Dashboard + API)
 ## Setup
 
 ### Voraussetzungen
+
 - Node.js 18+
 - Neon.com PostgreSQL-Datenbank
 - Supabase-Projekt (für Storage Bucket)
@@ -59,6 +61,7 @@ npm run dev
 ## Nutzung
 
 ### Dashboard (Web UI)
+
 - Alle Anbieter mit aktuellem Scraping-Status
 - Strommix-Daten mit Konfidenzwert und Extraktionsmethode
 - Manuelles Scraping pro Anbieter (optional mit direkter PDF-URL)
@@ -82,14 +85,15 @@ npx tsx scripts/query.ts "SELECT p.name, em.* FROM energy_mix em JOIN documents 
 
 ## Datenmodell
 
-| Tabelle | Beschreibung |
-|---|---|
-| `providers` | Energieversorger (Name, Adresse, Stadt, SKZ-URL) |
-| `scrape_jobs` | Scraping-Jobs mit Status und Log |
-| `documents` | Gespeicherte PDFs/Screenshots mit SHA256-Hash |
-| `energy_mix` | Extrahierte Kennzahlen (EE, Fossil, Nuklear + Unterkategorien) |
+| Tabelle       | Beschreibung                                                   |
+| ------------- | -------------------------------------------------------------- |
+| `providers`   | Energieversorger (Name, Adresse, Stadt, SKZ-URL)               |
+| `scrape_jobs` | Scraping-Jobs mit Status und Log                               |
+| `documents`   | Gespeicherte PDFs/Screenshots mit SHA256-Hash                  |
+| `energy_mix`  | Extrahierte Kennzahlen (EE, Fossil, Nuklear + Unterkategorien) |
 
 ### Energiemix-Unterkategorien
+
 - **Erneuerbar:** Wind, Solar, Biomasse, Wasserkraft, Sonstige EE
 - **Fossil:** Kohle, Erdgas, Sonstige Fossile
 - **Kernenergie**

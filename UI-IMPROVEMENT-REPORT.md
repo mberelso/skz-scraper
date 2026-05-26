@@ -9,9 +9,11 @@
 ## 📊 1. Reports & Analytics
 
 ### 1.1 Compliance-Dashboard ⭐⭐⭐
+
 **Beschreibung:** Übersicht über den Compliance-Status aller Provider
 
 **Features:**
+
 - Compliance-Ampel (Rot/Gelb/Grün basierend auf Aktualität der Daten)
 - "Kritische Provider" Liste (keine Daten, veraltete Daten >2 Jahre)
 - Automatische Compliance-Prüfung nach § 42 EnWG Kriterien
@@ -23,9 +25,11 @@
 ---
 
 ### 1.2 Trend-Analyse Dashboard ⭐⭐⭐
+
 **Beschreibung:** Visualisierung der Entwicklung von Strommix-Daten über Zeit
 
 **Features:**
+
 - Zeitreihen-Charts: EE-Anteil, Fossile, Nuklear über Jahre
 - Vergleich: Bundesschnitt vs. Provider-Durchschnitt
 - Top 10 / Bottom 10 EE-Anbieter
@@ -33,6 +37,7 @@
 - Filter nach Stadt, PLZ-Bereich, Prüfstatus
 
 **Visualisierungen:**
+
 - Line Charts (Zeitreihen)
 - Bar Charts (Top/Bottom Ranking)
 - Pie Charts (Strommix-Verteilung)
@@ -44,9 +49,11 @@
 ---
 
 ### 1.3 Geo-Visualisierung 🗺️ ⭐⭐
+
 **Beschreibung:** Interaktive Karte mit Provider-Verteilung
 
 **Features:**
+
 - Deutschlandkarte mit Markern pro Provider
 - Farbcodierung nach EE-Anteil (grün = hoch, rot = niedrig)
 - Cluster bei vielen Providern in einer Region
@@ -59,9 +66,11 @@
 ---
 
 ### 1.4 Advanced Export Center ⭐⭐
+
 **Beschreibung:** Verschiedene Export-Formate für unterschiedliche Zielgruppen
 
 **Export-Typen:**
+
 - **Behörden-Report:** PDF mit Compliance-Übersicht, Tabellen, Diagrammen
 - **Excel-Export:** Rohdaten mit Pivot-Tabellen vorbereitet
 - **CSV-Export:** Bereits vorhanden, erweitern um Filter-Presets
@@ -69,6 +78,7 @@
 - **Audit-Trail-Export:** Alle Änderungen eines Providers
 
 **Features:**
+
 - Template-System für Reports
 - Automatisches Branding (Logo, Farben)
 - Scheduled Exports (wöchentlich, monatlich)
@@ -79,9 +89,11 @@
 ---
 
 ### 1.5 Scraping-Performance-Dashboard ⭐
+
 **Beschreibung:** Analyse der Scraping-Erfolgsquoten
 
 **Metriken:**
+
 - Success Rate pro Provider (historisch)
 - Durchschnittliche Scraping-Dauer
 - Fehlerquellen-Analyse (404, Timeout, Parse-Fehler)
@@ -89,6 +101,7 @@
 - OCR vs. Gemini vs. Regex Erfolgsraten
 
 **Visualisierungen:**
+
 - Success Rate Trend-Chart
 - Error Distribution Pie Chart
 - Confidence Score Histogram
@@ -101,16 +114,18 @@
 ## 🔍 2. Erweiterte Suchfunktionen
 
 ### 2.1 Advanced Search Builder ⭐⭐⭐
+
 **Beschreibung:** Komplexe Filterabfragen mit UND/ODER-Verknüpfung
 
 **Features:**
+
 - Query Builder UI (z.B. wie QueryBuilder von react-querybuilder)
 - Kombinierbare Filter:
-  - EE-Anteil: > 50%, < 30%, zwischen X-Y
-  - Confidence: niedrig/mittel/hoch
-  - Stadt: beginnt mit, enthält
-  - Scraping-Datum: älter als X Tage, im Zeitraum
-  - Review-Status: Offen UND Confidence < 40%
+    - EE-Anteil: > 50%, < 30%, zwischen X-Y
+    - Confidence: niedrig/mittel/hoch
+    - Stadt: beginnt mit, enthält
+    - Scraping-Datum: älter als X Tage, im Zeitraum
+    - Review-Status: Offen UND Confidence < 40%
 - Gespeicherte Suchen ("Kritische Provider", "Hohe EE-Anbieter", etc.)
 - Suche speichern & teilen (URL mit Query-Params)
 
@@ -120,9 +135,11 @@
 ---
 
 ### 2.2 Volltextsuche in Dokumenten ⭐⭐
+
 **Beschreibung:** Suche in gespeicherten PDF/Image-Dokumenten
 
 **Features:**
+
 - OCR-Text durchsuchbar machen (bereits extrahiert, in DB speichern)
 - Suche nach Schlagwörtern in allen Dokumenten
 - Highlight der Fundstellen im PDF-Viewer
@@ -136,15 +153,17 @@
 ## ✏️ 3. Eingabemasken & Workflows
 
 ### 3.1 Bulk-Edit-Modus ⭐⭐⭐
+
 **Beschreibung:** Mehrere Provider gleichzeitig bearbeiten
 
 **Features:**
+
 - Multi-Select in Tabelle (Checkboxen)
 - Batch-Aktionen:
-  - Review-Status für X Provider auf "Geprüft" setzen
-  - Priorität für Auswahl ändern
-  - Notiz für alle ausgewählten hinzufügen
-  - Batch-Scraping für Auswahl starten
+    - Review-Status für X Provider auf "Geprüft" setzen
+    - Priorität für Auswahl ändern
+    - Notiz für alle ausgewählten hinzufügen
+    - Batch-Scraping für Auswahl starten
 - Undo-Funktion für Bulk-Edits
 
 **Technische Komplexität:** Mittel
@@ -153,9 +172,11 @@
 ---
 
 ### 3.2 CSV/Excel-Import ⭐⭐
+
 **Beschreibung:** Provider-Daten aus CSV/Excel importieren
 
 **Features:**
+
 - Drag & Drop Upload
 - Column-Mapping (welche Spalte = Name, URL, etc.)
 - Vorschau vor Import
@@ -163,6 +184,7 @@
 - Update-Modus (bestehende Provider aktualisieren) vs. Insert-Modus
 
 **Use-Cases:**
+
 - Initiale Provider-Liste importieren
 - Bulk-Update von Aktenzeichen oder URLs
 - Migration aus Altdaten
@@ -173,13 +195,16 @@
 ---
 
 ### 3.3 Template-Manager für SKZ-URLs ⭐
+
 **Beschreibung:** URL-Patterns für häufige Provider-Typen speichern
 
 **Beispiel-Templates:**
+
 - Stadtwerke: `https://www.stadtwerke-{city}.de/stromkennzeichnung`
 - Energiewerke: `https://www.{name}.de/privatkunden/strom/kennzeichnung`
 
 **Features:**
+
 - Template-Bibliothek anlegen
 - Bei neuem Provider: Template auswählen → Variablen füllen
 - Auto-Suggest basierend auf Provider-Name
@@ -190,14 +215,17 @@
 ---
 
 ### 3.4 Review-Workflow mit Genehmigung ⭐⭐
+
 **Beschreibung:** Mehrstufiger Prüfprozess für kritische Daten
 
 **Workflow:**
+
 1. Scraping extrahiert Daten → Status "Offen"
 2. Sachbearbeiter prüft → Status "Zur Genehmigung"
 3. Vorgesetzter genehmigt → Status "Geprüft"
 
 **Features:**
+
 - Rollen-System (Sachbearbeiter, Prüfer, Admin)
 - Kommentar-Funktion bei Ablehnung
 - Email-Benachrichtigungen bei Status-Änderung
@@ -209,9 +237,11 @@
 ---
 
 ### 3.5 Dokumenten-Upload mit OCR ⭐⭐
+
 **Beschreibung:** Manuelle PDF/Bild-Uploads mit automatischer Extraktion
 
 **Features:**
+
 - Drag & Drop Upload im Provider-Modal
 - Automatische Analyse mit Gemini/Tesseract
 - Formular wird vorbefüllt mit extrahierten Daten
@@ -228,15 +258,18 @@
 ## 📈 4. Visualisierungen & Dashboards
 
 ### 4.1 Strommix-Verteilungs-Chart ⭐⭐⭐
+
 **Beschreibung:** Aggregierte Visualisierung aller Provider-Daten
 
 **Charts:**
+
 - **Stacked Bar Chart:** Durchschnittlicher Strommix (EE / Fossil / Nuklear)
 - **Box Plot:** Verteilung der EE-Anteile (Median, Quartile, Ausreißer)
 - **Scatter Plot:** EE-Anteil vs. CO₂-Emissionen
 - **Histogram:** Häufigkeitsverteilung der Confidence-Scores
 
 **Filter:**
+
 - Jahr auswählen
 - Nach Stadt/PLZ filtern
 - Nur geprüfte Daten
@@ -247,9 +280,11 @@
 ---
 
 ### 4.2 Echtzeit-Scraping-Monitor ⭐
+
 **Beschreibung:** Live-Visualisierung laufender Scraping-Jobs
 
 **Features:**
+
 - Fortschrittsbalken pro Provider
 - Log-Stream im Terminal-Stil
 - Fehler-Highlighting
@@ -262,14 +297,17 @@
 ---
 
 ### 4.3 Compliance-Ampel (Widget) ⭐⭐
+
 **Beschreibung:** Schneller Status-Überblick als Ampel-Widget
 
 **Logik:**
+
 - 🟢 **Grün:** Daten < 1 Jahr alt, Confidence > 70%, Geprüft
 - 🟡 **Gelb:** Daten 1-2 Jahre alt ODER Confidence 40-70% ODER Offen
 - 🔴 **Rot:** Daten > 2 Jahre alt ODER Confidence < 40% ODER Beanstandet
 
 **Darstellung:**
+
 - Große Ampel auf Dashboard (Prozent-Anzeige pro Farbe)
 - Mini-Ampel in Provider-Tabelle (Spalte)
 - Drill-Down: Klick auf Rot → Liste aller roten Provider
@@ -282,15 +320,18 @@
 ## 🔔 5. Benachrichtigungen & Automation
 
 ### 5.1 Alert-System ⭐⭐
+
 **Beschreibung:** Benachrichtigungen bei kritischen Ereignissen
 
 **Trigger:**
+
 - Provider-Daten älter als 2 Jahre
 - Scraping fehlgeschlagen > 3x hintereinander
 - Neue Beanstandung
 - Batch-Job abgeschlossen
 
 **Kanäle:**
+
 - In-App-Notifications (Bell-Icon im Header)
 - Email-Benachrichtigungen
 - Optional: Slack/Teams-Integration
@@ -301,9 +342,11 @@
 ---
 
 ### 5.2 Scheduled Jobs ⭐
+
 **Beschreibung:** Automatisches Scraping nach Zeitplan
 
 **Features:**
+
 - Cron-Job-Editor (UI für Cron-Expression)
 - Z.B. "Alle Provider mit Priorität > 80 jeden Montag um 6 Uhr scrapen"
 - Job-History: Wann lief welcher Job?
@@ -317,9 +360,11 @@
 ## 🛠️ 6. Datenqualität & Validierung
 
 ### 6.1 Validierungs-Dashboard ⭐⭐
+
 **Beschreibung:** Automatische Plausibilitätsprüfungen
 
 **Checks:**
+
 - Summe EE + Fossil + Nuklear = 100%? (Warnung bei Abweichung)
 - CO₂-Wert plausibel für gegebenen Mix?
 - Nuklear-Anteil > 0 nach 2023? (Warnung, da AKW-Ausstieg)
@@ -327,6 +372,7 @@
 - Duplikate (gleicher Name, ähnliche Adresse)
 
 **Darstellung:**
+
 - Warnings-Liste mit Schweregrad (Error / Warning / Info)
 - Bulk-Fix-Aktionen ("Alle Summen auf 100% normalisieren")
 - Export als Excel für manuelle Nachbearbeitung
@@ -337,14 +383,17 @@
 ---
 
 ### 6.2 Duplikate-Erkennung ⭐
+
 **Beschreibung:** Automatische Erkennung doppelter Provider
 
 **Algorithmus:**
+
 - Fuzzy-Matching von Namen (Levenshtein-Distanz)
 - Gleiche PLZ + ähnlicher Name
 - Gleiche URL
 
 **Features:**
+
 - "Mögliche Duplikate"-Liste
 - Vergleichs-Ansicht (Side-by-Side)
 - Merge-Funktion (Provider zusammenführen, Audit-Trail behalten)
@@ -357,9 +406,11 @@
 ## 🎨 7. UI/UX-Verbesserungen
 
 ### 7.1 Dark Mode ⭐
+
 **Beschreibung:** Dunkles Farbschema für Nachtarbeit
 
 **Implementierung:**
+
 - Toggle im Header (Mond/Sonne-Icon)
 - Speichern in LocalStorage
 - Tailwind Dark-Mode-Classes
@@ -370,9 +421,11 @@
 ---
 
 ### 7.2 Keyboard Shortcuts ⭐
+
 **Beschreibung:** Power-User-Shortcuts
 
 **Shortcuts:**
+
 - `Strg+K`: Globale Suche öffnen
 - `Strg+N`: Neuer Provider
 - `Strg+B`: Batch-Scraping starten
@@ -386,9 +439,11 @@
 ---
 
 ### 7.3 Responsive Mobile-Optimierung ⭐⭐
+
 **Beschreibung:** Mobile-freundliche Ansicht für Tablets/Phones
 
 **Anpassungen:**
+
 - Tabelle als Karten-Layout auf Mobile
 - Sidebar versteckt auf Mobile (Hamburger-Menü)
 - Touch-optimierte Buttons
@@ -400,9 +455,11 @@
 ---
 
 ### 7.4 Tabellen-Customization ⭐⭐
+
 **Beschreibung:** User kann Spalten selbst konfigurieren
 
 **Features:**
+
 - Spalten ein-/ausblenden
 - Spalten-Reihenfolge ändern (Drag & Drop)
 - Spaltenbreite anpassen
@@ -416,6 +473,7 @@
 ## 🏆 Empfohlene Priorisierung
 
 ### Phase 1: Quick Wins (Niedrige Komplexität, Hoher Nutzen)
+
 1. ✅ **Compliance-Ampel** (Widget)
 2. ✅ **Bulk-Edit-Modus** (Multi-Select + Batch-Actions)
 3. ✅ **Validierungs-Dashboard** (Plausibilitätsprüfungen)
@@ -428,6 +486,7 @@
 ---
 
 ### Phase 2: Kern-Features (Mittlere Komplexität, Sehr hoher Nutzen)
+
 1. ✅ **Trend-Analyse Dashboard** (Charts)
 2. ✅ **Strommix-Verteilungs-Charts**
 3. ✅ **CSV/Excel-Import**
@@ -440,6 +499,7 @@
 ---
 
 ### Phase 3: Premium-Features (Hohe Komplexität, Mittlerer-Hoher Nutzen)
+
 1. ✅ **Geo-Visualisierung** (Karte)
 2. ✅ **Review-Workflow** (Rollen + Genehmigung)
 3. ✅ **Scheduled Jobs** (Cron)
@@ -466,6 +526,7 @@
 ## 📋 Zusammenfassung
 
 **Insgesamt 25+ Verbesserungsvorschläge** in 7 Kategorien:
+
 - 📊 5 Reports & Analytics
 - 🔍 2 Erweiterte Suchfunktionen
 - ✏️ 5 Eingabemasken & Workflows
