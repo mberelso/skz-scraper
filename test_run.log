@@ -1,0 +1,22 @@
+[dotenv@17.2.3] injecting env (8) from .env.local -- tip: ­ƒôí add observability to secrets: https://dotenvx.com/ops
+[dotenv@17.2.3] injecting env (0) from .env.local -- tip: Ô£à audit secrets and track compliance: https://dotenvx.com/ops
+Testing scraper for: Stadtwerke Leipzig
+
+--- Starting Job for: Stadtwerke Leipzig ---
+Searching for: Stadtwerke Leipzig Stromkennzeichnung 2024 PDF
+Searching Google for: "Stadtwerke Leipzig Stromkennzeichnung 2024 PDF"
+SEARCH SELECTORS FAILED. Check for bot detection.
+Search failed: Error: No Google results found - suspect bot detection
+    at ScraperEngine.searchAndScrape (C:\Users\marti\Documents\CODE\SKZ-Scraper\src\lib\scraper\engine.ts:118:23)
+    at async runScrapeJob (C:\Users\marti\Documents\CODE\SKZ-Scraper\src\lib\scraper\runner.ts:29:28)
+    at async testSingle (C:\Users\marti\Documents\CODE\SKZ-Scraper\scripts\test-single-provider.ts:24:9)
+No result found.
+Job failed: Error: No search results found on Google
+    at runScrapeJob (C:\Users\marti\Documents\CODE\SKZ-Scraper\src\lib\scraper\runner.ts:85:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testSingle (C:\Users\marti\Documents\CODE\SKZ-Scraper\scripts\test-single-provider.ts:24:9)
+Scrape result: Nothing found
+Test run failed: Error: No search results found on Google
+    at runScrapeJob (C:\Users\marti\Documents\CODE\SKZ-Scraper\src\lib\scraper\runner.ts:85:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testSingle (C:\Users\marti\Documents\CODE\SKZ-Scraper\scripts\test-single-provider.ts:24:9)

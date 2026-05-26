@@ -1,0 +1,967 @@
+Provider ID,Provider Name,City,ZIP,File Number,Priority,Active,Year,Renewable %,Fossil %,Nuclear %,CO2 (g/kWh),Confidence %,Extraction Method,Latest Job Status,Document Count
+111,"Bürgerwerke eG","Heidelberg",69124,,100,Yes,2025,50.90,50.90,50.90,0.00,60,regex,success,1
+141,"E.ON Energie Deutschland GmbH","München",80634,,100,Yes,,,,,,,,partial,0
+142,"E.ON Energy Solutions GmbH","Essen",45131,,100,Yes,,,,,,,,failed,0
+152,"EBERwerk GmbH & Co. KG","Grafing",85567,,100,Yes,2025,100.00,0.00,0.00,0.00,35,regex,success,2
+190,"EnBW Ostwürttemberg DonauRies AG","Ellwangen",73479,,100,Yes,2024,35.00,0.35,0.35,0.00,60,regex,success,1
+249,"Energiewerke Isernhagen GmbH","Isernhagen",30916,,100,Yes,,,,,,,,success,0
+250,"Energiewerke Waldbröl GmbH","Waldbröl",51545,,100,Yes,2025,50.90,50.90,50.90,0.00,60,regex,success,1
+299,"EWZ Energiewerke Zeulenroda GmbH","Zeulenroda",07937,,100,Yes,,,,,,,,failed,0
+346,"Gemeinderwerke Bobenheim-Roxheim GmbH","Bobenheim-Roxheim",67240,,100,Yes,2025,100.00,0.00,0.00,0.00,35,regex,success,2
+348,"Gemeindewerk Sörup GmbH","Sörup",24966,,100,Yes,,,,,,,,partial,2
+349,"Gemeindewerke Ammerbuch GmbH","Ammerbuch",72119,,100,Yes,2025,6.20,6.20,6.20,0.00,60,regex,success,1
+350,"Gemeindewerke Bad Sassendorf GmbH & Co. KG","Bad Sassendorf",59505,,100,Yes,,,,,,,,partial,2
+351,"Gemeindewerke Baiersbronn","Baiersbronn",72270,,100,Yes,2019,6.20,6.20,6.20,0.00,60,regex,success,1
+352,"Gemeindewerke Budenheim AöR","Budenheim",55257,,100,Yes,2022,10.29,10.29,10.29,0.00,60,regex,success,1
+353,"Gemeindewerke Everswinkel GmbH","Everswinkel",48351,,100,Yes,2025,100.00,0.00,0.00,0.00,35,regex,success,2
+354,"Gemeindewerke Großkotzenbrug","Großkotzenburg",63538,,100,Yes,,,,,,,,partial,1
+355,"Gemeindewerke Herxheim","Herxheim",76863,,100,Yes,,,,,,,,partial,1
+356,"Gemeindewerke Hohenwestedt GmbH","Hohenwestedt",24594,,100,Yes,,,,,,,,partial,1
+357,"Gemeindewerke Hünxe GmbH","Hünxe",46569,,100,Yes,2025,100.00,0.00,100.00,0.00,60,regex,success,1
+358,"Gemeindewerke Langenpreising GmbH & Co. KG","Wartenberg",85456,,100,Yes,,,,,,,,partial,1
+359,"Gemeindewerke Malente GmbH","Bad Malente",23714,,100,Yes,,,,,,,,partial,1
+360,"Gemeindewerke Murnau – Eigenbetrieb der Markt Murnau –","Murnau am Staffelsee",82418,,100,Yes,,,,,,,,partial,1
+361,"Gemeindewerke Oberhaching GmbH","Oberhaching",82041,,100,Yes,2025,100.00,0.00,0.00,0.00,35,regex,success,1
+362,"Gemeindewerke Peiner Land GmbH & Co. KG","Ilsede",31241,,100,Yes,,,,,,,,failed,0
+363,"Gemeindewerke Ruppichteroth GmbH","Ruppichteroth",53809,,100,Yes,,,,,,,,partial,2
+364,"Gemeindewerke Schutterwald","Schutterwald",77746,,100,Yes,,,,,,,,partial,1
+365,"Gemeindewerke Schwarzenbruck GmbH","Feucht",90537,,100,Yes,2024,1.30,1.30,1.30,0.00,60,regex,success,1
+366,"Gemeindewerke St. Michel-Energie GmbH","St. Michaelisdonn",25693,,100,Yes,,,,,,,,failed,0
+367,"Gemeindewerke Stockelsdorf GmbH","Stockelsdorf",23617,,100,Yes,,,,,,,,partial,2
+368,"Gemeindewerke Taufkirchen (Vils) GmbH & Co. KG","Taufkirchen (Vils)",84416,,100,Yes,,,,,,,,partial,2
+369,"Gemeindewerke Umkirch GmbH","Umkirch",79224,,100,Yes,2022,38.20,7.00,0.00,0.00,45,regex,success,1
+370,"Gemeindewerke Wedemark GmbH","Wedemark",30900,,100,Yes,,,,,,,,partial,1
+371,"Gemeindewerke Wendelstein Gasversorgung GmbH","Wendelstein",90530,,100,Yes,,,,,,,,partial,2
+372,"Gemeindewerke Wendelstein Kommunalunternehmen","Wendelstein",90530,,100,Yes,2024,0.20,0.20,0.20,0.00,60,regex,success,1
+415,"Hamburger Energiewerke GmbH","Hamburg",20539,,100,Yes,,,,,,,,partial,1
+420,"Heimatenergiewerke GmbH","Schrobenhausen",86529,,100,Yes,,,,,,,,partial,1
+462,"KEW Karwendel Energie und Wasser GmbH","Mittenwald",82481,,100,Yes,2021,23.00,23.00,23.00,0.00,60,regex,running,1
+536,"Naturwerke GmbH","Düsseldorf",40212,,100,Yes,2023,100.00,100.00,100.00,0.00,80,regex,success,1
+618,"Renergiewerke Buttenwiesen GmbH","Buttenwiesen",86647,,100,Yes,,,,,,,,success,0
+632,"RWE Renewables GmbH","Essen",45141,,100,Yes,,,,,,,,success,0
+925,"Vattenfall Europe Sales GmbH","Hamburg",20457,,100,Yes,,,,,,,,partial,1
+926,"Vattenfall Real Estate Energy Sales GmbH","Berlin",10829,,100,Yes,,,,,,,,partial,1
+137,"DREWAG Stadtwerke Dresden GmbH","Dresden",01069,,90,Yes,2024,0.00,100.00,100.00,0.00,35,regex,success,1
+297,"EWR AG","Worms",67545,,90,Yes,2024,22.80,22.80,22.80,212.00,80,regex,success,1
+580,"Pfalzwerke AG","Ludwigshafen",67059,,90,Yes,2025,100.00,0.00,0.00,0.00,35,regex,success,1
+622,"RheinEnergie Express GmbH","Köln",50823,,90,Yes,,,,,,,,partial,1
+711,"Stadtwerke Düsseldorf AG","Düsseldorf",40233,,90,Yes,,,,,,,,partial,1
+723,"Stadtwerke Frankfurt (Oder) GmbH","Frankfurt (Oder)",15230,,90,Yes,,,,,,,,partial,1
+846,"Stadtwerke Stuttgart Vertriebsgesellschaft mbH","Stuttgart",70174,,90,Yes,2024,25.00,0.00,0.00,0.00,25,regex,success,1
+888,"SWB Stadtwerke Balingen","Balingen",72336,,90,Yes,2024,100.00,49.90,0.00,385.00,65,regex,success,1
+889,"swb Vertrieb Bremen GmbH","Bremen",28215,,90,Yes,2024,100.00,49.90,0.00,385.00,65,regex,success,1
+890,"swb Vertrieb Bremerhaven GmbH & Co. KG","Bremerhaven",27568,,90,Yes,,,,,,,,success,0
+911,"Thüga Energie GmbH","München",80335,,90,Yes,,,,,,,,success,0
+982,"Stadtwerke Leipzig","Leipzig",,,90,Yes,2023,100.00,0.00,0.00,0.00,35,regex,success,1
+675,"Stadtwerke Augsburg Energie GmbH","Augsburg",86152,,80,Yes,,,,,,,,failed,0
+692,"Stadtwerke Bielefeld GmbH","Bielefeld",33619,,80,Yes,,,,,,,,never_run,0
+763,"Stadtwerke Kiel AG","Kiel",24113,,80,Yes,,,,,,,,never_run,0
+793,"Stadtwerke Munster-Bispingen GmbH","Munster",29633,,80,Yes,,,,,,,,never_run,0
+830,"Stadtwerke Rostock AG","Rostock",18069,,80,Yes,,,,,,,,never_run,0
+733,"Stadtwerke Göttingen AG","Göttingen",37081,,70,Yes,,,,,,,,never_run,0
+747,"Stadtwerke Heidelberg Energie GmbH","Heidelberg",69115,,70,Yes,,,,,,,,never_run,0
+764,"Stadtwerke Konstanz GmbH","Konstanz",78467,,70,Yes,,,,,,,,never_run,0
+808,"Stadtwerke Oldenburg in Holstein GmbH","Oldenburg in Holstein",23758,,70,Yes,,,,,,,,never_run,0
+895,"SWP Stadtwerke Pforzheim Vertriebs GmbH","Pforzheim",75179,,70,Yes,,,,,,,,never_run,0
+2,"E-Wie-Einfach","",,,50,Yes,2024,50.90,0.00,0.00,0.00,60,regex,success,4
+4,"AMB R. Adolf - C. Kämpf Mineralöle, Schmierstoffe","",,,50,Yes,,,,,,,,partial,3
+5,"und Transport GmbH","",,,50,Yes,,,,,,,,success,0
+6,"Liste der angezeigten Energielieferanten nach § 5 EnWG","",,,50,Yes,,,,,,,,success,0
+8,"Bischoff, Vliex & Schöngen, Pfennings","",,,50,Yes,2024,15.20,15.20,15.20,0.00,60,regex,success,1
+9,"GmbH & Co. KG","",,,50,Yes,2024,0.00,5.00,0.90,0.00,35,regex,success,1
+10,"EVU Weilerbach, c/o Verbandsgemeindeverwaltung, Eigenbetrieb nach der","",,,50,No,,,,,,,,failed,1
+11,"Anstalts- und Eigenbetriebsverordnung Rheinland-Pfalz","",,,50,No,,,,,,,,failed,2
+12,"Gesellschaft zur Energieversorgung der kirchlichen und sozialen Einrichtungen","",,,50,Yes,,,,,,,,success,0
+13,"GmbH","",,,50,Yes,,,,,,,,success,0
+14,"sonnen eServices Deutschland GmbH","Wildpoldsried",87499,,50,Yes,2024,16.00,0.00,0.00,0.00,25,regex,success,1
+15,"im Innovationspark Allgäu","",,,50,Yes,2024,100.00,0.00,0.00,0.00,35,regex,success,1
+16,"Am Riedbach 1","",,,50,Yes,,,,,,,,failed,0
+17,"sonnen eServices GmbH","Wildpoldsried",87499,,50,Yes,,,,,,,,success,0
+20,"Firma","Ort",PLZ,,50,Yes,2025,14.50,0.90,0.00,0.00,45,regex,success,1
+21,"17er Oberlandenergie GmbH","Murnau",82418,,50,Yes,,,,,,,,success,1
+22,"1KOMMA5° Services GmbH","Hamburg",20354,,50,Yes,,,,,,,,success,1
+23,"24/7 Energie & Kommunikation GmbH","Heidenheim",89522,,50,Yes,,,,,,,,success,0
+24,"24/7 Strom GmbH","Berlin",13357,,50,Yes,,,,,,,,success,0
+25,"A&A Stromallianz Solutions GmbH","Berlin",10119,,50,Yes,,,,,,,,success,1
+26,"acon Energie Management GmbH","Berlin",13465,,50,Yes,,,,,,,,partial,2
+27,"Adolf Roth GmbH & Co. KG","Gießen",35398,,50,Yes,,,,,,,,success,0
+28,"AggerEnergie GmbH","Gummersbach",51643,,50,Yes,2025,17.30,50.90,7.00,0.00,60,regex,success,1
+29,"Ahrtal-Werke GmbH","Bad Neuenahr-Ahrweiler",53474,,50,Yes,2022,0.00,41.10,41.10,0.00,35,regex,success,1
+30,"ALBSTADTWERKE GmbH","Albstadt",72461,,50,Yes,2025,24.00,0.00,0.00,0.00,25,regex,success,1
+31,"Albwerk GmbH & Co. KG","Geislingen an der Steige",73312,,50,Yes,2024,0.00,22.40,0.00,0.00,20,regex,success,1
+32,"Alpiq Energie Deutschland GmbH","Berlin",10117,,50,Yes,,,,,,,,success,0
+35,"Ammer Loisach Energie GmbH","Oberau",82496,,50,Yes,2024,100.00,28.00,28.00,389.00,80,regex,success,1
+36,"Anno Plan GmbH","Wesseling",50389,,50,Yes,,,,,,,,success,0
+37,"Aplus Energy GmbH","Berlin",10405,,50,Yes,,,,,,,,success,0
+38,"Aras Energy GmbH","Berlin",10707,,50,Yes,,,,,,,,success,1
+39,"Arndt Solarenergie UG","Schmalkalden",98574,,50,Yes,,,,,,,,success,1
+40,"Audax Energie GmbH","Berlin",12489,,50,Yes,,,,,,,,success,0
+41,"August Riemeier Mineralöle und Transporte GmbH & Co. KG","Bad Salzuflen",32105,,50,Yes,,,,,,,,partial,1
+42,"August Schmäling","Gütersloh",33330,,50,Yes,,,,,,,,success,0
+43,"Avalon Trust GmbH","Brunnthal",85649,,50,Yes,,,,,,,,success,1
+44,"AVIA Steingass Mineralöle GmbH","Leverkusen",51375,,50,Yes,2025,31.89,17.19,0.00,238.45,65,regex,success,1
+45,"aWATTar Deutschland GmbH","München",80637,,50,Yes,,,,,,,,success,0
+46,"B.R.A.S.S.T. Bau GmbH","Berlin",13088,,50,Yes,,,,,,,,partial,2
+47,"Badenova Energie GmbH","Freiburg",79108,,50,Yes,,,,,,,,success,1
+48,"BarMalGas GmbH","Ludwigsfelde",14974,,50,Yes,,,,,,,,success,0
+49,"Bayernwerk Regio Energie GmbH","Regensburg",93049,,50,Yes,,,,,,,,failed,0
+50,"BayWA r.e. Bürgerstrom GmbH","München",81925,,50,Yes,2025,0.00,40.00,0.00,0.00,35,regex,success,1
+51,"BayWa r.e. Energy Trading GmbH","Leipzig",04109,,50,Yes,,,,,,,,success,0
+52,"BCS Energy GmbH","Machern",04827,,50,Yes,,,,,,,,success,0
+53,"Becker Energie GbR","Paderborn",33106,,50,Yes,,,,,,,,success,0
+54,"Beer Energien GmbH & Co. KG","Nürnberg",90475,,50,Yes,,,,,,,,success,1
+55,"BEG-Energietechnik GmbH","Lahr",77933,,50,Yes,,,,,,,,success,0
+56,"BeGreen.Energy GmbH","Mönchengladbach",41061,,50,Yes,,,,,,,,success,0
+57,"Behrenswerth Energieservice GmbH","Hilter",49176,,50,Yes,,,,,,,,partial,1
+58,"BELKAW GmbH","Bergisch Gladbach",51469,,50,Yes,2022,100.00,0.00,0.00,0.00,35,regex,success,1
+59,"Benergie-Service GmbH","Bremen",28195,,50,Yes,,,,,,,,success,0
+60,"Berg Energie GmbH","Worms",67551,,50,Yes,,,,,,,,partial,1
+61,"Berliner Energieagentur GmbH","Berlin",10623,,50,Yes,,,,,,,,partial,1
+62,"Berliner Stadtwerke EnergiePartner GmbH","Berlin",10179,,50,Yes,2025,100.00,0.00,0.00,0.00,35,regex,success,1
+63,"Berliner Stadtwerke GmbH","Berlin",10179,,50,Yes,,,,,,,,partial,1
+64,"Berliner Stadtwerke KommunalPartner GmbH","Berlin",10179,,50,Yes,2025,100.00,0.00,0.00,0.00,35,regex,success,1
+65,"Bernburger Mineralölvertrieb Lühmann GmbH & Co. KG","Staßfurt",39418,,50,Yes,2025,12.90,12.90,12.90,350.00,80,regex,success,1
+66,"BES - Badische Energie-Servicegesellschaft mbH","Karlsruhe",76185,,50,Yes,,,,,,,,success,0
+67,"BEW Berliner Energie und Wärme GmbH","Berlin",10829,,50,Yes,,,,,,,,partial,1
+68,"BEW Solutions GmbH","Berlin",10829,,50,Yes,,,,,,,,success,1
+69,"BH Energy GmbH","Vechta",49377,,50,Yes,,,,,,,,partial,1
+70,"BHM Berliner Energiehandel GmbH","Berlin",13353,,50,Yes,,,,,,,,partial,1
+71,"Biermann Verwaltungs GmbH","Unna",59423,,50,Yes,,,,,,,,success,0
+72,"BIGGE ENERGIE GmbH & Co. KG","Attendorn",57439,,50,Yes,,,,,,,,partial,1
+73,"Bioenergie Am Kiecker GmbH & Co. KG","Nordwestuckermark",17291,,50,Yes,2024,50.90,0.50,81.60,0.00,60,regex,success,1
+74,"Bioenergie am Landsberg GmbH & Co. KG","Aukrug",24613,,50,Yes,,,,,,,,partial,1
+75,"Bioenergie Fürstenhagen GmbH & Co. KG","Feldberger Seenlandschaft",17258,,50,Yes,2024,49.10,0.00,0.00,0.00,25,regex,success,1
+76,"Bioenergie Haar GmbH & Co. KG","Darchau",19273,,50,Yes,,,,,,,,success,0
+77,"Bioenergie Rondeshagen GmbH & Co. KG","Rondeshagen",23919,,50,Yes,,,,,,,,failed,0
+78,"Bioenergie Vehlow GmbH & Co. KG","Gumtow OT Vehlow",16866,,50,Yes,,,,,,,,success,0
+79,"Bioenergie Witt GmbH & Co. KG","Stangheck",24395,,50,Yes,,,,,,,,partial,1
+80,"Bioenergy-Nord GmbH & Co. KG","Schleswig",24837,,50,Yes,,,,,,,,partial,1
+81,"Biogas Alte Au GmbH & Co. KG","Bramstedtlund",25926,,50,Yes,,,,,,,,success,0
+82,"Biogas Andresen GmbH & Co. KG","Sprakenbüll",25917,,50,Yes,2025,100.00,0.00,100.00,0.00,60,regex,success,1
+83,"Biogas Clausen-Hansen GmbH & Co. KG","Schwabstedt",25876,,50,Yes,,,,,,,,success,0
+84,"Biogas Grieben GmbH & Co. KG","Tangerhütte OT Grieben",39517,,50,Yes,,,,,,,,partial,1
+85,"Biogas Linnau GmbH & Co. KG","Lindewitt OT Linnau",24969,,50,Yes,,,,,,,,success,0
+86,"Biogas Nordwarf GmbH & Co. KG","Emmelsbüll-Horsbüll",25924,,50,Yes,,,,,,,,success,0
+87,"Biogasanlage an der Vogelzunge GmbH & Co KG","Weddelbrook",24576,,50,Yes,,,,,,,,success,1
+88,"Biokraftgesellschaft Moers/Dinslaken mbH","Moers",47441,,50,Yes,2024,0.10,0.10,0.10,0.00,60,regex,success,1
+89,"Biomethan Osterby GmbH & Co. KG","Osterby",24994,,50,Yes,,,,,,,,failed,0
+92,"BK Badische-Kraftwerk GmbH & Co. KG","Baden-Baden",76532,,50,Yes,,,,,,,,partial,1
+93,"bmp greengas GmbH","München",80339,,50,Yes,,,,,,,,partial,1
+94,"Boie GmbH & Co. KG","Lübeck",23552,,50,Yes,,,,,,,,success,0
+95,"Bonnhoff Buchenhof Bioenergie GmbH & Co. KG","Klein Offenseth-Sparrieshoop",25365,,50,Yes,,,,,,,,partial,1
+96,"bpure GmbH","Flensburg",24937,,50,Yes,2025,100.00,0.00,0.00,0.00,35,regex,success,1
+97,"BRASST Energiedienstleistungsgesellschaft mbH","Schwedt",16303,,50,Yes,,,,,,,,failed,0
+98,"Bremer Energiehaus- Genossenschaft eG","Bremen",28195,,50,Yes,,,,,,,,partial,1
+99,"Brennstoffhandel Habermann GmbH & Co. KG","Nidderau - Heldenbergen",61130,,50,Yes,,,,,,,,partial,1
+100,"Brennstoffhandel Maschek, Inh. Annette Schleyer","Schönstedt",99947,,50,Yes,,,,,,,,partial,1
+101,"Brennstoffhandel Petersohn Inh. Jochen Scholz e.K.","Leipzig",04349,,50,Yes,,,,,,,,partial,1
+102,"Brennstoffhandel Schmidt GmbH","Ducherow",17398,,50,Yes,,,,,,,,success,0
+103,"Brillant Energie GmbH","Leipzig",04277,,50,Yes,,,,,,,,partial,1
+104,"BRS Beteiligungsgesellschaft Bonn/Rhein-Sieg mbH","Siegburg",53721,,50,Yes,,,,,,,,failed,0
+105,"BSE Strom und Erdgas GmbH","Visselhoevede",27374,,50,Yes,,,,,,,,partial,1
+106,"BTB - Energieversorgungsgesellschaft mbH","Berlin",10787,,50,Yes,,,,,,,,never_run,0
+107,"BTB -Blockheizkraftwerks,Träger- und Betreibergesellschaft mbH Berlin","Berlin",10589,,50,Yes,,,,,,,,never_run,0
+108,"Burgenland Energie GmbH","Zeitz",06712,,50,Yes,,,,,,,,never_run,0
+109,"BürgerEnergie Nord eG","Norderstedt",22850,,50,Yes,,,,,,,,never_run,0
+110,"Bürger-Energie-Genossenschaft-Freisinger Land e. G.","Freising",85356,,50,Yes,,,,,,,,never_run,0
+112,"Bürgerwindpark Ockholm-Langehorn GmbH & Co. KG","Langenhorn",252842,,50,Yes,,,,,,,,never_run,0
+113,"C4 Energie Vertriebs GmbH & Co. KG","Hamburg",20095,,50,Yes,,,,,,,,never_run,0
+114,"Campus Ludwigslust GmbH & Co.KG","Schwerin",19055,,50,Yes,,,,,,,,never_run,0
+115,"Carl Hass Energie GmbH","Hamburg",22607,,50,Yes,,,,,,,,never_run,0
+116,"CB Energie GmbH","Leer",26789,,50,Yes,,,,,,,,never_run,0
+117,"CFP Flex Power GmbH","Hamburg",22769,,50,Yes,,,,,,,,never_run,0
+118,"Change! Energy GmbH","Hannover",30163,,50,Yes,,,,,,,,never_run,0
+119,"Cismarer Naturstrom GmbH & Co. KG","Manhagen",23738,,50,Yes,2022,100.00,32.50,32.50,0.00,60,regex,success,1
+120,"CoCloud GmbH","Münster",48159,,50,Yes,,,,,,,,never_run,0
+121,"COHAUS München GmbH","München",81371,,50,Yes,,,,,,,,never_run,0
+122,"Consulta AG","Viechtach",94234,,50,Yes,,,,,,,,never_run,0
+123,"Contigo Energie AG","Bochum",44787,,50,Yes,,,,,,,,never_run,0
+124,"Coppen GmbH","Bad Dürkheim",67098,,50,Yes,,,,,,,,never_run,0
+125,"CrämerSchmäling GmbH","Lippstadt",59557,,50,Yes,,,,,,,,never_run,0
+126,"Current Energy GmbH","Berlin",10115,,50,Yes,,,,,,,,never_run,0
+127,"Currenta GmbH & Co. OHG","Leverkusen",51373,,50,Yes,,,,,,,,partial,1
+128,"Danpower Energie Service GmbH","Potsdam",14467,,50,Yes,,,,,,,,never_run,0
+129,"DB Energie GmbH","Frankfurt a. M.",60326,,50,Yes,,,,,,,,success,0
+130,"DEC Deutsches EnergieContor GmbH & Co. KG","Celle",29227,,50,Yes,,,,,,,,never_run,0
+131,"DEH Deutsche Energiehandels GmbH","Singen",78244,,50,Yes,,,,,,,,never_run,0
+132,"Dessauer Versorgungs- und Verkehrsgesellschaft mbH","Dessau-Roßlau",06844,,50,Yes,,,,,,,,never_run,0
+133,"Deutsche Rhein Main Energie GmbH","Ludwigshafen am Rhein",67059,,50,Yes,,,,,,,,never_run,0
+134,"die energievorsorger GmbH","Hagen",49170,,50,Yes,,,,,,,,never_run,0
+135,"DIG Deutsche Industrie Gas GmbH","Ludwigshafen",67065,,50,Yes,,,,,,,,never_run,0
+136,"Digital Power Germany GmbH","Stadtlohn",48703,,50,Yes,,,,,,,,never_run,0
+138,"Dritte WRB GmbH & Co. KG","Bohmte",49163,,50,Yes,,,,,,,,never_run,0
+139,"E WIE EINFACH GmbH","Köln",50677,,50,Yes,,,,,,,,never_run,0
+140,"E.MAGIS energy GmbH","Weimar",99423,,50,Yes,,,,,,,,never_run,0
+143,"e.optimum AG","Offenburg",77654,,50,Yes,,,,,,,,never_run,0
+144,"e.optimum home GmbH","Offenburg",77654,,50,Yes,,,,,,,,never_run,0
+145,"E.T. GmbH & Co. KG","Tutzing",82327,,50,Yes,,,,,,,,never_run,0
+146,"E.VITA GmbH","Stuttgart",70567,,50,Yes,,,,,,,,never_run,0
+147,"e.wa riss GmbH & Co. KG","Biberach a. d. Riß",88400,,50,Yes,,,,,,,,never_run,0
+148,"e:veen Energie eG","Hannover",30149,,50,Yes,,,,,,,,never_run,0
+149,"EAM Energie GmbH","Kassel",34131,,50,Yes,,,,,,,,never_run,0
+150,"easyOptimize GmbH","Essen",45141,,50,Yes,,,,,,,,never_run,0
+151,"Ebergy Ludwigsluste GmbH & Co. KG, c/o die.bau.mv GmbH","Schwerin",19055,,50,No,,,,,,,,never_run,0
+153,"Eckhardt GmbH","Lützelbach",64750,,50,Yes,,,,,,,,never_run,0
+154,"ECN Energie GmbH","Wiesmoor",26639,,50,Yes,,,,,,,,never_run,0
+155,"ECO2GROW GmbH","Bonn",53179,,50,Yes,,,,,,,,never_run,0
+156,"EcoPowerPlus GmbH","Berlin",10719,,50,Yes,,,,,,,,never_run,0
+157,"EDi Energie-Direkt Hohenlohe GmbH","Öhringen",74613,,50,Yes,,,,,,,,never_run,0
+158,"eforna e.K.","Osnabrück",49086,,50,Yes,,,,,,,,never_run,0
+159,"eg factory GmbH","Chemnitz",09111,,50,Yes,,,,,,,,never_run,0
+160,"EG Tacherting-Feichten eG","Tacherting",83342,,50,Yes,,,,,,,,never_run,0
+161,"EGC Energie- und Gebäudetechnik Control GmbH & Co. KG","Düsseldorf",40547,,50,Yes,,,,,,,,never_run,0
+162,"Eggers Energy GmbH","Husum",25813,,50,Yes,,,,,,,,never_run,0
+163,"EGR Energiegesellschaft Riesa GmbH","Riesa",01587,,50,Yes,,,,,,,,never_run,0
+164,"EGT Energiehandel GmbH","Triberg",78098,,50,Yes,,,,,,,,never_run,0
+165,"EGT Energievertrieb GmbH","Triberg",78098,,50,Yes,,,,,,,,never_run,0
+166,"Ehinger Energie Stromvertrieb GmbH & Co. Kg","Ehingen",89584,,50,Yes,,,,,,,,never_run,0
+167,"Eichsfelder Wirtschaftsbetriebe GmbH","Duderstadt",37115,,50,Yes,,,,,,,,never_run,0
+168,"Eifelville GmbH","Jünkerath",54584,,50,Yes,,,,,,,,never_run,0
+169,"EINHORN-ENERGIE GmbH & Co. KG","Giengen",89537,,50,Yes,,,,,,,,never_run,0
+170,"EINHUNDERT Energie GmbH","Köln",50825,,50,Yes,,,,,,,,never_run,0
+171,"eins energie in sachsen GmbH & Co. KG","Chemnitz",09111,,50,Yes,,,,,,,,never_run,0
+172,"Eisenacher Versorgungs-Betriebe GmbH","Eisenach",99817,,50,Yes,,,,,,,,never_run,0
+173,"ElectroFleet Energy GmbH","Osnabrück",49090,,50,Yes,,,,,,,,never_run,0
+174,"Elektrizitätsgenossenschaft Dirmstein eG","Frankenthal (Pfalz)",67227,,50,Yes,,,,,,,,never_run,0
+175,"Elektrizitätsgenossenschaft für Wittmund eG","Wittmund",26409,,50,Yes,,,,,,,,never_run,0
+176,"Elektrizitätsversorgung Berlin ElVeBe GmbH","Berlin",10707,,50,Yes,,,,,,,,never_run,0
+177,"Elektrizitätsversorgung Werther GmbH","Werther",33824,,50,Yes,,,,,,,,never_run,0
+178,"Elektrizitätswerk Goldbach-Hösbach GmbH & Co. KG","Goldbach",63773,,50,Yes,,,,,,,,never_run,0
+179,"Elektrizitätswerk Hindelang eG","Bad Hindelang",87541,,50,Yes,,,,,,,,never_run,0
+180,"Elektrizitätswerk Mittelbaden AG & Co. KG","Lahr",77933,,50,Yes,,,,,,,,never_run,0
+181,"Elektrizitätswerk Müller GmbH & Co. KG","Tauberrettersheim",97285,,50,Yes,,,,,,,,never_run,0
+182,"Elektrizitätswerk Tegernsee Vertriebs- und Service-KG","Tegernsee",83684,,50,Yes,,,,,,,,never_run,0
+183,"Elektrizitätswerke Düsseldorf AG","Leverkusen",51371,,50,Yes,,,,,,,,never_run,0
+184,"Elektrizitätswerke Reutte GmbH & Co.KG","Füssen",87629,,50,Yes,,,,,,,,never_run,0
+185,"Elektrizitätswerke Schönau Energie GmbH","Schönau",79677,,50,Yes,,,,,,,,never_run,0
+186,"Elektrizitätswerke Schönau Vertriebs GmbH","Schönau",79677,,50,Yes,,,,,,,,never_run,0
+187,"EMB Energie Mark Brandenburg","Michendorf",14552,,50,Yes,,,,,,,,never_run,0
+188,"EMIXO GmbH","Ansbach",91522,,50,Yes,,,,,,,,never_run,0
+189,"Emscher Lippe Energie GmbH","Gelsenkirchen",45879,,50,Yes,,,,,,,,never_run,0
+191,"enercity AG","Hannover",30169,,50,Yes,,,,,,,,never_run,0
+192,"Enerco Systems GmbH & Co. KG","Ludwigsburg",71634,,50,Yes,,,,,,,,never_run,0
+193,"Energie 360 GmbH & Co.KG","Korbach",34497,,50,Yes,,,,,,,,never_run,0
+194,"Energie Bottwartal GmbH","Großbottwar",71723,,50,Yes,,,,,,,,never_run,0
+195,"Energie Calw GmbH","Calw",75365,,50,Yes,,,,,,,,never_run,0
+196,"Energie für Immoblien GmbH","Moers",47441,,50,Yes,,,,,,,,never_run,0
+197,"Energie Kieselbronn GmbH","Kieselbronn",75249,,50,Yes,,,,,,,,never_run,0
+198,"Energie Marburg Biedenkopf GmbH & Co. KG","Marburg",35039,,50,Yes,,,,,,,,never_run,0
+199,"Energie Sachsenheim GmbH & Co. KG","Sachsenheim",74343,,50,Yes,,,,,,,,never_run,0
+200,"Energie Schwaben GmbH","Augsburg",86199,,50,Yes,,,,,,,,never_run,0
+201,"Energie Stern GmbH","Chemnitz",09113,,50,Yes,,,,,,,,never_run,0
+202,"Energie Südbayern GmbH","München",81539,,50,Yes,,,,,,,,never_run,0
+203,"Energie- u. Wasserversorgung Bonn/Rhein-Sieg GmbH","Bonn",53111,,50,Yes,,,,,,,,never_run,0
+204,"Energie- und Medienversorgung Schwarza GmbH","Rudolstadt-Schwarza",07407,,50,Yes,,,,,,,,never_run,0
+205,"Energie und Wasser Potsdam GmbH","Potsdam",14480,,50,Yes,,,,,,,,never_run,0
+206,"Energie- und Wasserversorgung Bitz GmbH","Albstadt",72461,,50,Yes,,,,,,,,never_run,0
+207,"Energie- und Wasserversorgung Bruchsal GmbH","Bruchsal",76646,,50,Yes,,,,,,,,never_run,0
+208,"Energie Vertrieb Deutschland EVD GmbH","Hamburg",20251,,50,Yes,,,,,,,,never_run,0
+209,"Energie Vorpommern GmbH","Trassenheide",17449,,50,Yes,,,,,,,,never_run,0
+210,"Energiefeld Geel GmbH & Co. KG","Brodersby",24864,,50,Yes,,,,,,,,never_run,0
+211,"Energiegenossenschaft Darmstadt eG","Darmstadt",64289,,50,Yes,,,,,,,,never_run,0
+212,"Energiegenossenschaft Lehrte - Sehnde","Lehrte",31275,,50,Yes,,,,,,,,never_run,0
+213,"energieGUT GmbH","Duisburg",47053,,50,Yes,,,,,,,,never_run,0
+214,"Energiehandel Süd GmbH & Co. KG","Leutkirch / Allgäu",88299,,50,Yes,,,,,,,,never_run,0
+215,"Energiehaus Deutschland B2B GmbH","Bayreuth",95445,,50,Yes,,,,,,,,never_run,0
+216,"Energiehoch3 GmbH","Bochum",44787,,50,Yes,,,,,,,,never_run,0
+217,"EnergieHof Schmalfeld UG & Co. KG","Schmalfeld",24640,,50,Yes,,,,,,,,never_run,0
+218,"ENERGIEN in REGIONEN Passau GmbH & Co. KG","Pocking  OT Hartkirchen",94060,,50,Yes,,,,,,,,never_run,0
+219,"ENERGIEN in REGIONEN Rottal-Inn GmbH & Co. KG","Pocking  OT Hartkirchen",94060,,50,Yes,,,,,,,,never_run,0
+220,"EnergieRevolte GmbH","Düren",52351,,50,Yes,,,,,,,,never_run,0
+221,"Energie-Rhein-Sieg GmbH","Sankt Augustin",53757,,50,Yes,,,,,,,,never_run,0
+222,"EnergieSaarLorLux AG","Saarbrücken",66111,,50,Yes,,,,,,,,never_run,0
+223,"Energie-Service Dienstleistungsgesellschaft mbH","Freiburg",79108,,50,Yes,,,,,,,,never_run,0
+224,"Energieservice Schmitz","Kerpen",50169,,50,Yes,,,,,,,,success,0
+225,"EnergieSüdwest AG","Landau in der Pfalz",76829,,50,Yes,,,,,,,,never_run,0
+226,"EnergieVerbund Dresden GmbH","Dresden",01069,,50,Yes,,,,,,,,success,0
+227,"Energieversorgung Apolda GmbH","Apolda",99510,,50,Yes,,,,,,,,never_run,0
+228,"Energieversorgung Bad Bentheim GmbH & Co. KG","Bad Bentheim",48455,,50,Yes,,,,,,,,never_run,0
+229,"Energieversorgung Burghausen GmbH","Burghausen",84489,,50,Yes,,,,,,,,never_run,0
+230,"Energieversorgung Dahlenburg-Bleckede AG","Dahlenburg",21368,,50,Yes,,,,,,,,never_run,0
+231,"Energieversorgung Ergolding-Essenbach GmbH","Ergolding",84030,,50,Yes,,,,,,,,never_run,0
+232,"Energieversorgung Filstal GmbH & Co. KG","Göppingen",73033,,50,Yes,,,,,,,,never_run,0
+233,"Energieversorgung Greiz GmbH","Greiz",07973,,50,Yes,,,,,,,,never_run,0
+234,"Energieversorgung Guben GmbH","Guben",03172,,50,Yes,,,,,,,,never_run,0
+235,"Energieversorgung Inn-Salzach GmbH","Mühldorf am Inn",84453,,50,Yes,,,,,,,,never_run,0
+236,"Energieversorgung Klettgau-Rheintal GmbH & Co. KG","Klettgau",79771,,50,Yes,,,,,,,,never_run,0
+237,"Energieversorgung Leverkusen GmbH & Co. KG","Leverkusen",51371,,50,Yes,,,,,,,,never_run,0
+238,"Energieversorgung Limburg GmbH","Limburg",65549,,50,Yes,,,,,,,,never_run,0
+239,"Energieversorgung Main-Spessart GmbH","Aschaffenburg",63741,,50,Yes,,,,,,,,never_run,0
+240,"Energieversorgung Marienberg GmbH","Marienberg",09496,,50,Yes,,,,,,,,never_run,0
+241,"Energieversorgung Mittelrhein AG","Koblenz",56073,,50,Yes,,,,,,,,never_run,0
+242,"Energieversorgung Rodau GmbH","Rodgau",63110,,50,Yes,,,,,,,,never_run,0
+243,"Energieversorgung Rudolstadt GmbH","Rudolstadt",07407,,50,Yes,,,,,,,,never_run,0
+244,"Energieversorgung Rüsselsheim GmbH","Rüsselsheim",65428,,50,Yes,,,,,,,,never_run,0
+245,"Energieversorgung Schmalkalden GmbH","Schmalkalden",98574,,50,Yes,,,,,,,,never_run,0
+246,"Energieversorgung Sehnde GmbH","Sehnde",31319,,50,Yes,,,,,,,,never_run,0
+247,"Energieversorgung Selb-Marktredwitz GmbH","Selb",95100,,50,Yes,,,,,,,,never_run,0
+248,"Energieversorgung Titisee-Neustadt GmbH","Titisee-Neustadt",79822,,50,Yes,,,,,,,,never_run,0
+251,"energis GmbH","Saarbrücken",66121,,50,Yes,,,,,,,,never_run,0
+252,"Energora GmbH","Leipzig",04328,,50,Yes,,,,,,,,never_run,0
+253,"Energy Market Solutions GmbH","Berlin",10557,,50,Yes,,,,,,,,never_run,0
+254,"Energy2day GmbH","Gräfelfing",82166,,50,Yes,,,,,,,,never_run,0
+255,"energy4u GmbH & Co. KG","Siegburg",53721,,50,Yes,,,,,,,,never_run,0
+256,"energycoop eG","Osnabrück",49074,,50,Yes,,,,,,,,never_run,0
+257,"EnergyLink Direkt GmbH & Co. KG","München",80335,,50,Yes,,,,,,,,never_run,0
+258,"Enervatis Energieversorgungsgesellschaft mbH","Halle",06112,,50,Yes,,,,,,,,never_run,0
+259,"enervolution GmbH","Bochum",44787,,50,Yes,,,,,,,,never_run,0
+260,"eness GmbH","München",81539,,50,Yes,,,,,,,,never_run,0
+261,"enewa GmbH","Wachtberg",53343,,50,Yes,,,,,,,,never_run,0
+262,"engel Energie GmbH","Berlin",10719,,50,Yes,,,,,,,,never_run,0
+263,"ENGIE Deutschland GmbH","Köln",50858,,50,Yes,,,,,,,,never_run,0
+264,"ENNI Energie & Umwelt Niederrhein GmbH","Moers",47441,,50,Yes,,,,,,,,never_run,0
+265,"enno-energie GmbH","Brilon",59929,,50,Yes,,,,,,,,never_run,0
+266,"Enpal Energy","Berlin",10245,,50,Yes,,,,,,,,never_run,0
+267,"Enpal Pro GmbH","Berlin",10245,,50,Yes,,,,,,,,never_run,0
+268,"ENSTROGA AG","Berlin",10789,,50,Yes,,,,,,,,never_run,0
+269,"Ensys AG","Frankfurt/M",60313,,50,Yes,,,,,,,,never_run,0
+270,"ENTEGA Plus GmbH","Darmstadt",64293,,50,Yes,,,,,,,,never_run,0
+271,"envia Mitteldeutsche Energie AG","Chemnitz",09114,,50,Yes,,,,,,,,never_run,0
+272,"EnWds Energie Weil der Stadt GmbH & Co.KG","Weil der Stadt",71263,,50,Yes,,,,,,,,never_run,0
+273,"EP Energie Deutschland GmbH","Berlin",10179,,50,Yes,,,,,,,,never_run,0
+274,"eprimo GmbH","Neu-Isenburg",63263,,50,Yes,,,,,,,,never_run,0
+275,"eq strom GmbH & Co. KG","Zossen OT Kallinchen",15806,,50,Yes,,,,,,,,never_run,0
+276,"Erdgas Oberösterreich Vertriebs GmbH","Tittling",94104,,50,Yes,,,,,,,,never_run,0
+277,"Erdgas Südwest GmbH","Ettlingen",76275,,50,Yes,,,,,,,,never_run,0
+278,"e-regio GmbH & Co. KG","Euskirchen-Kuchenheim",53881,,50,Yes,,,,,,,,never_run,0
+279,"Erenja AG & Co. KG","Gelsenkirchen",45891,,50,Yes,,,,,,,,never_run,0
+280,"Erhard Bürk-Kauffmann GmbH","Villingen-Schwenningen",78056,,50,Yes,,,,,,,,never_run,0
+281,"Ernst Buscher GmbH & Co. KG","Wuppertal",42369,,50,Yes,,,,,,,,never_run,0
+282,"Erwin Steigleiter GmbH","Speyer",67346,,50,Yes,,,,,,,,never_run,0
+283,"e-shelter facility services GmbH","Frankfurt am Main",60489,,50,Yes,,,,,,,,never_run,0
+284,"ESW GasVertrieb GmbH","Landau",76829,,50,Yes,,,,,,,,never_run,0
+285,"ESWE Versorgungs AG","Wiesbaden",65189,,50,Yes,,,,,,,,never_run,0
+286,"E-two-energy GmbH","Ahrensfelde",16356,,50,Yes,,,,,,,,never_run,0
+287,"Eurogate Technical Services GmbH","Bremerhaven",25768,,50,Yes,,,,,,,,never_run,0
+288,"EVD Energieversorgung Deutschland GmbH","Monheim am Rhein",40789,,50,Yes,,,,,,,,never_run,0
+289,"EVO Vertrieb GmbH","Offenbach am Main",63067,,50,Yes,,,,,,,,never_run,0
+292,"EW Eichsfeldgas GmbH","Leinefelde-Worbis",37339,,50,Yes,,,,,,,,never_run,0
+293,"E-Werk Gerolsheim","Frankenthal (Pfalz)",67227,,50,Yes,,,,,,,,never_run,0
+294,"E-Werk Meckenheim/Pfalz","Meckenheim",67149,,50,Yes,,,,,,,,never_run,0
+295,"e-werk Sachsenwald GmbH","Reinbek",21465,,50,Yes,,,,,,,,never_run,0
+296,"EWF Energy GmbH","Travemünde",23570,,50,Yes,,,,,,,,never_run,0
+298,"EWV Baesweiler GmbH & Co. KG","Baesweiler",52499,,50,Yes,,,,,,,,never_run,0
+300,"ExtraEnergie GmbH","Monheim am Rhein",40789,,50,Yes,,,,,,,,never_run,0
+301,"ExtraGrün GmbH","Monheim am Rhein",40789,,50,Yes,,,,,,,,never_run,0
+302,"FAG GmbH","Albstadt",72461,,50,Yes,,,,,,,,never_run,0
+303,"Fair Trade Power Deutschland GmbH","München",81547,,50,Yes,,,,,,,,never_run,0
+304,"FairEnergie GmbH","Reutlingen",72762,,50,Yes,,,,,,,,never_run,0
+305,"fairster.Energie gGmbH","Berlin",10115,,50,Yes,,,,,,,,never_run,0
+306,"FAW GmbH","Albstadt",72461,,50,Yes,,,,,,,,never_run,0
+307,"Fey Energie GmbH & Co. KG","Wehrheim",61273,,50,Yes,,,,,,,,never_run,0
+308,"Filderstadtwerke","Filderstadt",70794,,50,Yes,,,,,,,,never_run,0
+309,"FirstCon GmbH","Lüneburg",21335,,50,Yes,,,,,,,,never_run,0
+310,"Förderverein Neue Produktion e.V.","Kiel",24106,,50,Yes,,,,,,,,never_run,0
+311,"FORTAS Energie Gas GmbH","Hannover",30159,,50,Yes,,,,,,,,never_run,0
+312,"Frankfurt Energy Holding GmbH","Eschborn",65760,,50,Yes,,,,,,,,never_run,0
+313,"Franz X. Heinritzi & Söhne GmbH","Bruckmühl",83052,,50,Yes,,,,,,,,never_run,0
+314,"Franz-Josef Wieghaus Biogas","Garrel",49681,,50,Yes,,,,,,,,never_run,0
+315,"Freitaler Stadtwerke GmbH","Freital",01705,,50,Yes,,,,,,,,never_run,0
+316,"Friedel Energie & Service e.K.","Elsterwerda",04910,,50,Yes,,,,,,,,never_run,0
+317,"Friedrich Mineralölhandel GmbH","Schönheide",08304,,50,Yes,,,,,,,,never_run,0
+318,"friesenenergie GmbH","Wangerland",26434,,50,Yes,,,,,,,,never_run,0
+319,"Fritz Wahr Energie GmbH & Co. KG","Nagold",72202,,50,Yes,,,,,,,,never_run,0
+320,"Fromholz, Brennstoff- u. Mineralölvertriebs GmbH","Benz OT Labömitz",17429,,50,Yes,,,,,,,,never_run,0
+321,"Frühmesser Mineralölhandelsgesellschaft mbh & Co. KG","Landau",76829,,50,Yes,,,,,,,,never_run,0
+322,"FSG Energy GmbH & Co. KG","Paderborn",33100,,50,Yes,,,,,,,,never_run,0
+323,"FT Energiepartner GmbH","Frankenthal (Pfalz)",67227,,50,Yes,,,,,,,,never_run,0
+324,"fünfwerke GmbH & Co. KG","Limburg an der Lahn",65549,,50,Yes,,,,,,,,never_run,0
+325,"Fuxx - Die Sparenergie GmbH","Hamburg",20354,,50,Yes,,,,,,,,never_run,0
+326,"G. Friese & Sohn GmbH","Triptis",07819,,50,Yes,,,,,,,,never_run,0
+327,"GAG Servicegesellschaft mbH","Köln",51103,,50,Yes,,,,,,,,never_run,0
+328,"Gas- und Energiegenossenschaft Ost- und Mitteldeutschland eG (GEG)","Möhlau",06791,,50,Yes,,,,,,,,never_run,0
+329,"Gas und Strom Mittelrhein GmbH","Bad Hönningen",53557,,50,Yes,,,,,,,,never_run,0
+330,"Gas und Wärme GmbH Bad Aibling","Bad Aibling",83043,,50,Yes,,,,,,,,never_run,0
+331,"Gas- und Wasserversorgung Höxter GmbH & Co. KG","Höxter",37671,,50,Yes,,,,,,,,never_run,0
+332,"gas.de Versorgungsgesellschaft mbH","Kaarst",41564,,50,Yes,,,,,,,,never_run,0
+333,"GASAG AG","Berlin",10829,,50,Yes,,,,,,,,never_run,0
+334,"GasCom-Equipment GmbH","Troisdorf",53842,,50,Yes,,,,,,,,never_run,0
+335,"Gas-Union GmbH","Frankfurt am Frankfurt",60596,,50,Yes,,,,,,,,never_run,0
+336,"Gasversorgung Angermünde GmbH","Angermünde",16278,,50,Yes,,,,,,,,never_run,0
+337,"Gasversorgung Germering GmbH","Germering",82110,,50,Yes,,,,,,,,never_run,0
+338,"Gasversorgung Grevesmühlen GmbH","Grevesmühlen",23936,,50,Yes,,,,,,,,never_run,0
+339,"Gasversorgung Main-Kinzig GmbH","Gelnhausen",63571,,50,Yes,,,,,,,,never_run,0
+340,"Gasversorgung Westerwald GmbH","Höhr-Grenzhausen",56203,,50,Yes,,,,,,,,never_run,0
+341,"Gas-Versorgungsbetriebe Cottbus GmbH","Cottbus",03046,,50,Yes,,,,,,,,never_run,0
+342,"Gebauer GmbH & Co.KG","Schrobenhausen",86529,,50,Yes,,,,,,,,never_run,0
+343,"Gedea Schwarzwaldkraft Service GmbH","Murrhardt",71540,,50,Yes,,,,,,,,never_run,0
+344,"Geiger GmbH","Ansbach",91522,,50,Yes,,,,,,,,never_run,0
+345,"GEMAG Gebäudemanagement Aktiengesellschaft","Cottbus",03044,,50,Yes,,,,,,,,never_run,0
+347,"GemeindeStrom Wadgassen GmbH","Wadgassen",66787,,50,Yes,,,,,,,,never_run,0
+373,"Gemeindliche Werke Hengersberg – Eigenbetrieb des Marktes Hengersberg","Hengersberg",94491,,50,Yes,,,,,,,,never_run,0
+374,"Genek Gesellschaft für Energieeinkauf mbH & Co. KG","Köln",50969,,50,Yes,,,,,,,,never_run,0
+375,"GENO Energie GmbH","Stuttgart",70191,,50,Yes,,,,,,,,never_run,0
+376,"GEO Gesellschaft für Energieversorgung Ostalb mbH","Oberkochen",73447,,50,Yes,,,,,,,,never_run,0
+377,"Gesellschaft für Energieversorgung Ostalb mbH","Oberkochen",73447,,50,Yes,,,,,,,,never_run,0
+378,"Gesellschaft für regionale Teilhabe und Klimaschutz mbH","Schwerin",19055,,50,Yes,,,,,,,,never_run,0
+381,"GETEC ENERGIE GmbH","Hannover",30159,,50,Yes,,,,,,,,never_run,0
+382,"GETEC Energy Management GmbH","Magdeburg",39108,,50,Yes,,,,,,,,never_run,0
+383,"GETEC net GmbH","Hannover",30159,,50,Yes,,,,,,,,never_run,0
+384,"Getigy GmbH","Hannover",30159,,50,Yes,,,,,,,,never_run,0
+385,"GfM Gesellschaft für Messdienstleistungen mbH","Köln",50679,,50,Yes,,,,,,,,never_run,0
+386,"GGEW AG","Bensheim",64625,,50,Yes,,,,,,,,never_run,0
+387,"Gilbert Energiehandelsgesellschaft mbH","Butzbach",35510,,50,Yes,,,,,,,,never_run,0
+388,"Glotec Germany GmbH","Monheim am Rhein",40789,,50,Yes,,,,,,,,never_run,0
+389,"Glotec Team Vermögensverwaltung GmbH & Co. KG","Monheim am Rhein",40789,,50,Yes,,,,,,,,never_run,0
+390,"goldgas GmbH","Eschborn",65760,,50,Yes,,,,,,,,never_run,0
+391,"Gothaer Stadtwerke Energie GmbH","Gotha",99867,,50,Yes,,,,,,,,never_run,0
+392,"Göttinger Versorgungs- und Verkehrsbetriebe GmbH","Göttingen",37081,,50,Yes,,,,,,,,never_run,0
+393,"GP JOULE Connect GmbH & Co. KG","Reußenköge",25821,,50,Yes,,,,,,,,never_run,0
+394,"GP JOULE Plus GmbH","Reußenköge",25821,,50,Yes,,,,,,,,never_run,0
+395,"GRAVO energy","Drensteinfurt",48317,,50,Yes,,,,,,,,never_run,0
+396,"Green Planet Energy eG","Hamburg",20457,,50,Yes,,,,,,,,never_run,0
+397,"Greenman Energy Operations GmbH & Co. KG","Hamburg",20095,,50,Yes,,,,,,,,never_run,0
+398,"GreenStone Energy GmbH","Berlin",10587,,50,Yes,,,,,,,,never_run,0
+399,"grün.power GmbH","Mainz",55124,,50,Yes,,,,,,,,never_run,0
+400,"grünES GmbH","Esslingen",73728,,50,Yes,,,,,,,,never_run,0
+401,"GrünHausEnergie GmbH","Mülheim an der Ruhr",45478,,50,Yes,,,,,,,,never_run,0
+402,"GrünStrom Kirchberg GmbH","Kirchberg an der Jagst",74592,,50,Yes,,,,,,,,never_run,0
+403,"Grünstromwerk GmbH","Hamburg",20097,,50,Yes,,,,,,,,never_run,0
+404,"GrünWatt GmbH","Itzehoe",25524,,50,Yes,,,,,,,,never_run,0
+405,"Grünwelt Wärmestrom GmbH","Kaarst",41564,,50,Yes,,,,,,,,never_run,0
+406,"GSD Naturenergie GmbH","Dresden",01277,,50,Yes,,,,,,,,never_run,0
+407,"Günther Erdgas- und Stromhandels GmbH","Bebra",36179,,50,Yes,,,,,,,,never_run,0
+408,"GVG Rhein-Erft GmbH","Hürth",50354,,50,Yes,,,,,,,,never_run,0
+409,"GVI-Gasversorgung Ismaning GmbH","Ismaning",85737,,50,Yes,,,,,,,,never_run,0
+410,"GWS Stadtwerke Hameln","Hammeln",31785,,50,Yes,,,,,,,,never_run,0
+411,"H & N Bürgerwind GmbH & Co. KG","Hörup",24980,,50,Yes,,,,,,,,never_run,0
+412,"H. +  R. Bellersheim GmbH","Neitersen",57638,,50,Yes,,,,,,,,never_run,0
+413,"Haas GmbH","Hachenburg",57627,,50,Yes,,,,,,,,never_run,0
+414,"Halberstadtwerke GmbH","Halberstadt",38220,,50,Yes,,,,,,,,never_run,0
+416,"Hans Engelke Energie OHG","Berlin",12099,,50,Yes,,,,,,,,never_run,0
+417,"HaseEnergie GmbH","Eggersmühlen",49577,,50,Yes,,,,,,,,never_run,0
+418,"Hausstrom GmbH","Leipzig",04178,,50,Yes,,,,,,,,never_run,0
+419,"Heilbronner Versorgungs GmbH","Heilbronn",74076,,50,Yes,,,,,,,,never_run,0
+421,"Heinrich Fip GmbH & Co. KG","Osnabrück",49090,,50,Yes,,,,,,,,never_run,0
+422,"Heinrich Klöcker GmbH & Co. KG","Borken",46325,,50,Yes,,,,,,,,never_run,0
+423,"Heinrich Renken Landhandel","Bispingen",29646,,50,Yes,,,,,,,,never_run,0
+424,"Heinrich Schwarz GmbH","Diez",65582,,50,Yes,,,,,,,,never_run,0
+425,"Heizöl Sistig GmbH","Alfter",53347,,50,Yes,,,,,,,,never_run,0
+426,"Helten, Alfred","Koblenz",56076,,50,Yes,,,,,,,,never_run,0
+427,"Herm GmbH & Co. KG","Lauda-Königshofen",97922,,50,Yes,,,,,,,,never_run,0
+428,"Hermann Hansen, Einzelunternehmer","Enge-Sande",25917,,50,Yes,,,,,,,,never_run,0
+429,"Hertener Stadtwerke GmbH","Herten",45699,,50,Yes,,,,,,,,never_run,0
+430,"HHB Agrarenergie GmbH & Co. KG","Harsefeld",21698,,50,Yes,,,,,,,,never_run,0
+431,"HKD Handeslsgesellschaft für Kirche und Diakonie mbH","Kiel",24103,,50,Yes,,,,,,,,never_run,0
+432,"HochsauerlandEnergie GmbH","Meschede",59872,,50,Yes,,,,,,,,never_run,0
+433,"homee GmbH","Berlin",10777,,50,Yes,,,,,,,,never_run,0
+434,"Hospital LogiServe GmbH","Berlin",14109,,50,Yes,,,,,,,,never_run,0
+435,"Hoyer G.m.b.H.","Visselhövede",27374,,50,Yes,,,,,,,,never_run,0
+436,"HSG Hanseatische Strom- und Gasversorgungsgesellschaft mbH","Hamburg",20354,,50,Yes,,,,,,,,never_run,0
+437,"Hycube Technologies GmbH","Mannheim",68165,,50,Yes,,,,,,,,never_run,0
+438,"IBC GreenElements GmbH","Bad Staffelstein",96231,,50,Yes,,,,,,,,never_run,0
+439,"IKEA Deutschland Energieservice GmbH","München",80333,,50,Yes,,,,,,,,never_run,0
+440,"illwerke vkw Deutschland GmbH","Lindenberg",88161,,50,Yes,,,,,,,,never_run,0
+441,"Ilzhöfer Inh. Walch GmbH & Co. KG","Augsburg",86161,,50,Yes,,,,,,,,never_run,0
+442,"In(n) Energie GmbH","Simbach am Inn",84359,,50,Yes,,,,,,,,never_run,0
+443,"Innostrom GmbH","Kitzingen",97318,,50,Yes,,,,,,,,never_run,0
+444,"inteligy GmbH","Köln",50969,,50,Yes,,,,,,,,never_run,0
+445,"Interconnector GmbH","Karlsruhe",76131,,50,Yes,,,,,,,,never_run,0
+446,"J. Knittel Söhne Verwaltungsgesellschaft mbH","Fulda",36039,,50,Yes,,,,,,,,never_run,0
+447,"Janssen Mineralöle GmbH & Co. KG","Kevelaer",47623,,50,Yes,,,,,,,,never_run,0
+448,"Jantzon & Hocke KG","Sulingen",27232,,50,Yes,,,,,,,,never_run,0
+449,"Johannesstift Diakonie Services GmbH","Berlin",13629,,50,Yes,,,,,,,,never_run,0
+450,"Jorczyk Energie KG","Celle",29227,,50,Yes,,,,,,,,never_run,0
+451,"Josef Dorner Mineraloel - GmbH","Gengenbach",77723,,50,Yes,,,,,,,,never_run,0
+452,"Josef Pauli GmbH","Düren",52353,,50,Yes,,,,,,,,never_run,0
+453,"Jürgen Dorst GmbH","Ostheim v. d. Rhön",97645,,50,Yes,,,,,,,,never_run,0
+454,"K.-Otto Hucke  Brennstoffe - Mineralöle","Eberswalde",16225,,50,Yes,,,,,,,,never_run,0
+455,"Kaltenhof gGmbH","Schonungen",97453,,50,Yes,,,,,,,,never_run,0
+456,"Kamps Capital Partners GmbH","Bonn",53179,,50,Yes,,,,,,,,never_run,0
+457,"Karl Triebstein e. K.","Wildeck-Obersuhl",36208,,50,Yes,,,,,,,,never_run,0
+458,"Karl-Otto Hucke Brennstoffe-Mineralöle e. K. Inh.: Bernd Hucke","Eberswalde",16225,,50,Yes,,,,,,,,never_run,0
+459,"KBG Homberg eG","Homberg (Efze)",34576,,50,Yes,,,,,,,,never_run,0
+460,"Keep – Kommunale Eisenberger Energiepartner GmbH","Eisenberg",67304,,50,Yes,,,,,,,,never_run,0
+461,"Keslar GmbH Energiehandel","Kempten (Allgäu)",87437,,50,Yes,,,,,,,,never_run,0
+463,"Kleiner 2 Grad GmbH","Berlin",10969,,50,Yes,,,,,,,,never_run,0
+464,"KlickEnergie GmbH & Co. KG","Neuss",41464,,50,Yes,,,,,,,,never_run,0
+465,"Klindworth-Kronol Energie GmbH & Co. KG","Hamburg",21107,,50,Yes,,,,,,,,never_run,0
+466,"Knauber Erdgas GmbH","Bonn",53115,,50,Yes,,,,,,,,never_run,0
+467,"KommEnergie GmbH","Eichenau",82223,,50,Yes,,,,,,,,never_run,0
+468,"Kommunalunternehmen Stadtwerke Pfaffenhofen a. d. Ilm","Pfaffenhofen",85276,,50,Yes,,,,,,,,never_run,0
+469,"Köthen Energie GmbH","Köthen",06366,,50,Yes,,,,,,,,never_run,0
+470,"KR Buchenhof Bioenergie GmbH & Co. KG","Klein Offenseth-Sparrieshoop",25365,,50,Yes,,,,,,,,never_run,0
+471,"Kraftwerk Köhlgartenwiese GmbH","Kleines Wiesental",79692,,50,Yes,,,,,,,,never_run,0
+472,"Kreiswerke Main-Kinzig GmbH","Gelnhausen",63571,,50,Yes,,,,,,,,never_run,0
+473,"Krimphoff & Schulte Mineralöl-Service und Logistik GmbH","Rheine",48432,,50,Yes,,,,,,,,never_run,0
+474,"KWG Energie GmbH","Köln",50737,,50,Yes,,,,,,,,never_run,0
+475,"LandlEnergie GmbH","Parsberg",92331,,50,Yes,,,,,,,,never_run,0
+476,"Landstrom GmbH & Co. KG","Gevesleben",38384,,50,Yes,,,,,,,,never_run,0
+477,"LE Energy Solutions GmbH","Leipzig",04103,,50,Yes,,,,,,,,never_run,0
+478,"Leine Energie GmbH","Neustadt am Rübenberge",31535,,50,Yes,,,,,,,,never_run,0
+479,"Leipziger Kommunale Energieeffizienz GmbH","Leipzig",04109,,50,Yes,,,,,,,,never_run,0
+480,"lekker Energie GmbH","Berlin",10115,,50,Yes,,,,,,,,never_run,0
+481,"Lenz Energie AG","Waibstadt",74915,,50,Yes,,,,,,,,never_run,0
+482,"Leu Energie GmbH & Co. KG","Hof",95028,,50,Yes,,,,,,,,never_run,0
+483,"Leuendorff Strom und Erdgas GmbH","Berlin",13125,,50,Yes,,,,,,,,never_run,0
+484,"Lewak greenprojekts GmbH","Zülpich",53909,,50,Yes,,,,,,,,never_run,0
+485,"LFE GmbH","Leipzig",04103,,50,Yes,,,,,,,,never_run,0
+486,"LG Bioenergie GmbH","Winsen (Aller)",29308,,50,Yes,,,,,,,,never_run,0
+487,"LGE Energy Berlin GmbH","Berlin",10785,,50,Yes,,,,,,,,never_run,0
+488,"LichtBlick SE","Hamburg",20097,,50,Yes,,,,,,,,never_run,0
+489,"Lightcore Energy Deutschland GmbH","Mönchengladbach",41238,,50,Yes,,,,,,,,never_run,0
+490,"Lipps Mineralöle GmbH","Hagen-Hohenlimburg",58119,,50,Yes,,,,,,,,never_run,0
+491,"LogoEnergie GmbH","Euskirchen",53881,,50,Yes,,,,,,,,never_run,0
+492,"Lohse Biogas GmbH & Co. KG","Hennstedt",25581,,50,Yes,,,,,,,,never_run,0
+493,"LSW Energie GmbH & Co. KG","Wolfsburg",38440,,50,Yes,,,,,,,,never_run,0
+494,"Ludwig Dalacker & Sohn GmbH & Co.KG","Gaildorf",74405,,50,Yes,,,,,,,,never_run,0
+495,"Lumenaza GmbH","Berlin",10965,,50,Yes,,,,,,,,never_run,0
+496,"LWE Landwerke Eifel Vertriebs GmbH","Prüm",54595,,50,Yes,,,,,,,,never_run,0
+497,"M4Energy eG","Dresden",01309,,50,Yes,,,,,,,,never_run,0
+498,"Maier & Korduletsch Energie GmbH","Vilshofen",94474,,50,Yes,,,,,,,,never_run,0
+499,"MAINGAU Energie GmbH","Obertshausen",63179,,50,Yes,,,,,,,,never_run,0
+500,"Mainzer Stadtwerke Vertrieb und Service GmbH","Mainz",55118,,50,Yes,,,,,,,,never_run,0
+501,"Mainzer Wärme GmbH","Mainz",55118,,50,Yes,,,,,,,,never_run,0
+502,"Mann Naturenergie GmbH & Co KG","Langenbach",57520,,50,Yes,,,,,,,,never_run,0
+503,"Maschinenringe Deutschland GmbH","Neuburg/Donau",86633,,50,Yes,,,,,,,,never_run,0
+504,"MAXENERGY GmbH","Augsburg",86157,,50,Yes,,,,,,,,never_run,0
+505,"McEnergy GmbH","München",80807,,50,Yes,,,,,,,,never_run,0
+506,"Med 360° Service GmbH","Leverkusen",51377,,50,Yes,,,,,,,,never_run,0
+507,"Medizinische Hochschule Hannover","Hannover",30625,,50,Yes,,,,,,,,never_run,0
+508,"medl GmbH","Mülheim an der Ruhr",45476,,50,Yes,,,,,,,,never_run,0
+509,"meistro Energie GmbH","Ingolstadt",85055,,50,Yes,,,,,,,,never_run,0
+510,"Mer Germany GmbH","München",80807,,50,Yes,,,,,,,,never_run,0
+511,"MET Germany GmbH","Frankfurt am Main",60327,,50,Yes,,,,,,,,never_run,0
+512,"METANK Gas+Strom GmbH","Melle",49324,,50,Yes,,,,,,,,never_run,0
+513,"Meyer Erneuerbare Energien GmbH","Twistringen",27235,,50,Yes,,,,,,,,never_run,0
+514,"Mindener Stadtwerke GmbH","Minden",32427,,50,Yes,,,,,,,,never_run,0
+515,"MINERA Kraftstoffe Mineraloelwerk Rempel GmbH","Mannheim",68219,,50,Yes,,,,,,,,never_run,0
+516,"Minol Energie GmbH & Co. KG","Nürtingen",72622,,50,Yes,,,,,,,,never_run,0
+517,"Mitgas Mitteldeutsche Gasversorgung GmbH","Kabelsketal",06184,,50,Yes,,,,,,,,never_run,0
+518,"mivolta GmbH","Gräfelfing",82166,,50,Yes,,,,,,,,never_run,0
+519,"Mobilität & Energie me-Süd GmbH","Hamburg",20095,,50,Yes,,,,,,,,never_run,0
+520,"Mobilität & Energie Mitte-West GmbH & Co.KG","Hamburg",20097,,50,Yes,,,,,,,,never_run,0
+521,"MÖHRLE energy GmbH","Durmersheim",76448,,50,Yes,,,,,,,,never_run,0
+522,"MONTANA Energieversorgung GmbH & Co. KG","Grünwald",82031,,50,Yes,,,,,,,,never_run,0
+523,"MPSV GmbH","Kronberg",61476,,50,Yes,,,,,,,,never_run,0
+524,"Münch Energie GmbH & Co. KG","Rugendorf",95365,,50,Yes,,,,,,,,never_run,0
+525,"Mundt GmbH Hannover","Hannover",30453,,50,Yes,,,,,,,,never_run,0
+526,"MVV Alpha eins GmbH","Mannheim",68199,,50,Yes,,,,,,,,never_run,0
+527,"MWEnergy GmbH","Meerbusch",40670,,50,Yes,,,,,,,,never_run,0
+528,"NaCon GmbH","Osnabrück",49090,,50,Yes,,,,,,,,never_run,0
+529,"naturenergie hochrhein AG","Rheinfelden",79618,,50,Yes,,,,,,,,never_run,0
+530,"NaturEnergie+ Deutschland GmbH","Mühlacker",75417,,50,Yes,,,,,,,,never_run,0
+531,"NatürlicheEnergie EMH GmbH","Wittlich",54516,,50,Yes,,,,,,,,never_run,0
+532,"Naturstrom Rheinland-Pfalz GmbH","Koblenz",56073,,50,Yes,,,,,,,,never_run,0
+533,"naturstrom vor Ort GmbH","Hamburg",20459,,50,Yes,,,,,,,,never_run,0
+534,"NaturStrom XL GmbH","Düsseldorf",40468,,50,Yes,,,,,,,,never_run,0
+535,"NaturStromHandel GmbH","Düsseldorf",40468,,50,Yes,,,,,,,,never_run,0
+537,"Neander Energie GmbH","Wülfrath",42489,,50,Yes,,,,,,,,never_run,0
+538,"Neas Energy A/S","Aalborg, Dänemark",9000,,50,Yes,,,,,,,,never_run,0
+539,"Neckermann Strom GmbH","Norderstedt",22848,,50,Yes,,,,,,,,never_run,0
+540,"NEO Energy DE GmbH","Montabaur",56410,,50,Yes,,,,,,,,never_run,0
+541,"Netzgesellschaft Eisenberg mbH","Eisenberg",07607,,50,Yes,,,,,,,,never_run,0
+542,"NEW AG","Mönchengladbach",41236,,50,Yes,,,,,,,,never_run,0
+543,"New Breeze GmbH & Co. Wind Wörrstadt KG","Wörrstadt",55286,,50,Yes,,,,,,,,never_run,0
+544,"New Generation Energy GmbH","St Katharinen",53562,,50,Yes,,,,,,,,never_run,0
+545,"NEW Niederrhein Energie und Wasser GmbH","Mönchengladbach",41236,,50,Yes,,,,,,,,never_run,0
+546,"Next Kraftwerke GmbH","Köln",50825,,50,Yes,,,,,,,,never_run,0
+547,"Nexus Energy Deutschland GmbH","Düsseldorf",40547,,50,Yes,,,,,,,,never_run,0
+548,"Nienburg Energie GmbH","Nienburg/Weser",31582,,50,Yes,,,,,,,,never_run,0
+549,"Niers-Energie GmbH","Kevelaer",47623,,50,Yes,,,,,,,,never_run,0
+550,"Nimex Energie","Neu-Isenburg",63263,,50,Yes,,,,,,,,never_run,0
+551,"Nomos GmbH","Berlin",10115,,50,Yes,,,,,,,,never_run,0
+552,"Norbert Neuburger","Hamburg",21109,,50,Yes,,,,,,,,never_run,0
+553,"Nord Stadtwerke GmbH","Langballig",24977,,50,Yes,,,,,,,,never_run,0
+554,"Nordgröön Energie GmbH & Co. KG","Medelby",24994,,50,Yes,,,,,,,,never_run,0
+555,"Nordlicht Power GbR","Schneverdingen",29640,,50,Yes,,,,,,,,never_run,0
+556,"nowenergy GmbH","Berlin",12107,,50,Yes,,,,,,,,never_run,0
+557,"NRN Energie GmbH","Goch",47574,,50,Yes,,,,,,,,never_run,0
+558,"nvb Nordhorner Versorgungsbetriebe GmbH","Nordhorn",48529,,50,Yes,,,,,,,,never_run,0
+559,"NWG Power GmbH","Hamburg",22179,,50,Yes,,,,,,,,never_run,0
+560,"Oberbillig Energie GmbH","Mettlach - Weiten",66693,,50,Yes,,,,,,,,never_run,0
+561,"Oberhessische Versorgungsbetriebe AG","Friedberg",61169,,50,Yes,,,,,,,,never_run,0
+562,"Octopus Energy Germany GmbH","München",81671,,50,Yes,,,,,,,,never_run,0
+563,"Oel-Heimburger GmbH","Rottweil",78628,,50,Yes,,,,,,,,never_run,0
+564,"OEST ENERGIES GmbH & Co. KG","Freudenstadt",72250,,50,Yes,,,,,,,,never_run,0
+565,"Ohra Energie GmbH","Hörsel",99880,,50,Yes,,,,,,,,never_run,0
+566,"OK Energy Group GmbH","Leipzig",04155,,50,Yes,,,,,,,,never_run,0
+567,"OÖ. Gas-Wärme GmbH","Linz, Österreich",AUT 4030,,50,Yes,,,,,,,,never_run,0
+568,"Optimization engineers GmbH","Hattingen",45527,,50,Yes,,,,,,,,never_run,0
+570,"Osso Energy Deutschland GmbH","Hamburg",20457,,50,Yes,,,,,,,,never_run,0
+571,"Otto Fricke & Co. GmbH","Gütersloh",33330,,50,Yes,,,,,,,,never_run,0
+572,"OUTLETCITY AG","Metzingen",72555,,50,Yes,,,,,,,,never_run,0
+573,"OVE GmbH & Co. KG","Bad Rothenfelde",49214,,50,Yes,,,,,,,,never_run,0
+574,"P. und M. Rothmoser GmbH & CO KG","Grafing",85567,,50,Yes,,,,,,,,never_run,0
+575,"Paartal-Energie GmbH","Schrobenhausen",86529,,50,Yes,,,,,,,,never_run,0
+576,"paketsparer GmbH","Berlin",12107,,50,Yes,,,,,,,,never_run,0
+577,"PANELY GmbH","Boitzenburger Land",17268,,50,Yes,,,,,,,,never_run,0
+578,"PassatEnergie GmbH","Lübeck",23560,,50,Yes,,,,,,,,never_run,0
+579,"Peter & Krebs Mineralölhandels GmbH","Berlin",10589,,50,Yes,,,,,,,,never_run,0
+581,"Phoenix Altbauimmobilien Sanierung & Vermarktung UG","Duisburg",47167,,50,Yes,,,,,,,,never_run,0
+582,"PLAN-B NET ZERO ENERGY GmbH","Berlin",10707,,50,Yes,,,,,,,,never_run,0
+583,"Poggelann Naturenergie GmbH & Co. KG","Bramstedtlund",25926,,50,Yes,,,,,,,,never_run,0
+584,"Poitzmann & Geißel Vertriebs GmbH","Wetter",35083,,50,Yes,,,,,,,,never_run,0
+585,"Polarstern GmbH","München",80337,,50,Yes,,,,,,,,never_run,0
+586,"Pölke Mineralölhandel GmbH","Lage",32791,,50,Yes,,,,,,,,never_run,0
+587,"Präg Strom & Gas GmbH & Co. KG","Kempten",87435,,50,Yes,,,,,,,,never_run,0
+588,"Primaenergy GmbH","Berlin",12107,,50,Yes,,,,,,,,never_run,0
+589,"Primastrom GmbH","Berlin",12107,,50,Yes,,,,,,,,never_run,0
+590,"Primavolt GmbH","Berlin",12107,,50,Yes,,,,,,,,never_run,0
+591,"Prio Services GmbH","Neuss",41460,,50,Yes,,,,,,,,never_run,0
+592,"PRO-E Preußisch Oldendorfer Energieversorgung GmbH","Preußisch Oldendorf",32361,,50,Yes,,,,,,,,never_run,0
+593,"ProEngeno GmbH & Co. KG","Jemgum",26844,,50,Yes,,,,,,,,never_run,0
+594,"Propan Rheingas GmbH & Co. KG","Brühl",50321,,50,Yes,,,,,,,,never_run,0
+595,"prosumergy GmbH","Kassel",34127,,50,Yes,,,,,,,,never_run,0
+596,"PV Energy Solutions","Hamburg",22529,,50,Yes,,,,,,,,never_run,0
+597,"Q1 Energie AG","Osnabrück",49090,,50,Yes,,,,,,,,never_run,0
+598,"Qsol net GmbH","Leipzig",04109,,50,Yes,,,,,,,,never_run,0
+599,"QUADRA Energy GmbH","Düsseldorf",40468,,50,Yes,,,,,,,,never_run,0
+600,"Queichtal Energie Offenbach GmbH & Co. KG","Offenbach an der Queich",76877,,50,Yes,,,,,,,,never_run,0
+601,"QUEST Energy GmbH","Hamburg",20095,,50,Yes,,,,,,,,never_run,0
+602,"RABOT Energy DE GmbH","Hamburg",20457,,50,Yes,,,,,,,,never_run,0
+603,"Raiffeisen Energie GmbH & Co. KG","Hannover",30175,,50,Yes,,,,,,,,never_run,0
+604,"Raimund Lesch KG","Illingen",66557,,50,Yes,,,,,,,,never_run,0
+605,"Rakelbusch & harting Energie GmbH & Co.KG","Hagenburg",31558,,50,Yes,,,,,,,,never_run,0
+606,"Rationelle Energie Süd GmbH","Geislingen an der Steige",73312,,50,Yes,,,,,,,,never_run,0
+607,"ReDirect GmbH","Stuttgart",70567,,50,Yes,,,,,,,,never_run,0
+608,"Regiogröön GmbH & Co. KG","Medelby",24994,,50,Yes,,,,,,,,never_run,0
+609,"RegioGrünStrom GmbH & Co. KG","Markt Erlbach",91456,,50,Yes,,,,,,,,never_run,0
+610,"Regionah Energie GmbH","Munderkingen",89597,,50,Yes,,,,,,,,never_run,0
+611,"Regionalwerk Bodensee GmbH & Co. KG","Tettnang",88069,,50,Yes,,,,,,,,never_run,0
+612,"Regionalwerk Chiemgau-Rupertiwinkel gKU","Kirchanschöring",83417,,50,Yes,,,,,,,,never_run,0
+613,"Regionalwerk Würmtal GmbH & Co. KG","Gauting",82131,,50,Yes,,,,,,,,never_run,0
+614,"regionalwerke GmbH & Co. KG","Bodenkirchen",84155,,50,Yes,,,,,,,,never_run,0
+615,"Reibert energie GmbH","Biedenkopf",35216,,50,Yes,,,,,,,,never_run,0
+616,"Remstalwerk GmbH & Co. KG","Remshalden",73630,,50,Yes,,,,,,,,never_run,0
+617,"renergie GmbH","Kempten",87439,,50,Yes,,,,,,,,never_run,0
+619,"Respect Energy GmbH","Hamburg",20457,,50,Yes,,,,,,,,never_run,0
+620,"Rhegio Natur GmbH","Rhede",46414,,50,Yes,,,,,,,,never_run,0
+621,"Rhein Energie AG","Köln",50823,,50,Yes,,,,,,,,never_run,0
+623,"Rheinhessen-Energie GmbH","Sprendlingen",55576,,50,Yes,,,,,,,,never_run,0
+624,"Rheinische Elektrizitäts- und Gasversorgungsgesellschaft mbH","Leverkusen",513371,,50,Yes,,,,,,,,never_run,0
+625,"RheinWerke GmbH","Düsseldorf",40233,,50,Yes,,,,,,,,never_run,0
+626,"Richtwerk Energie GmbH iGr.","Haan",42781,,50,Yes,,,,,,,,never_run,0
+627,"Rödl GmbH","Neumarkt",92318,,50,Yes,,,,,,,,never_run,0
+628,"Rommel Energie GmbH","Laupheim",88471,,50,Yes,,,,,,,,never_run,0
+629,"ROSSMANN EcoPower GmbH","Burgwedel",30938,,50,Yes,,,,,,,,never_run,0
+630,"RS Utility Service UG","Gräfenhainichen",06772,,50,Yes,,,,,,,,never_run,0
+631,"RUB Energy GmbH & Co. KG","Klein Offenseth-Sparrieshoop",25365,,50,Yes,,,,,,,,never_run,0
+633,"SachsenEnergie AG","Dresden",01069,,50,Yes,,,,,,,,never_run,0
+634,"Saergas GmbH & Co. KG","Saerbeck",48369,,50,Yes,,,,,,,,never_run,0
+635,"SAVIN GmbH","Kassel",34131,,50,Yes,,,,,,,,never_run,0
+636,"SCHARR WÄRME GmbH & Co. KG","Stuttgart",70565,,50,Yes,,,,,,,,never_run,0
+637,"Schillhorn Strom und Gas GmbH","Meldorf",25704,,50,Yes,,,,,,,,never_run,0
+638,"Schöpper & Knoll Taubertal GmbH","Rothenburg o. d. T.",91541,,50,Yes,,,,,,,,never_run,0
+639,"Schröder Gas GmbH & Co. KG","Thedinghausen",27321,,50,Yes,,,,,,,,never_run,0
+640,"Schuster & Sohn KG","Kaiserslautern",67663,,50,Yes,,,,,,,,never_run,0
+641,"schwarzwald energy GmbH","Calw",75365,,50,Yes,,,,,,,,never_run,0
+642,"SD Energie GmbH","Dresden",01156,,50,Yes,,,,,,,,never_run,0
+643,"SE SAUBER ENERGIE GmbH & Co. KG","Köln",50968,,50,Yes,,,,,,,,never_run,0
+644,"SE Sustainable Exergy GmbH","Unterhaching",82008,,50,Yes,,,,,,,,never_run,0
+645,"SENEC GmbH","Leipzig",04129,,50,Yes,,,,,,,,never_run,0
+646,"servenergy GmbH","Peine",31224,,50,Yes,,,,,,,,never_run,0
+647,"SES SolarEigenStrom GmbH","Oststeinbek",22113,,50,Yes,,,,,,,,never_run,0
+648,"SGB Energie GmbH","Gröbenzell",82194,,50,Yes,,,,,,,,never_run,0
+649,"Siegener Versorgungsbetriebe GmbH","Siegen",57072,,50,Yes,,,,,,,,never_run,0
+650,"SKIBATRON Mess-und Abrechnungssysteme GmbH","Gelsenkirchen",45896,,50,Yes,,,,,,,,never_run,0
+651,"SOLARIMO GmbH","Berlin",10829,,50,Yes,,,,,,,,never_run,0
+654,"SONNENEXT energy GmbH","Andernach",56626,,50,Yes,,,,,,,,never_run,0
+655,"Sonnenwind GmbH","Düsseldorf",40474,,50,Yes,,,,,,,,never_run,0
+656,"Sparkasse Siegen","Siegen",57009,,50,Yes,,,,,,,,never_run,0
+657,"SpotmyEnergy GmbH","Köln",51063,,50,Yes,,,,,,,,never_run,0
+658,"Stadt- und Überlandwerke GmbH Lübben","Lübben",15907,,50,Yes,,,,,,,,never_run,0
+659,"Stadt- und Überlandwerke GmbH Luckau-Lübbenau","Luckau",15926,,50,Yes,,,,,,,,never_run,0
+660,"Städtische Werke AG","Kassel",34117,,50,Yes,,,,,,,,never_run,0
+661,"Städtische Werke Magdeburg GmbH & Co. KG","Magdeburg",39104,,50,Yes,,,,,,,,never_run,0
+662,"Städtische Werke Spremberg (Lausitz) GmbH","Spremberg",03130,,50,Yes,,,,,,,,never_run,0
+663,"Stadtwerk am See GmbH & Co. KG","Überlingen",88662,,50,Yes,,,,,,,,never_run,0
+664,"Stadtwerk Haßfurt GmbH","Haßfurt",97437,,50,Yes,,,,,,,,never_run,0
+665,"Stadtwerk Rheda-Wiedenbrück GmbH & Co. KG","Rheda-Wiedenbrück",33378,,50,Yes,,,,,,,,never_run,0
+666,"Stadtwerk Tauberfranken GmbH","Bad Mergentheim",97980,,50,Yes,,,,,,,,never_run,0
+667,"Stadtwerk Verl GmbH","Verl",33415,,50,Yes,,,,,,,,never_run,0
+668,"Stadtwerke - Strom Plauen GmbH & Co. KG","Plauen",08523,,50,Yes,,,,,,,,never_run,0
+669,"Stadtwerke Ahrensburg GmbH","Ahrensburg",22926,,50,Yes,,,,,,,,never_run,0
+670,"Stadtwerke Altdorf GmbH","Altdorf",90518,,50,Yes,,,,,,,,never_run,0
+671,"Stadtwerke Amberg Versorgungs GmbH","Amberg",92224,,50,Yes,,,,,,,,never_run,0
+672,"Stadtwerke Andernach GmbH","Andernach",56626,,50,Yes,,,,,,,,never_run,0
+673,"Stadtwerke Arnsberg Vertriebs und Energiedienstleistungs GmbH","Arnsberg",59823,,50,Yes,,,,,,,,never_run,0
+674,"Stadtwerke Aue GmbH","Aue",08280,,50,Yes,,,,,,,,never_run,0
+676,"Stadtwerke Backnang GmbH","Backnang",71522,,50,Yes,,,,,,,,never_run,0
+677,"Stadtwerke Bad Belzig GmbH","Bad Belzig",14806,,50,Yes,,,,,,,,never_run,0
+678,"Stadtwerke Bad Brückenau GmbH","Bad Brückenau",97769,,50,Yes,,,,,,,,never_run,0
+679,"Stadtwerke Bad Friedrichshall","Bad Friedrichshall",74177,,50,Yes,,,,,,,,never_run,0
+680,"Stadtwerke Bad Homburg v. d. Höhe","Bad Homburg v. d. Höhe",61352,,50,Yes,,,,,,,,never_run,0
+681,"Stadtwerke Bad Langensalza GmbH","Bad Langensalza",99947,,50,Yes,,,,,,,,never_run,0
+682,"Stadtwerke Bad Nauheim GmbH","Bad Nauheim",61231,,50,Yes,,,,,,,,never_run,0
+683,"Stadtwerke Bad Tölz GmbH","Bad Tölz",83646,,50,Yes,,,,,,,,never_run,0
+684,"Stadtwerke Bad Vilbel GmbH","Bad Vilbel",61118,,50,Yes,,,,,,,,never_run,0
+685,"Stadtwerke Balve GmbH","Balve",58802,,50,Yes,,,,,,,,never_run,0
+686,"Stadtwerke Barmstedt Xtra GmbH","Barmstedt",25355,,50,Yes,,,,,,,,never_run,0
+687,"Stadtwerke Barsinghausen GmbH","Barsinghausen",30890,,50,Yes,,,,,,,,never_run,0
+688,"Stadtwerke Barth GmbH","Barth",18356,,50,Yes,,,,,,,,never_run,0
+689,"Stadtwerke Bayreuth Energie und Wasser GmbH","Bayreuth",95447,,50,Yes,,,,,,,,never_run,0
+690,"Stadtwerke Bayreuth Energiehandel GmbH","Bayreuth",95447,,50,Yes,,,,,,,,never_run,0
+691,"Stadtwerke Bergheim GmbH","Bergheim",50127,,50,Yes,,,,,,,,never_run,0
+693,"Stadtwerke Blaustein GmbH","Blaustein",89134,,50,Yes,,,,,,,,never_run,0
+694,"Stadtwerke Böblingen GmbH & Co. KG","Böblingen",71032,,50,Yes,,,,,,,,never_run,0
+695,"Stadtwerke Bogen GmbH","Bogen",94327,,50,Yes,,,,,,,,never_run,0
+696,"Stadtwerke Böhmetal GmbH","Walsrode",29664,,50,Yes,,,,,,,,never_run,0
+697,"Stadtwerke Brilon Energie GmbH","Brilon",59929,,50,Yes,,,,,,,,never_run,0
+698,"Stadtwerke Brunsbüttel GmbH","Brunsbüttel",25541,,50,Yes,,,,,,,,never_run,0
+699,"Stadtwerke Burgdorf GmbH","Burgdorf",31303,,50,Yes,,,,,,,,never_run,0
+700,"Stadtwerke Buxtehude GmbH","Buxtehude",21614,,50,Yes,,,,,,,,never_run,0
+701,"Stadtwerke Castrop-Rauxel GmbH","Castrop-Rauxel",44575,,50,Yes,,,,,,,,never_run,0
+702,"Stadtwerke Celle GmbH","Celle",29225,,50,Yes,,,,,,,,never_run,0
+703,"Stadtwerke Coesfeld GmbH","Coesfeld",48653,,50,Yes,,,,,,,,never_run,0
+704,"Stadtwerke Cottbus GmbH","Cottbus",03046,,50,Yes,,,,,,,,never_run,0
+705,"Stadtwerke Dachau","Dachau",85221,,50,Yes,,,,,,,,never_run,0
+706,"Stadtwerke Deggendorf GmbH","Deggendorf",94469,,50,Yes,,,,,,,,never_run,0
+707,"Stadtwerke Delmenhorst GmbH","Delmenhorst",27749,,50,Yes,,,,,,,,never_run,0
+708,"Stadtwerke Diez GmbH","Diez",65582,,50,Yes,,,,,,,,failed,0
+709,"Stadtwerke Dorfen GmbH","Dorfen",84405,,50,Yes,,,,,,,,never_run,0
+710,"Stadtwerke Dreieich GmbH","Dreieich",63303,,50,Yes,,,,,,,,never_run,0
+712,"Stadtwerke Eisenberg Energie GmbH","Eisenberg",07607,,50,Yes,,,,,,,,never_run,0
+713,"Stadtwerke Eisenhütenstadt GmbH","Eisenhüttenstadt",15890,,50,Yes,,,,,,,,never_run,0
+714,"Stadtwerke Elm-Lappwald GmbH","Königslutter am Elm",38154,,50,Yes,,,,,,,,never_run,0
+715,"Stadtwerke Emsdetten GmbH","Emsdetten",48282,,50,Yes,,,,,,,,never_run,0
+716,"Stadtwerke Eppingen GmbH & Co. KG","Eppingen",75031,,50,Yes,,,,,,,,never_run,0
+717,"Stadtwerke Erft GmbH","Bergheim",50127,,50,Yes,,,,,,,,never_run,0
+718,"Stadtwerke Espelkamp AöR","Espelkamp",32339,,50,Yes,,,,,,,,never_run,0
+719,"Stadtwerke Finsterwalde GmbH","Finsterwalde",03238,,50,Yes,,,,,,,,never_run,0
+720,"Stadtwerke Forchheim","Forchheim",91301,,50,Yes,,,,,,,,never_run,0
+721,"Stadtwerke Forst GmbH","Forst (Lausitz)",03149,,50,Yes,,,,,,,,never_run,0
+722,"Stadtwerke Frankenthal GmbH","Frankenthal (Pfalz)",67227,,50,Yes,,,,,,,,never_run,0
+724,"Stadtwerke Freiberg a.N. GmbH","Freiberg am Neckar",71691,,50,Yes,,,,,,,,never_run,0
+725,"Stadtwerke Freudenstadt GmbH & Co. KG","Freudenstadt",72250,,50,Yes,,,,,,,,never_run,0
+726,"Stadtwerke Fürstenfeldbruck GmbH","Fürstenfeldbruck",82256,,50,Yes,,,,,,,,never_run,0
+727,"Stadtwerke Garbsen GmbH","Garbsen",30823,,50,Yes,,,,,,,,never_run,0
+728,"Stadtwerke Gelnhausen GmbH","Gelnhausen",63571,,50,Yes,,,,,,,,never_run,0
+729,"Stadtwerke Georgsmarienhütte GmbH","Georgsmarienhütte",49124,,50,Yes,,,,,,,,never_run,0
+730,"Stadtwerke Gescher GmbH","Gescher",48712,,50,Yes,,,,,,,,never_run,0
+731,"Stadtwerke Gießen AG","Gießen",35398,,50,Yes,,,,,,,,never_run,0
+732,"Stadtwerke Gifhorn GmbH","Gifhorn",38505,,50,Yes,,,,,,,,never_run,0
+734,"Stadtwerke Greifswald GmbH","Greifswald",17489,,50,Yes,,,,,,,,never_run,0
+735,"Stadtwerke Greven GmbH","Greven",48268,,50,Yes,,,,,,,,never_run,0
+736,"Stadtwerke Grevesmühlen GmbH","Grevesmühlen",23936,,50,Yes,,,,,,,,never_run,0
+737,"Stadtwerke Grimma GmbH","Grimma",04668,,50,Yes,,,,,,,,never_run,0
+738,"Stadtwerke Gronau GmbH","Gronau",48599,,50,Yes,,,,,,,,never_run,0
+739,"Stadtwerke Groß-Gerau Versorgungs GmbH","Groß-Gerau",64521,,50,Yes,,,,,,,,never_run,0
+740,"Stadtwerke Güstrow GmbH","Güstrow",18273,,50,Yes,,,,,,,,never_run,0
+741,"Stadtwerke Haan GmbH","Haan",42781,,50,Yes,,,,,,,,never_run,0
+742,"Stadtwerke Haldensleben GmbH","Haldensleben",39340,,50,Yes,,,,,,,,never_run,0
+743,"Stadtwerke Haltern am See GmbH","Haltern am See",45721,,50,Yes,,,,,,,,never_run,0
+744,"Stadtwerke Harsewinkel GmbH","Harsewinkel",33428,,50,Yes,,,,,,,,never_run,0
+745,"Stadtwerke Hattingen GmbH","Hattingen",45525,,50,Yes,,,,,,,,never_run,0
+746,"Stadtwerke Hechingen","Hechingen",72379,,50,Yes,,,,,,,,never_run,0
+748,"Stadtwerke Heiligenhafen","Heiligenhafen",23774,,50,Yes,,,,,,,,never_run,0
+749,"Stadtwerke Hennigsdorf GmbH","Hennigsdorf",16761,,50,Yes,,,,,,,,never_run,0
+750,"Stadtwerke Herborn GmbH","Herborn",35745,,50,Yes,,,,,,,,never_run,0
+751,"Stadtwerke Herford GmbH","Herford",32049,,50,Yes,,,,,,,,never_run,0
+752,"Stadtwerke Herrenberg","Herrenberg",71083,,50,Yes,,,,,,,,never_run,0
+753,"Stadtwerke Hilden GmbH","Hilden",40724,,50,Yes,,,,,,,,never_run,0
+754,"Stadtwerke Hollfeld, Eigenbetrieb","Hollfeld",96142,,50,Yes,,,,,,,,never_run,0
+755,"Stadtwerke Holzminden GmbH","Holzminden",37603,,50,Yes,,,,,,,,never_run,0
+756,"Stadtwerke Homburg GmbH","Homburg",66424,,50,Yes,,,,,,,,never_run,0
+757,"Stadtwerke Hürth","Hürth",50354,,50,Yes,,,,,,,,never_run,0
+758,"Stadtwerke Hürth AöR","Hürth",50354,,50,Yes,,,,,,,,never_run,0
+759,"Stadtwerke Kaarst GmbH","Kaarst",41564,,50,Yes,,,,,,,,never_run,0
+760,"Stadtwerke Kalkar GmbH & Co. KG","Kalkar",47546,,50,Yes,,,,,,,,never_run,0
+761,"Stadtwerke Kaltenkirchen GmbH","Kaltenkirchen",24568,,50,Yes,,,,,,,,never_run,0
+762,"Stadtwerke Kerpen GmbH & Co. KG","Kerpen",50171,,50,Yes,,,,,,,,never_run,0
+765,"Stadtwerke Korschenbroich GmbH","Korschenbroich",41352,,50,Yes,,,,,,,,never_run,0
+766,"Stadtwerke Kulmbach","Kulmbach",95326,,50,Yes,,,,,,,,never_run,0
+767,"Stadtwerke Külsheim GmbH","Külsheim",97900,,50,Yes,,,,,,,,never_run,0
+768,"Stadtwerke Lage GmbH","Lage",32791,,50,Yes,,,,,,,,never_run,0
+769,"Stadtwerke Landsberg KU","Landsberg am Lech",86899,,50,Yes,,,,,,,,never_run,0
+770,"Stadtwerke Landstuhl","Landstuhl",66849,,50,Yes,,,,,,,,never_run,0
+771,"Stadtwerke Langen GmbH","Langen",63225,,50,Yes,,,,,,,,never_run,0
+772,"Stadtwerke Langenfeld GmbH","Langenfeld",40764,,50,Yes,,,,,,,,never_run,0
+773,"Stadtwerke Langenzenn","Langenzenn",90579,,50,Yes,,,,,,,,never_run,0
+774,"Stadtwerke Lauterbach GmbH","Lauterbach",36341,,50,Yes,,,,,,,,never_run,0
+775,"Stadtwerke Lebach GmbH","Lebach",66822,,50,Yes,,,,,,,,never_run,0
+776,"Stadtwerke Lehrte GmbH","Lehrte",31275,,50,Yes,,,,,,,,never_run,0
+777,"Stadtwerke Leichlingen GmbH","Leichlingen",42799,,50,Yes,,,,,,,,never_run,0
+778,"Stadtwerke Lichtenfels","Lichtenfels",96215,,50,Yes,,,,,,,,never_run,0
+779,"Stadtwerke Lindenberg","Lindenberg",88161,,50,Yes,,,,,,,,never_run,0
+780,"Stadtwerke Lingen GmbH","Lingen/Ems",49808,,50,Yes,,,,,,,,never_run,0
+781,"Stadtwerke Löbau GmbH","Löbau",02708,,50,Yes,,,,,,,,never_run,0
+782,"Stadtwerke Löhne Energie & mehr GmbH","Löhne",32584,,50,Yes,,,,,,,,never_run,0
+783,"Stadtwerke Loitz GmbH","Loitz",17121,,50,Yes,,,,,,,,never_run,0
+784,"Stadtwerke Ludwigsburg GmbH","Ludwigsburg",71636,,50,Yes,,,,,,,,never_run,0
+785,"Stadtwerke Lünen GmbH","Lünen",44534,,50,Yes,,,,,,,,never_run,0
+786,"Stadtwerke Malchow","Malchow",17213,,50,Yes,,,,,,,,never_run,0
+787,"Stadtwerke Marburg","Marburg",35009,,50,Yes,,,,,,,,never_run,0
+788,"Stadtwerke Meerbusch GmbH","Meerbusch",40670,,50,Yes,,,,,,,,never_run,0
+789,"Stadtwerke Metzingen – Eigenbetrieb der Stadt Metzingen","Metzingen",72555,,50,Yes,,,,,,,,never_run,0
+790,"Stadtwerke Mosbach GmbH","Mosbach",74821,,50,Yes,,,,,,,,never_run,0
+791,"Stadtwerke Mühlhausen GmbH","Mühlhausen",99974,,50,Yes,,,,,,,,never_run,0
+792,"Stadtwerke MüllheimStaufen GmbH","Müllheim",79379,,50,Yes,,,,,,,,never_run,0
+794,"Stadtwerke Neckargemünd GmbH","Neckargemünd",69151,,50,Yes,,,,,,,,never_run,0
+795,"Stadtwerke Neckarsulm","Neckarsulm",74172,,50,Yes,,,,,,,,never_run,0
+796,"Stadtwerke Neuenhaus GmbH","Neuenhaus",49828,,50,Yes,,,,,,,,never_run,0
+797,"Stadtwerke Neuffen AG","Neuffen",72639,,50,Yes,,,,,,,,never_run,0
+798,"Stadtwerke Neuruppin GmbH","Neuruppin",16816,,50,Yes,,,,,,,,never_run,0
+799,"Stadtwerke Neuss Energie und Wasser GmbH","Neuss",41464,,50,Yes,,,,,,,,never_run,0
+800,"Stadtwerke Neuss GmbH","Neuss",41464,,50,Yes,,,,,,,,never_run,0
+801,"Stadtwerke Neustadt a.Rbge. GmbH","Neustadt",31535,,50,Yes,,,,,,,,never_run,0
+802,"Stadtwerke Neustadt an der Orla GmbH","Neustadt an der Orla",07806,,50,Yes,,,,,,,,never_run,0
+803,"Stadtwerke Oberkirch GmbH","Oberkirch",77704,,50,Yes,,,,,,,,never_run,0
+804,"Stadtwerke Oberursel (Taunus) GmbH","Oberursel (Taunus)",61440,,50,Yes,,,,,,,,never_run,0
+805,"Stadtwerke Oerlinghausen GmbH","Oerlinghausen",33813,,50,Yes,,,,,,,,never_run,0
+806,"Stadtwerke Öhringen GmbH","Öhringen",74613,,50,Yes,,,,,,,,never_run,0
+807,"Stadtwerke Olching GmbH","Olching",82140,,50,Yes,,,,,,,,never_run,0
+809,"Stadtwerke Oranienburg GmbH","Oranienburg",16515,,50,Yes,,,,,,,,never_run,0
+810,"Stadtwerke Overath Energie GmbH","Overath",51491,,50,Yes,,,,,,,,never_run,0
+811,"Stadtwerke Paderborn GmbH","Paderborn",33102,,50,Yes,,,,,,,,never_run,0
+812,"Stadtwerke Pasewalk GmbH","Pasewalk",17309,,50,Yes,,,,,,,,never_run,0
+813,"Stadtwerke Passau GmbH","Passau",94036,,50,Yes,,,,,,,,never_run,0
+814,"Stadtwerke Pfullendorf GmbH","Pfullendorf",88630,,50,Yes,,,,,,,,never_run,0
+815,"Stadtwerke Pfullingen","Pfullingen",72793,,50,Yes,,,,,,,,never_run,0
+816,"Stadtwerke Pirna Energie GmbH","Pirna",01796,,50,Yes,,,,,,,,never_run,0
+817,"Stadtwerke Plattling","Plattling",94447,,50,Yes,,,,,,,,never_run,0
+818,"Stadtwerke Plön Versorgungs GmbH","Plön",54306,,50,Yes,,,,,,,,never_run,0
+819,"Stadtwerke Porta Westfalica GmbH","Porta Westfalica",32457,,50,Yes,,,,,,,,never_run,0
+820,"Stadtwerke Pulheim GmbH","Pulheim",50259,,50,Yes,,,,,,,,never_run,0
+821,"Stadtwerke Radolfzell GmbH","Radolfzell",78315,,50,Yes,,,,,,,,never_run,0
+822,"Stadtwerke Recklinghausen","Recklinghausen",45657,,50,Yes,,,,,,,,never_run,0
+823,"Stadtwerke Rees GmbH","Rees",46459,,50,Yes,,,,,,,,never_run,0
+824,"Stadtwerke Ribnitz Damgarten GmbH","Ribnitz Damgarten",18311,,50,Yes,,,,,,,,never_run,0
+825,"Stadtwerke Riesa GmbH","Riesa",01587,,50,Yes,,,,,,,,never_run,0
+826,"Stadtwerke Rietberg-Langenberg GmbH","Rietberg",33397,,50,Yes,,,,,,,,never_run,0
+827,"Stadtwerke Rinteln","Rinteln",31737,,50,Yes,,,,,,,,never_run,0
+828,"Stadtwerke Rodgau Energie GmbH","Rodgau",63110,,50,Yes,,,,,,,,never_run,0
+829,"StadtWerke Rösrath - Energie GmbH","Rösrath",51503,,50,Yes,,,,,,,,never_run,0
+831,"Stadtwerke Saalfeld GmbH","Saalfeld",07318,,50,Yes,,,,,,,,never_run,0
+832,"Stadtwerke Sankt Augustin GmbH","Sankt Augustin / Mülldorf",53757,,50,Yes,,,,,,,,failed,0
+833,"Stadtwerke Schaumburg-Lippe GmbH","Bückeburg",31675,,50,Yes,,,,,,,,never_run,0
+834,"Stadtwerke Schloß Holte-Stukenbrock GmbH","Schloß Holte-Stukenbrock",33758,,50,Yes,,,,,,,,never_run,0
+835,"Stadtwerke Schmalkalden GmbH","Schmalkalden",98574,,50,Yes,,,,,,,,never_run,0
+836,"Stadtwerke Schneverdingen GmbH","Schneverdingen",29640,,50,Yes,,,,,,,,never_run,0
+837,"Stadtwerke Schönebeck GmbH","Schönebeck",39218,,50,Yes,,,,,,,,never_run,0
+838,"Stadtwerke Schüttorf Emsbüren GmbH","Schüttorf",48465,,50,Yes,,,,,,,,never_run,0
+839,"Stadtwerke Schwentinental GmbH","Schwentinental",24222,,50,Yes,,,,,,,,never_run,0
+840,"Stadtwerke Senftenberg GmbH","Senftenberg",01968,,50,Yes,,,,,,,,never_run,0
+841,"Stadtwerke Soltau GmbH & Co. KG","Soltau",29614,,50,Yes,,,,,,,,never_run,0
+842,"Stadtwerke Springe GmbH","Springe",31832,,50,Yes,,,,,,,,never_run,0
+843,"Stadtwerke Stadtoldendorf GmbH","Stadtoldendorf",37627,,50,Yes,,,,,,,,never_run,0
+844,"Stadtwerke Steinfurt GmbH","Steinfurt",48565,,50,Yes,,,,,,,,never_run,0
+845,"Stadtwerke Straubing Strom und Gas GmbH","Straubing",94315,,50,Yes,,,,,,,,never_run,0
+847,"Stadtwerke Südholstein GmbH","Pinneberg",25421,,50,Yes,,,,,,,,never_run,0
+848,"Stadtwerke Tecklenburger Land Energie GmbH","Ibbenbüren",49477,,50,Yes,,,,,,,,never_run,0
+849,"Stadtwerke Teterow GmbH","Teterow",17166,,50,Yes,,,,,,,,never_run,0
+850,"Stadtwerke Thale GmbH","Thale",06502,,50,Yes,,,,,,,,never_run,0
+851,"Stadtwerke Torgelow GmbH","Torgelow",17358,,50,Yes,,,,,,,,never_run,0
+852,"Stadtwerke Troisdorf GmbH","Troisdorf",53840,,50,Yes,,,,,,,,never_run,0
+853,"Stadtwerke Tübingen GmbH","Tübingen",72014,,50,Yes,,,,,,,,never_run,0
+854,"Stadtwerke Tuttlingen GmbH","Tuttlingen",78532,,50,Yes,,,,,,,,never_run,0
+855,"Stadtwerke Velbert GmbH","Velbert",42549,,50,Yes,,,,,,,,never_run,0
+856,"Stadtwerke Velten GmbH","Velten",16727,,50,Yes,,,,,,,,never_run,0
+857,"Stadtwerke Viernheim GmbH","Viernheim",68519,,50,Yes,,,,,,,,never_run,0
+858,"Stadtwerke Voerde GmbH","Voerde",46562,,50,Yes,,,,,,,,never_run,0
+859,"Stadtwerke Waldkirch","Waldkirch",79183,,50,Yes,,,,,,,,never_run,0
+860,"Stadtwerke Waldkraiburg GmbH","Waldkraiburg",84478,,50,Yes,,,,,,,,never_run,0
+861,"Stadtwerke Walldorf GmbH","Walldorf",69190,,50,Yes,,,,,,,,never_run,0
+862,"Stadtwerke Waltrop GmbH & Co. KG","Waltrop",45731,,50,Yes,,,,,,,,never_run,0
+863,"Stadtwerke Waren GmbH","Waren",17192,,50,Yes,,,,,,,,never_run,0
+864,"Stadtwerke Wedel GmbH","Wedel",22880,,50,Yes,,,,,,,,never_run,0
+865,"Stadtwerke Weilburg GmbH","Weilburg an der Lahn",35781,,50,Yes,,,,,,,,never_run,0
+866,"Stadtwerke Weilheim i.OB Energie GmbH - SWE","Weilheim",82362,,50,Yes,,,,,,,,never_run,0
+867,"Stadtwerke Weinstadt","Weinstadt",71384,,50,Yes,,,,,,,,never_run,0
+868,"Stadtwerke Wernigerode GmbH","Wernigerode",38855,,50,Yes,,,,,,,,never_run,0
+869,"Stadtwerke Wesel GmbH","Wesel",46485,,50,Yes,,,,,,,,never_run,0
+870,"Stadtwerke Westmünsterland Energiekooperation GmbH & Co. KG","Coesfeld",48653,,50,Yes,,,,,,,,never_run,0
+871,"Stadtwerke Willich GmbH","Willich",47877,,50,Yes,,,,,,,,never_run,0
+872,"Stadtwerke Winnenden GmbH","Winnenden",71364,,50,Yes,,,,,,,,never_run,0
+873,"Stadtwerke Wismar GmbH","Wismar",23970,,50,Yes,,,,,,,,success,1
+874,"Stadtwerke Wissen GmbH","Wissen",57537,,50,Yes,,,,,,,,never_run,0
+875,"Stadtwerke Wolfenbüttel","Wolfenbüttel",38304,,50,Yes,,,,,,,,never_run,0
+876,"Stadtwerke Wolfhagen GmbH","Wolfhagen",34466,,50,Yes,,,,,,,,never_run,0
+877,"Stadtwerke Wunstorf GmbH","Wunstorf",31515,,50,Yes,,,,,,,,never_run,0
+878,"Stadtwerkenergie Ostwestfalen-Lippe GmbH","Lemgo",32657,,50,Yes,,,,,,,,never_run,0
+879,"Statkraft Markets GmbH","Düsseldorf",40476,,50,Yes,,,,,,,,never_run,0
+880,"Steil Energie GmbH","Weißenburg i. Bay",91781,,50,Yes,,,,,,,,never_run,0
+881,"Strogon GmbH","Bonn",53111,,50,Yes,,,,,,,,never_run,0
+882,"STROMIX GmbH","Leipzig",04107,,50,Yes,,,,,,,,never_run,0
+883,"Stromversorgung Angermünde GmbH","Angermünde",16278,12 122/12,50,Yes,,,,,,,,never_run,0
+884,"Stromvertrieb Backnang GmbH & Co. KG","Backnang",71512,,50,Yes,,,,,,,,never_run,0
+885,"Sunnic Lighthouse","Hamburg",20457,,50,Yes,,,,,,,,never_run,0
+886,"Sunvigo Energy I GmbH","Köln",50999,,50,Yes,,,,,,,,never_run,0
+887,"Süwag Vertrieb AG & Co. KG","Frankfurt am Main",65929,,50,Yes,,,,,,,,never_run,0
+891,"SWE Energie GmbH","Erfurt",99086,,50,Yes,,,,,,,,success,1
+892,"SWK Energie GmbH","Krefeld",47804,,50,Yes,,,,,,,,never_run,0
+893,"SWM Versorgungs GmbH","München",80992,,50,Yes,,,,,,,,never_run,0
+894,"SWN Stadtwerke Neustadt GmbH","Neustadt/Coburg",96465,,50,Yes,,,,,,,,never_run,0
+896,"SWR Energie . Service . Bau GmbH","Rothenburg o.d.T.",91541,,50,Yes,,,,,,,,never_run,0
+897,"SWS Energie GmbH","Stalsund",18439,,50,Yes,,,,,,,,never_run,0
+898,"SWTE Kommunal GmbH & Co.KG","Ibbenbüren",49477,,50,Yes,,,,,,,,never_run,0
+899,"SWV Regional GmbH","Versmold",33775,,50,Yes,,,,,,,,never_run,0
+900,"SWW Wunsiedel GmbH","Wunsiedel",95632,,50,Yes,,,,,,,,never_run,0
+901,"SYNVIA energy","Magdeburg",39104,,50,Yes,,,,,,,,never_run,0
+902,"Systemstrom GmbH","Tüßling",84577,,50,Yes,,,,,,,,never_run,0
+903,"team energie GmbH & Co. KG","Flensburg",24941,,50,Yes,,,,,,,,failed,0
+904,"Tebbe Mineralölhandel GmbH & Co. KG","Visbek",49429,,50,Yes,,,,,,,,never_run,0
+905,"Technische Werke Schussental GmbH & Co KG","Ravensburg",88212,,50,Yes,,,,,,,,never_run,0
+906,"Tegernseer Erdgasversorgungsgesellschaft mbH & Co. KG","Tegernsee",83684,,50,Yes,,,,,,,,never_run,0
+907,"TeleSon Energie GmbH","Grünwald",82031,,50,Yes,,,,,,,,never_run,0
+908,"Teutoburger Energie Netzwerk eG","Hagen a. T. W.",49170,,50,Yes,,,,,,,,never_run,0
+909,"The Mobility House Energy GmbH","München",81669,,50,Yes,,,,,,,,never_run,0
+910,"Thiel GmbH & Co.KG","Gräfentonna, Dänemark",DNK 99958,,50,Yes,,,,,,,,never_run,0
+912,"Tibber Deutschland GmbH","Berlin",10115,,50,Yes,,,,,,,,never_run,0
+913,"Tilly Hedrich GmbH & Co.KG","Langgöns",35428,,50,Yes,,,,,,,,never_run,0
+914,"Trifels Gas GmbH","Annweiler am Trifels",76855,,50,Yes,,,,,,,,never_run,0
+915,"TürkiyemElektrik GmbH","Rosenheim",57520,,50,Yes,,,,,,,,never_run,0
+916,"TWH - Technische Werke Herbrechtingen GmbH","Herbrechtingen",89542,,50,Yes,,,,,,,,never_run,0
+917,"TWL Energie Deutschland GmbH","Ludwigshafen",67063,,50,Yes,,,,,,,,never_run,0
+918,"Tyczka Totalgaz GmbH","Geretsried",82538,,50,Yes,,,,,,,,never_run,0
+919,"ubitricity Gesellschaft für verteilte Energiesysteme mbH","Berlin",10829,,50,Yes,,,,,,,,never_run,0
+920,"Uhlenbruck Energie GmbH","Mülheim an der Ruhr",45478,,50,Yes,,,,,,,,never_run,0
+921,"UNIEN GmbH","Mehring",86415,,50,Yes,,,,,,,,never_run,0
+922,"Univers Operations GmbH","München",80807,,50,Yes,,,,,,,,never_run,0
+923,"Unser E GmbH","Nauen",14641,,50,Yes,,,,,,,,never_run,0
+924,"Up2You Energy GmbH","Gröbenzell",82194,,50,Yes,,,,,,,,never_run,0
+927,"VBV Wind GmbH","Bad Vilbel",61118,,50,Yes,,,,,,,,never_run,0
+928,"Ver- und Entsorgungwerke Bad Muskau GmbH","Bad Muskau",02953,,50,Yes,,,,,,,,never_run,0
+929,"Vereinigte Gas- und Wasserversorgung GmbH","Rheda-Wiedenbrück",33378,,50,Yes,,,,,,,,never_run,0
+930,"Vereinigte Stadtwerke GmbH","Ratzeburg",23909,,50,Yes,,,,,,,,never_run,0
+931,"Vereinigte Wertach-Elektrizitätswerke GmbH","Kaufbeuren",87600,,50,Yes,,,,,,,,never_run,0
+932,"Versorgungs- Betriebe Elbe GmbH","Lauenburg/ Elbe",21481,,50,Yes,,,,,,,,never_run,0
+933,"Vester GmbH","Schlierbach",73278,,50,Yes,,,,,,,,never_run,0
+934,"Vestische Energie GmbH","Recklinghausen",45657,,50,Yes,,,,,,,,never_run,0
+935,"Vetra Energie GmbH","Grünwald",82031,,50,Yes,,,,,,,,never_run,0
+936,"vivi-power GmbH","Viernheim",68519,,50,Yes,,,,,,,,never_run,0
+937,"Volkswagen Group Charging GmbH","Berlin",10178,,50,Yes,2025,50.90,1.50,1.50,0.00,,,success,1
+938,"Voltego GmbH","Krefeld",47803,,50,Yes,,,,,,,,never_run,0
+939,"Vonovia Energie GmbH","Bochum",44803,,50,Yes,,,,,,,,never_run,0
+940,"Vonovia Energie Service GmbH","Bochum",44803,,50,Yes,,,,,,,,never_run,0
+941,"voxenergie GmbH","Berlin",12107,,50,Yes,,,,,,,,never_run,0
+942,"Vraend GmbH","Frankfurt am Main",60327,,50,Yes,,,,,,,,never_run,0
+943,"w3energie GmbH","Essen",45309,,50,Yes,,,,,,,,never_run,0
+944,"Walter Fritz Deutsche Gesellschaft für Energieversorgung mbH","Weimar",99423,,50,Yes,,,,,,,,never_run,0
+945,"Wärmeversorgung Würselen GmbH","Stolberg",52222,,50,Yes,,,,,,,,never_run,0
+946,"Watzmann Natur Energie GmbH","Schönau a. Königssee",83471,,50,Yes,,,,,,,,never_run,0
+947,"WEB Windenergie Deutschland GmbH","Hamburg",21029,,50,Yes,,,,,,,,never_run,0
+948,"wechselstrom wechselgas GmbH","Wedel",22880,,50,Yes,,,,,,,,never_run,0
+949,"WEG Weidener Energie GmbH","Weiden",92637,,50,Yes,,,,,,,,never_run,0
+950,"Weihermann Energiehandel GmbH","Münster",48161,,50,Yes,,,,,,,,never_run,0
+951,"Weiler Wärme eG","Pfalzgrafenweiler",72285,,50,Yes,,,,,,,,never_run,0
+952,"Weinmayr Energie GmbH","Eggenfelden",84307,,50,Yes,,,,,,,,never_run,0
+953,"Weiß Energie GmbH","Ulm",89073,,50,Yes,,,,,,,,never_run,0
+954,"WEP Wärme-, Energie- und Prozesstechnik GmbH","Hückelhoven",41836,,50,Yes,,,,,,,,never_run,0
+955,"werkkraft GmbH","München",81671,,50,Yes,,,,,,,,never_run,0
+956,"Werraenergie GmbH","Bad Salzungen",36433,,50,Yes,,,,,,,,never_run,0
+957,"WES energy GmbH","Michaelisdonn",25693,,50,Yes,,,,,,,,never_run,0
+958,"WeShareEnergy GmbH","Düsseldorf",40225,,50,Yes,,,,,,,,never_run,0
+959,"Westbridge Energy GmbH","Frankfurt am Main",60325,,50,Yes,,,,,,,,never_run,0
+960,"WestfalenWIND Strom GmbH","Paderborn",33100,,50,Yes,,,,,,,,never_run,0
+961,"Westhof Energie GmbH & Co. KG","Friedrichsgabekoog",25764,,50,Yes,,,,,,,,never_run,0
+962,"WEV Westdeutsche Energieversorgung GmbH","Bochum",44787,,50,Yes,,,,,,,,never_run,0
+963,"Wind Line Markus A. Henrich e. K.","Lörrach",79539,,50,Yes,,,,,,,,never_run,0
+964,"WindMW GmbH","Zossen",15806,,50,Yes,,,,,,,,never_run,0
+965,"Windpark Johannsen OHG","Hörup",24980,,50,Yes,,,,,,,,never_run,0
+966,"Windpark Lütjenholm GmbH & Co. KG","Lütjenholm",25842,,50,Yes,,,,,,,,never_run,0
+967,"Windströöm GmbH","Düsseldorf",40213,,50,Yes,,,,,,,,failed,0
+968,"Wirtschaftsbetriebe der Stadt Norden GmbH","Norden",26506,,50,Yes,,,,,,,,never_run,0
+969,"Wohnpark Stufenlos Energieerzeugungs- u. Vertriebs GmbH & Co. KG","Schöppenstedt",38170,,50,Yes,,,,,,,,never_run,0
+970,"Wohnungsgesellschaft Riesa mbH","Riesa",01587,,50,Yes,,,,,,,,never_run,0
+971,"WSW Energie & Wasser AG","Wuppertal",42281,,50,Yes,,,,,,,,never_run,0
+972,"Wumm GmbH","Meßkirch",88605,,50,Yes,,,,,,,,never_run,0
+973,"XOOL GmbH","München",80335,,50,Yes,,,,,,,,never_run,0
+974,"Yippie GmbH","Obertshausen",63179,,50,Yes,,,,,,,,never_run,0
+975,"Zander Brennstoffe & Service KG","Halenbeck-Rohlsdorf",16945,,50,Yes,,,,,,,,never_run,0
+976,"Zehrer & Petersen GmbH & Co. KG","Hamburg",21079,,50,Yes,,,,,,,,never_run,0
+977,"ZENERGIE GmbH","Wunsiedel",95632,,50,Yes,,,,,,,,never_run,0
+978,"ZG  Raiffeisen Energie GmbH","Karlsruhe",76137,,50,Yes,2023,100.00,0.00,0.00,0.00,35,regex,success,1
+979,"ZukunftsEnergie Nordostbayern GmbH","Wunsiedel",95632,,50,Yes,,,,,,,,never_run,0
+980,"ZVO Energie GmbH","Sierksdorf",23723,,50,Yes,,,,,,,,never_run,0
+981,"ZVO Energiedienstleistungen GmbH","Sierksdorf",23723,,50,Yes,2024,100.00,0.00,0.00,0.00,35,regex,success,1
