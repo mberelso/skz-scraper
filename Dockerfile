@@ -32,7 +32,7 @@ RUN apt-get update && apt-get install -y \
     libxcomposite1 \
     libxcursor1 \
     libxdamage1 \
-    libext6 \
+    libxext6 \
     libxfixes3 \
     libxi6 \
     libxrandr2 \
