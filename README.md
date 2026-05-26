@@ -12,7 +12,7 @@ Next.js App (Dashboard + API)
 ├── Puppeteer → lädt Webseiten und PDFs herunter
 ├── Gemini Vision API → analysiert PDFs direkt (AI-First)
 ├── Regex-Parser → Fallback für einfache Fälle
-├── Neon (PostgreSQL) → speichert Provider, Jobs, Dokumente, Energiemix
+├── Neon (PostgreSQL) → speichert Provider, Jobs, Dokumente, Energiemix, HKN-Herkunftsländer
 └── Supabase Storage → archiviert PDFs und Screenshots (Cloud)
 ```
 
@@ -64,8 +64,10 @@ npm run dev
 
 - Alle Anbieter mit aktuellem Scraping-Status
 - Strommix-Daten mit Konfidenzwert und Extraktionsmethode
-- Manuelles Scraping pro Anbieter (optional mit direkter PDF-URL)
-- Live-Updates während laufender Jobs
+- Manuelles Erfassen und Bearbeiten von Energiemix-Details (EEG %, HKN %, Mieterstrom %)
+- Dynamischer Editor für HKN-Herkunftsländer (Länder und Prozentanteile hinzufügen/entfernen)
+- Manuelles Scraping pro Anbieter (optional mit direkter PDF-URL zur Umgehung von Suchmaschinen-Sperren)
+- Interaktiver Live-Update-Kippschalter oben rechts im Header (automatische Aktualisierung an-/ausschaltbar)
 
 ### Batch-Scraping (CLI)
 
@@ -91,10 +93,12 @@ npx tsx scripts/query.ts "SELECT p.name, em.* FROM energy_mix em JOIN documents 
 | `scrape_jobs` | Scraping-Jobs mit Status und Log                               |
 | `documents`   | Gespeicherte PDFs/Screenshots mit SHA256-Hash                  |
 | `energy_mix`  | Extrahierte Kennzahlen (EE, Fossil, Nuklear + Unterkategorien) |
+| `hkn_origins` | Herkunftsländer und Prozentanteile der HKN pro Strommix        |
 
 ### Energiemix-Unterkategorien
 
 - **Erneuerbar:** Wind, Solar, Biomasse, Wasserkraft, Sonstige EE
+- **Erneuerbare-Aufschlüsselung:** EEG-gefördert %, Sonstige HKN %, Mieterstrom %
 - **Fossil:** Kohle, Erdgas, Sonstige Fossile
 - **Kernenergie**
 - **Umwelt:** CO₂ (g/kWh), Radioaktiver Abfall (mg/kWh)
@@ -102,7 +106,8 @@ npx tsx scripts/query.ts "SELECT p.name, em.* FROM energy_mix em JOIN documents 
 ## Tech-Stack
 
 - **Frontend:** Next.js 16, React 19, Tailwind CSS
-- **Backend:** Next.js API Routes, MariaDB
+- **Backend:** Next.js API Routes, PostgreSQL (Neon.com)
+- **Speicher:** Supabase Storage (PDF-Archivierung in der Cloud)
 - **Scraping:** Puppeteer, DuckDuckGo-Suche
 - **Parsing:** Google Gemini 2.0 Flash (Vision + Text), pdf2json, Regex
 - **Datenquelle:** Bundesnetzagentur Energielieferantenliste
