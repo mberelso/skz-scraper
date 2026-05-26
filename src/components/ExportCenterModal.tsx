@@ -33,10 +33,13 @@ export default function ExportCenterModal({
     }, [isOpen, initialSelectedIds]);
 
     useEffect(() => {
-        if (!isOpen) return;
+        if (isOpen) {
+            modalRef.current?.focus();
+        }
+    }, [isOpen]);
 
-        // Focus modal initially
-        modalRef.current?.focus();
+    useEffect(() => {
+        if (!isOpen) return;
 
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
