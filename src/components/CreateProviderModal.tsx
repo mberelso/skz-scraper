@@ -27,6 +27,33 @@ export default function CreateProviderModal({ onClose, onSuccess }: CreateProvid
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
                 onClose();
+                return;
+            }
+
+            if (e.key === 'Tab') {
+                if (!modalRef.current) return;
+                const focusableElements = modalRef.current.querySelectorAll(
+                    'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]'
+                );
+                const firstElement = focusableElements[0] as HTMLElement;
+                const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+
+                if (focusableElements.length === 0) {
+                    e.preventDefault();
+                    return;
+                }
+
+                if (e.shiftKey) {
+                    if (document.activeElement === firstElement) {
+                        lastElement.focus();
+                        e.preventDefault();
+                    }
+                } else {
+                    if (document.activeElement === lastElement) {
+                        firstElement.focus();
+                        e.preventDefault();
+                    }
+                }
             }
         };
         window.addEventListener('keydown', handleKeyDown);
@@ -89,7 +116,8 @@ export default function CreateProviderModal({ onClose, onSuccess }: CreateProvid
         >
             <div
                 ref={modalRef}
-                className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-slate-200"
+                tabIndex={-1}
+                className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-slate-200 outline-none"
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="create-provider-title"

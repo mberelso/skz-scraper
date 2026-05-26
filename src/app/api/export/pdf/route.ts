@@ -9,7 +9,8 @@ export async function POST(req: Request) {
 
         // Query providers using common query runner
         const providers = await queryExportData(body);
-        const year = body.filters?.year && body.filters.year !== 'all' ? Number(body.filters.year) : new Date().getFullYear();
+        const year =
+            body.filters?.year && body.filters.year !== 'all' ? Number(body.filters.year) : new Date().getFullYear();
 
         // Generate HTML template
         const html = generatePDFHtml(providers, year);

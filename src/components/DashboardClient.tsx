@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import ProviderModal from './ProviderModal';
 import CreateProviderModal from './CreateProviderModal';
+import ExportCenterModal from './ExportCenterModal';
 
 const formatJobDate = (dateVal: any) => {
     if (!dateVal) return '-';
@@ -26,6 +27,8 @@ export default function DashboardClient({
     const router = useRouter();
     const [selectedProvider, setSelectedProvider] = useState<any>(null);
     const [showCreateModal, setShowCreateModal] = useState(false);
+    const [selectedProviderIds, setSelectedProviderIds] = useState<number[]>([]);
+    const [showExportModal, setShowExportModal] = useState(false);
     const [batchLoading, setBatchLoading] = useState(false);
     const [batchResult, setBatchResult] = useState<any>(null);
     const [batchStatus, setBatchStatus] = useState<any>(null);
@@ -186,6 +189,29 @@ export default function DashboardClient({
     const totalPages = Math.max(1, Math.ceil(sortedProviders.length / pageSize));
     const paginatedProviders = sortedProviders.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
+    const allPageSelected =
+        paginatedProviders.length > 0 && paginatedProviders.every((p: any) => selectedProviderIds.includes(p.id));
+
+    const toggleSelectProvider = (id: number) => {
+        setSelectedProviderIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+    };
+
+    const toggleSelectAllPage = () => {
+        if (allPageSelected) {
+            const pageIds = paginatedProviders.map((p: any) => p.id);
+            setSelectedProviderIds((prev) => prev.filter((id) => !pageIds.includes(id)));
+        } else {
+            const pageIds = paginatedProviders.map((p: any) => p.id);
+            setSelectedProviderIds((prev) => {
+                const newIds = [...prev];
+                pageIds.forEach((id) => {
+                    if (!newIds.includes(id)) newIds.push(id);
+                });
+                return newIds;
+            });
+        }
+    };
+
     useEffect(() => {
         setCurrentPage(1);
     }, [searchQuery, statusFilter, dataFilter, reviewFilter]);
@@ -340,6 +366,13 @@ export default function DashboardClient({
                                 ></span>
                             </span>
                             <span>Live-Update: {livePollingEnabled ? 'Aktiv' : 'Inaktiv'}</span>
+                        </button>
+                        <button
+                            onClick={() => setShowExportModal(true)}
+                            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all shadow-sm"
+                        >
+                            <span className="material-symbols-outlined text-sm">ios_share</span>
+                            Export-Center {selectedProviderIds.length > 0 && `(${selectedProviderIds.length})`}
                         </button>
                         <button
                             onClick={() => setShowCreateModal(true)}
@@ -670,6 +703,14 @@ export default function DashboardClient({
                             <table className="w-full text-left">
                                 <thead className="bg-slate-50 text-slate-500 text-xs font-bold uppercase tracking-wider">
                                     <tr>
+                                        <th className="px-6 py-4 w-12 text-center">
+                                            <input
+                                                type="checkbox"
+                                                checked={allPageSelected}
+                                                onChange={toggleSelectAllPage}
+                                                className="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer"
+                                            />
+                                        </th>
                                         <th
                                             onClick={() => handleSort('name')}
                                             className="px-6 py-4 cursor-pointer hover:text-primary"
@@ -717,6 +758,14 @@ export default function DashboardClient({
                                             id={`provider-${provider.id}`}
                                             className={`transition-colors hover:bg-primary/5 ${index % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}`}
                                         >
+                                            <td className="px-6 py-4 text-center whitespace-nowrap w-12">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={selectedProviderIds.includes(provider.id)}
+                                                    onChange={() => toggleSelectProvider(provider.id)}
+                                                    className="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4 cursor-pointer"
+                                                />
+                                            </td>
                                             <td className="px-6 py-4">
                                                 <div className="text-sm font-semibold text-slate-900">
                                                     {provider.name}
@@ -904,6 +953,15 @@ export default function DashboardClient({
                         setShowCreateModal(false);
                         refreshData();
                     }}
+                />
+            )}
+
+            {showExportModal && (
+                <ExportCenterModal
+                    isOpen={showExportModal}
+                    onClose={() => setShowExportModal(false)}
+                    initialSelectedIds={selectedProviderIds}
+                    providers={providers}
                 />
             )}
         </div>
