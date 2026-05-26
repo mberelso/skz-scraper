@@ -550,7 +550,7 @@ export default function DashboardClient({
                                                         {job.provider_name}
                                                     </div>
                                                     <div className="text-xs text-slate-400">
-                                                        {new Date(job.created_at).toLocaleString('de-DE')}
+                                                        {new Date(job.started_at).toLocaleString('de-DE')}
                                                     </div>
                                                 </div>
                                                 <div className="ml-3">
