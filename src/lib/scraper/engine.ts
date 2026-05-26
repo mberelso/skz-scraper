@@ -150,13 +150,10 @@ export class ScraperEngine {
         await page.setExtraHTTPHeaders({ 'Accept-Language': 'de-DE,de;q=0.9,en;q=0.8' });
 
         try {
-            // Strategy 1: DuckDuckGo search
-            const ddgUrl = 'https://duckduckgo.com/?q=' + encodeURIComponent(searchQuery) + '&kl=de-de';
-            console.log(`  [SEARCH] Searching DuckDuckGo: "${searchQuery}"`);
+            // Strategy 1: DuckDuckGo HTML-only search (bypass Cloudflare and heavy JS/timeouts)
+            const ddgUrl = 'https://html.duckduckgo.com/html/?q=' + encodeURIComponent(searchQuery);
+            console.log(`  [SEARCH] Searching DuckDuckGo (HTML): "${searchQuery}"`);
             await page.goto(ddgUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
-
-            // Wait for results to load (DuckDuckGo uses JavaScript rendering)
-            await new Promise((r) => setTimeout(r, 3000));
 
             // Extract search result links
             const resultLinks = await page.evaluate(() => {

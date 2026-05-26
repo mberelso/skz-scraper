@@ -35,13 +35,25 @@ export async function runScrapeJob(providerId: number, providerName: string, ove
         let scrapeResult = null;
         let lastError: Error | null = null;
 
+        // Fetch direct URL from database if not explicitly overwritten
+        let directUrl = overwriteUrl;
+        if (!directUrl) {
+            const providerRows: any[] = await query('SELECT skz_url, url FROM providers WHERE id = ?', [providerId]);
+            if (providerRows.length > 0) {
+                directUrl = providerRows[0].skz_url || providerRows[0].url;
+            }
+        }
+
+        let triedDirect = false;
+
         // Retry loop for network errors
         for (let attempt = 1; attempt <= MAX_RETRIES + 1; attempt++) {
             try {
-                if (overwriteUrl) {
-                    console.log(`  [JOB] Using manual URL: ${overwriteUrl}`);
-                    await updateJobLog(jobId, `Manuell: ${overwriteUrl}`);
-                    scrapeResult = await scraper.scrapePage(overwriteUrl);
+                if (directUrl && !triedDirect) {
+                    console.log(`  [JOB] Trying direct URL: ${directUrl}`);
+                    await updateJobLog(jobId, `Direkt-URL: ${directUrl}`);
+                    scrapeResult = await scraper.scrapePage(directUrl);
+                    triedDirect = true;
                 } else {
                     // Build search query
                     const searchQuery = `${providerName} Stromkennzeichnung Energiemix PDF`;
@@ -52,6 +64,10 @@ export async function runScrapeJob(providerId: number, providerName: string, ove
                 break; // Success, exit retry loop
             } catch (e: any) {
                 lastError = e;
+                if (directUrl && !triedDirect) {
+                    triedDirect = true;
+                    console.warn(`  [JOB] Direct URL failed: ${e.message}. Falling back to search.`);
+                }
                 if (attempt <= MAX_RETRIES) {
                     console.warn(
                         `  [JOB] Attempt ${attempt} failed: ${e.message}. Retrying in ${RETRY_DELAY_MS / 1000}s...`
