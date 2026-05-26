@@ -68,6 +68,8 @@ npm run dev
 - Dynamischer Editor für HKN-Herkunftsländer (Länder und Prozentanteile hinzufügen/entfernen)
 - Manuelles Scraping pro Anbieter (optional mit direkter PDF-URL zur Umgehung von Suchmaschinen-Sperren)
 - Interaktiver Live-Update-Kippschalter oben rechts im Header (automatische Aktualisierung an-/ausschaltbar)
+- **Mehrfachauswahl & Export-Center:** Komfortable Checkboxen zur Auswahl bestimmter Anbieter und ein zentraler Export-Center-Button im Header zur Erzeugung strukturierter Behördenberichte (A4-PDFs via Puppeteer) oder aggregierter CSV-Dateien.
+- **Tastatur-Barrierefreiheit (Accessibility):** Alle Modale (Export-Center, Provider-Details, Erstellung) besitzen eine Tastatur-Falle (Focus Trap) und schließen sich augenblicklich per `Esc`-Taste.
 
 ### Batch-Scraping (CLI)
 
@@ -108,6 +110,6 @@ npx tsx scripts/query.ts "SELECT p.name, em.* FROM energy_mix em JOIN documents 
 - **Frontend:** Next.js 16, React 19, Tailwind CSS
 - **Backend:** Next.js API Routes, PostgreSQL (Neon.com)
 - **Speicher:** Supabase Storage (PDF-Archivierung in der Cloud)
-- **Scraping:** Puppeteer, DuckDuckGo-Suche
+- **Scraping & Export:** Puppeteer (Web-Scraping und serverseitige PDF-Berichtserstellung im A4-Layout), DuckDuckGo-Suche
 - **Parsing:** Google Gemini 2.0 Flash (Vision + Text), pdf2json, Regex
 - **Datenquelle:** Bundesnetzagentur Energielieferantenliste
