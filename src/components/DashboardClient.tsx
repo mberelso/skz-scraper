@@ -30,28 +30,31 @@ export default function DashboardClient({
     const [reviewFilter, setReviewFilter] = useState<string>('all');
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(50);
+    const [livePollingEnabled, setLivePollingEnabled] = useState(true);
     const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const batchPollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const refreshCounterRef = useRef<number>(0);
 
     const hasRunningJob = recentJobs.some((j: any) => j.status === 'running');
 
-    // Live-polling: refresh every 3s while a job is running
+    // Live-polling: refresh every 4s if enabled
     useEffect(() => {
-        if (hasRunningJob) {
-            pollingRef.current = setInterval(() => {
-                router.refresh();
-            }, 3000);
-        } else {
+        if (!livePollingEnabled) {
             if (pollingRef.current) {
                 clearInterval(pollingRef.current);
                 pollingRef.current = null;
             }
+            return;
         }
+
+        pollingRef.current = setInterval(() => {
+            router.refresh();
+        }, 4000);
+
         return () => {
             if (pollingRef.current) clearInterval(pollingRef.current);
         };
-    }, [hasRunningJob, router]);
+    }, [livePollingEnabled, router]);
 
     // Batch status polling
     useEffect(() => {
@@ -305,15 +308,23 @@ export default function DashboardClient({
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
-                        {hasRunningJob && (
-                            <div className="flex items-center gap-2 text-primary text-sm font-semibold">
-                                <span className="relative flex h-3 w-3">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
-                                </span>
-                                Live-Update
-                            </div>
-                        )}
+                        <button
+                            onClick={() => setLivePollingEnabled(!livePollingEnabled)}
+                            className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold border transition-all ${
+                                livePollingEnabled
+                                    ? 'bg-indigo-50 border-indigo-200 text-indigo-700 hover:bg-indigo-100'
+                                    : 'bg-slate-100 border-slate-200 text-slate-500 hover:bg-slate-200'
+                            }`}
+                            title={livePollingEnabled ? 'Automatisches Laden deaktivieren' : 'Automatisches Laden aktivieren'}
+                        >
+                            <span className="relative flex h-3 w-3">
+                                {livePollingEnabled && (
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                                )}
+                                <span className={`relative inline-flex rounded-full h-3 w-3 ${livePollingEnabled ? 'bg-indigo-500' : 'bg-slate-400'}`}></span>
+                            </span>
+                            <span>Live-Update: {livePollingEnabled ? 'Aktiv' : 'Inaktiv'}</span>
+                        </button>
                         <button
                             onClick={() => setShowCreateModal(true)}
                             className="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all shadow-sm"

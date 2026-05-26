@@ -390,8 +390,12 @@ export default function ProviderModal({
             renewable_percentage: '',
             fossil_percentage: '',
             nuclear_percentage: '',
+            eeg_funded_percentage: '',
+            hkn_percentage: '',
+            mieterstrom_percentage: '',
             co2_emission_g_kwh: '',
             tariff_name: '',
+            hkn_origins: [],
         });
         setNewEntryResult(null);
     };
@@ -406,25 +410,22 @@ export default function ProviderModal({
         setNewEntryLoading(true);
         setNewEntryResult(null);
         try {
+            const parseNum = (v: any) => (v !== '' && v != null ? parseFloat(v) : null);
             const res = await fetch('/api/energy-mix', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     provider_id: provider.id,
                     year: parseInt(newEntryFormData.year),
-                    renewable_percentage: newEntryFormData.renewable_percentage
-                        ? parseFloat(newEntryFormData.renewable_percentage)
-                        : null,
-                    fossil_percentage: newEntryFormData.fossil_percentage
-                        ? parseFloat(newEntryFormData.fossil_percentage)
-                        : null,
-                    nuclear_percentage: newEntryFormData.nuclear_percentage
-                        ? parseFloat(newEntryFormData.nuclear_percentage)
-                        : null,
-                    co2_emission_g_kwh: newEntryFormData.co2_emission_g_kwh
-                        ? parseFloat(newEntryFormData.co2_emission_g_kwh)
-                        : null,
+                    renewable_percentage: parseNum(newEntryFormData.renewable_percentage),
+                    fossil_percentage: parseNum(newEntryFormData.fossil_percentage),
+                    nuclear_percentage: parseNum(newEntryFormData.nuclear_percentage),
+                    eeg_funded_percentage: parseNum(newEntryFormData.eeg_funded_percentage),
+                    hkn_percentage: parseNum(newEntryFormData.hkn_percentage),
+                    mieterstrom_percentage: parseNum(newEntryFormData.mieterstrom_percentage),
+                    co2_emission_g_kwh: parseNum(newEntryFormData.co2_emission_g_kwh),
                     tariff_name: newEntryFormData.tariff_name || null,
+                    hkn_origins: newEntryFormData.hkn_origins?.length > 0 ? newEntryFormData.hkn_origins : null,
                 }),
             });
 
@@ -1214,6 +1215,139 @@ export default function ProviderModal({
                                                 />
                                             </div>
                                         </div>
+
+                                        {/* EE-Aufschlüsselung */}
+                                        <div className="border-t border-indigo-200/50 pt-3">
+                                            <p className="text-[10px] font-bold text-indigo-700 uppercase mb-2">EE-Aufschlüsselung</p>
+                                            <div className="grid grid-cols-3 gap-3">
+                                                <div>
+                                                    <label className="block text-xs font-medium text-gray-700 mb-1">EEG %</label>
+                                                    <input
+                                                        type="number"
+                                                        value={newEntryFormData.eeg_funded_percentage || ''}
+                                                        onChange={(e) =>
+                                                            setNewEntryFormData({
+                                                                ...newEntryFormData,
+                                                                eeg_funded_percentage: e.target.value,
+                                                            })
+                                                        }
+                                                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                                        min="0"
+                                                        max="100"
+                                                        step="0.1"
+                                                        placeholder="z.B. 65.0"
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label className="block text-xs font-medium text-gray-700 mb-1">HKN %</label>
+                                                    <input
+                                                        type="number"
+                                                        value={newEntryFormData.hkn_percentage || ''}
+                                                        onChange={(e) =>
+                                                            setNewEntryFormData({
+                                                                ...newEntryFormData,
+                                                                hkn_percentage: e.target.value,
+                                                            })
+                                                        }
+                                                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                                        min="0"
+                                                        max="100"
+                                                        step="0.1"
+                                                        placeholder="z.B. 35.0"
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label className="block text-xs font-medium text-gray-700 mb-1">Mieterstrom %</label>
+                                                    <input
+                                                        type="number"
+                                                        value={newEntryFormData.mieterstrom_percentage || ''}
+                                                        onChange={(e) =>
+                                                            setNewEntryFormData({
+                                                                ...newEntryFormData,
+                                                                mieterstrom_percentage: e.target.value,
+                                                            })
+                                                        }
+                                                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                                        min="0"
+                                                        max="100"
+                                                        step="0.1"
+                                                        placeholder="z.B. 0.0"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* HKN-Herkunftsländer Editor */}
+                                        <div className="border-t border-indigo-200/50 pt-3">
+                                            <div className="flex items-center justify-between mb-2">
+                                                <p className="text-[10px] font-bold text-indigo-700 uppercase">
+                                                    HKN-Herkunftsländer
+                                                </p>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        const origins = newEntryFormData.hkn_origins ? [...newEntryFormData.hkn_origins] : [];
+                                                        origins.push({ country: '', percentage: '' });
+                                                        setNewEntryFormData({ ...newEntryFormData, hkn_origins: origins });
+                                                    }}
+                                                    className="text-xs font-semibold text-indigo-600 hover:text-indigo-800"
+                                                >
+                                                    + Land hinzufügen
+                                                </button>
+                                            </div>
+                                            {newEntryFormData.hkn_origins && newEntryFormData.hkn_origins.length > 0 ? (
+                                                <div className="space-y-2">
+                                                    {newEntryFormData.hkn_origins.map((h: any, i: number) => (
+                                                        <div key={i} className="flex items-center gap-2 text-xs">
+                                                            <input
+                                                                type="text"
+                                                                value={h.country}
+                                                                onChange={(e) => {
+                                                                    const origins = [...newEntryFormData.hkn_origins];
+                                                                    origins[i] = { ...origins[i], country: e.target.value };
+                                                                    setNewEntryFormData({ ...newEntryFormData, hkn_origins: origins });
+                                                                }}
+                                                                className="flex-1 px-2 py-1 border border-gray-300 rounded text-xs"
+                                                                placeholder="Land"
+                                                            />
+                                                            <input
+                                                                type="number"
+                                                                value={h.percentage}
+                                                                onChange={(e) => {
+                                                                    const origins = [...newEntryFormData.hkn_origins];
+                                                                    origins[i] = {
+                                                                        ...origins[i],
+                                                                        percentage: e.target.value === '' ? '' : parseFloat(e.target.value),
+                                                                    };
+                                                                    setNewEntryFormData({ ...newEntryFormData, hkn_origins: origins });
+                                                                }}
+                                                                className="w-20 px-2 py-1 border border-gray-300 rounded text-xs"
+                                                                min="0"
+                                                                max="100"
+                                                                step="0.1"
+                                                                placeholder="%"
+                                                            />
+                                                            <span className="text-gray-400">%</span>
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => {
+                                                                    const origins = newEntryFormData.hkn_origins.filter(
+                                                                        (_: any, j: number) => j !== i
+                                                                    );
+                                                                    setNewEntryFormData({ ...newEntryFormData, hkn_origins: origins });
+                                                                }}
+                                                                className="text-red-400 hover:text-red-600 text-xs font-bold px-1"
+                                                            >
+                                                                ✕
+                                                            </button>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            ) : (
+                                                <p className="text-xs text-gray-400 italic">Keine Herkunftsländer eingetragen.</p>
+                                            )}
+                                        </div>
+
                                         <div className="flex items-center gap-2 justify-end pt-2">
                                             {newEntryResult && (
                                                 <span
@@ -1401,6 +1535,136 @@ export default function ProviderModal({
                                                                         />
                                                                     </div>
                                                                 </div>
+
+                                                                {/* EE-Aufschlüsselung */}
+                                                                <div className="border-t border-indigo-200/50 pt-3">
+                                                                    <p className="text-[10px] font-bold text-indigo-700 uppercase mb-2">EE-Aufschlüsselung</p>
+                                                                    <div className="grid grid-cols-3 gap-3">
+                                                                        <div>
+                                                                            <label className="block text-xs font-medium text-gray-700 mb-1">EEG %</label>
+                                                                            <input
+                                                                                type="number"
+                                                                                value={editFormData.eeg_funded_percentage || ''}
+                                                                                onChange={(e) =>
+                                                                                    setEditFormData({
+                                                                                        ...editFormData,
+                                                                                        eeg_funded_percentage: e.target.value,
+                                                                                    })
+                                                                                }
+                                                                                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                                                                min="0"
+                                                                                max="100"
+                                                                                step="0.1"
+                                                                            />
+                                                                        </div>
+                                                                        <div>
+                                                                            <label className="block text-xs font-medium text-gray-700 mb-1">HKN %</label>
+                                                                            <input
+                                                                                type="number"
+                                                                                value={editFormData.hkn_percentage || ''}
+                                                                                onChange={(e) =>
+                                                                                    setEditFormData({
+                                                                                        ...editFormData,
+                                                                                        hkn_percentage: e.target.value,
+                                                                                    })
+                                                                                }
+                                                                                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                                                                min="0"
+                                                                                max="100"
+                                                                                step="0.1"
+                                                                            />
+                                                                        </div>
+                                                                        <div>
+                                                                            <label className="block text-xs font-medium text-gray-700 mb-1">Mieterstrom %</label>
+                                                                            <input
+                                                                                type="number"
+                                                                                value={editFormData.mieterstrom_percentage || ''}
+                                                                                onChange={(e) =>
+                                                                                    setEditFormData({
+                                                                                        ...editFormData,
+                                                                                        mieterstrom_percentage: e.target.value,
+                                                                                    })
+                                                                                }
+                                                                                className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                                                                min="0"
+                                                                                max="100"
+                                                                                step="0.1"
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                {/* HKN-Herkunftsländer Editor */}
+                                                                <div className="border-t border-indigo-200/50 pt-3">
+                                                                    <div className="flex items-center justify-between mb-2">
+                                                                        <p className="text-[10px] font-bold text-indigo-700 uppercase">
+                                                                            HKN-Herkunftsländer
+                                                                        </p>
+                                                                        <button
+                                                                            type="button"
+                                                                            onClick={() => {
+                                                                                const origins = editFormData.hkn_origins ? [...editFormData.hkn_origins] : [];
+                                                                                origins.push({ country: '', percentage: '' });
+                                                                                setEditFormData({ ...editFormData, hkn_origins: origins });
+                                                                            }}
+                                                                            className="text-xs font-semibold text-indigo-600 hover:text-indigo-800"
+                                                                        >
+                                                                            + Land hinzufügen
+                                                                        </button>
+                                                                    </div>
+                                                                    {editFormData.hkn_origins && editFormData.hkn_origins.length > 0 ? (
+                                                                        <div className="space-y-2">
+                                                                            {editFormData.hkn_origins.map((h: any, i: number) => (
+                                                                                <div key={i} className="flex items-center gap-2 text-xs">
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        value={h.country}
+                                                                                        onChange={(e) => {
+                                                                                            const origins = [...editFormData.hkn_origins];
+                                                                                            origins[i] = { ...origins[i], country: e.target.value };
+                                                                                            setEditFormData({ ...editFormData, hkn_origins: origins });
+                                                                                        }}
+                                                                                        className="flex-1 px-2 py-1 border border-gray-300 rounded text-xs"
+                                                                                        placeholder="Land"
+                                                                                    />
+                                                                                    <input
+                                                                                        type="number"
+                                                                                        value={h.percentage}
+                                                                                        onChange={(e) => {
+                                                                                            const origins = [...editFormData.hkn_origins];
+                                                                                            origins[i] = {
+                                                                                                ...origins[i],
+                                                                                                percentage: e.target.value === '' ? '' : parseFloat(e.target.value),
+                                                                                            };
+                                                                                            setEditFormData({ ...editFormData, hkn_origins: origins });
+                                                                                        }}
+                                                                                        className="w-20 px-2 py-1 border border-gray-300 rounded text-xs"
+                                                                                        min="0"
+                                                                                        max="100"
+                                                                                        step="0.1"
+                                                                                        placeholder="%"
+                                                                                    />
+                                                                                    <span className="text-gray-400">%</span>
+                                                                                    <button
+                                                                                        type="button"
+                                                                                        onClick={() => {
+                                                                                            const origins = editFormData.hkn_origins.filter(
+                                                                                                (_: any, j: number) => j !== i
+                                                                                            );
+                                                                                            setEditFormData({ ...editFormData, hkn_origins: origins });
+                                                                                        }}
+                                                                                        className="text-red-400 hover:text-red-600 text-xs font-bold px-1"
+                                                                                    >
+                                                                                        ✕
+                                                                                    </button>
+                                                                                </div>
+                                                                            ))}
+                                                                        </div>
+                                                                    ) : (
+                                                                        <p className="text-xs text-gray-400 italic">Keine Herkunftsländer eingetragen.</p>
+                                                                    )}
+                                                                </div>
+
                                                                 <div className="flex items-center gap-2 justify-end">
                                                                     {editResult && (
                                                                         <span
@@ -2073,58 +2337,75 @@ export default function ProviderModal({
                             </div>
 
                             {/* HKN-Herkunftsländer */}
-                            {reviewFormData.hkn_origins && reviewFormData.hkn_origins.length > 0 && (
-                                <div className="border-t border-gray-100 pt-3">
-                                    <p className="text-[10px] font-bold text-gray-400 uppercase mb-2">
-                                        HKN-Herkunftsländer
-                                    </p>
-                                    <div className="space-y-1">
-                                        {reviewFormData.hkn_origins.map((h: HknOrigin, i: number) => (
-                                            <div key={i} className="flex items-center gap-2 text-xs">
-                                                <input
-                                                    type="text"
-                                                    value={h.country}
-                                                    onChange={(e) => {
-                                                        const origins = [...reviewFormData.hkn_origins];
-                                                        origins[i] = { ...origins[i], country: e.target.value };
-                                                        setReviewFormData({ ...reviewFormData, hkn_origins: origins });
-                                                    }}
-                                                    className="flex-1 px-2 py-1 border border-gray-300 rounded text-xs"
-                                                    placeholder="Land"
-                                                />
-                                                <input
-                                                    type="number"
-                                                    value={h.percentage}
-                                                    onChange={(e) => {
-                                                        const origins = [...reviewFormData.hkn_origins];
-                                                        origins[i] = {
-                                                            ...origins[i],
-                                                            percentage: parseFloat(e.target.value) || 0,
-                                                        };
-                                                        setReviewFormData({ ...reviewFormData, hkn_origins: origins });
-                                                    }}
-                                                    className="w-20 px-2 py-1 border border-gray-300 rounded text-xs"
-                                                    min="0"
-                                                    max="100"
-                                                    step="0.1"
-                                                />
-                                                <span className="text-gray-400">%</span>
-                                                <button
-                                                    onClick={() => {
-                                                        const origins = reviewFormData.hkn_origins.filter(
-                                                            (_: HknOrigin, j: number) => j !== i
-                                                        );
-                                                        setReviewFormData({ ...reviewFormData, hkn_origins: origins });
-                                                    }}
-                                                    className="text-red-400 hover:text-red-600 text-xs"
-                                                >
-                                                    x
-                                                </button>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
+                             <div className="border-t border-gray-100 pt-3">
+                                 <div className="flex items-center justify-between mb-2">
+                                     <p className="text-[10px] font-bold text-gray-400 uppercase">
+                                         HKN-Herkunftsländer
+                                     </p>
+                                     <button
+                                         type="button"
+                                         onClick={() => {
+                                             const origins = reviewFormData.hkn_origins ? [...reviewFormData.hkn_origins] : [];
+                                             origins.push({ country: '', percentage: '' });
+                                             setReviewFormData({ ...reviewFormData, hkn_origins: origins });
+                                         }}
+                                         className="text-xs font-semibold text-indigo-600 hover:text-indigo-800"
+                                     >
+                                         + Land hinzufügen
+                                     </button>
+                                 </div>
+                                 {reviewFormData.hkn_origins && reviewFormData.hkn_origins.length > 0 ? (
+                                     <div className="space-y-1">
+                                         {reviewFormData.hkn_origins.map((h: HknOrigin, i: number) => (
+                                             <div key={i} className="flex items-center gap-2 text-xs">
+                                                 <input
+                                                     type="text"
+                                                     value={h.country}
+                                                     onChange={(e) => {
+                                                         const origins = [...reviewFormData.hkn_origins];
+                                                         origins[i] = { ...origins[i], country: e.target.value };
+                                                         setReviewFormData({ ...reviewFormData, hkn_origins: origins });
+                                                     }}
+                                                     className="flex-1 px-2 py-1 border border-gray-300 rounded text-xs"
+                                                     placeholder="Land"
+                                                 />
+                                                 <input
+                                                     type="number"
+                                                     value={h.percentage}
+                                                     onChange={(e) => {
+                                                         const origins = [...reviewFormData.hkn_origins];
+                                                         origins[i] = {
+                                                             ...origins[i],
+                                                             percentage: e.target.value === '' ? '' : (parseFloat(e.target.value) || 0),
+                                                         };
+                                                         setReviewFormData({ ...reviewFormData, hkn_origins: origins });
+                                                     }}
+                                                     className="w-20 px-2 py-1 border border-gray-300 rounded text-xs"
+                                                     min="0"
+                                                     max="100"
+                                                     step="0.1"
+                                                     placeholder="%"
+                                                 />
+                                                 <span className="text-gray-400">%</span>
+                                                 <button
+                                                     type="button"
+                                                     onClick={() => {
+                                                         const origins = reviewFormData.hkn_origins.filter(
+                                                             (_: HknOrigin, j: number) => j !== i
+                                                         );
+                                                         setReviewFormData({ ...reviewFormData, hkn_origins: origins });
+                                                     }}
+                                                     className="text-red-400 hover:text-red-600 text-xs font-bold px-1"
+                                                 >
+                                                     ✕
+                                                 </button>
+                                             </div>
+                                         ))}
+                                     </div>
+                                 ) : (
+                                     <p className="text-xs text-gray-400 italic">Keine Herkunftsländer eingetragen.</p>
+                                 )}
+                             </div>
 
                             {/* Sum check */}
                             {(() => {

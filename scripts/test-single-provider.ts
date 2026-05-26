@@ -6,7 +6,7 @@ dotenv.config({ path: '.env.local' });
 
 async function testSingle() {
     try {
-        const providerName = 'Stadtwerke Leipzig';
+        const providerName = 'AggerEnergie GmbH';
         console.log(`Testing scraper for: ${providerName}`);
 
         // Find ID
