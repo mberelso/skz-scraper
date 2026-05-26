@@ -39,6 +39,23 @@ const BUNDESMIX: Record<number, { ee: number; fossil: number; nuclear: number; c
     2020: { ee: 45.5, fossil: 40.5, nuclear: 6.1, co2: 366 },
 };
 
+const formatModalDate = (dateVal: any) => {
+    if (!dateVal) return '-';
+    let val = dateVal;
+    if (typeof dateVal === 'string') {
+        val = dateVal.replace(' ', 'T');
+    }
+    const d = new Date(val);
+    if (isNaN(d.getTime())) return '-';
+    return d.toLocaleString('de-DE', {
+        day: '2-digit',
+        month: '2-digit',
+        year: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+    });
+};
+
 export default function ProviderModal({
     provider,
     onClose,
@@ -2081,14 +2098,8 @@ export default function ProviderModal({
                                                         {note.text}
                                                     </span>
                                                     <div className="shrink-0 flex flex-col items-end gap-1">
-                                                        <span className="text-gray-400">
-                                                            {new Date(note.created_at).toLocaleString('de-DE', {
-                                                                day: '2-digit',
-                                                                month: '2-digit',
-                                                                year: '2-digit',
-                                                                hour: '2-digit',
-                                                                minute: '2-digit',
-                                                            })}
+                                                        <span className="text-gray-400" suppressHydrationWarning>
+                                                            {formatModalDate(note.created_at)}
                                                         </span>
                                                         <button
                                                             onClick={() => handleDeleteNote(note.id)}
@@ -2147,14 +2158,8 @@ export default function ProviderModal({
                                                               : entry.action}
                                                 </span>
                                                 <span className="text-gray-600 flex-1">{entry.description}</span>
-                                                <span className="text-gray-400 shrink-0">
-                                                    {new Date(entry.created_at).toLocaleString('de-DE', {
-                                                        day: '2-digit',
-                                                        month: '2-digit',
-                                                        year: '2-digit',
-                                                        hour: '2-digit',
-                                                        minute: '2-digit',
-                                                    })}
+                                                <span className="text-gray-400 shrink-0" suppressHydrationWarning>
+                                                    {formatModalDate(entry.created_at)}
                                                 </span>
                                             </div>
                                         ))}

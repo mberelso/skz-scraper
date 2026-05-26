@@ -5,6 +5,16 @@ import { useRouter } from 'next/navigation';
 import ProviderModal from './ProviderModal';
 import CreateProviderModal from './CreateProviderModal';
 
+const formatJobDate = (dateVal: any) => {
+    if (!dateVal) return '-';
+    let val = dateVal;
+    if (typeof dateVal === 'string') {
+        val = dateVal.replace(' ', 'T');
+    }
+    const d = new Date(val);
+    return isNaN(d.getTime()) ? '-' : d.toLocaleString('de-DE');
+};
+
 export default function DashboardClient({
     providers,
     recentJobs,
@@ -549,8 +559,8 @@ export default function DashboardClient({
                                                     <div className="text-sm font-semibold text-slate-900 truncate">
                                                         {job.provider_name}
                                                     </div>
-                                                    <div className="text-xs text-slate-400">
-                                                        {new Date(job.started_at).toLocaleString('de-DE')}
+                                                    <div className="text-xs text-slate-400" suppressHydrationWarning>
+                                                        {formatJobDate(job.started_at)}
                                                     </div>
                                                 </div>
                                                 <div className="ml-3">
