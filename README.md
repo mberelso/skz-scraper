@@ -9,12 +9,12 @@ Automatisiertes System zum Herunterladen, Archivieren und Auslesen von Stromkenn
 ```
 Next.js App (Dashboard + API)
 ├── Scraper-Engine (engine.ts & search-helper.ts)
-│   ├── DuckDuckGo-Suche → findet Stromkennzeichnungs-PDFs
+│   ├── DuckDuckGo-Suche → findet Stromkennzeichnungs-PDFs (mit automatischem Bing-Fallback & Stealth-Modus)
 │   └── Puppeteer → lädt Webseiten und PDFs herunter
 ├── Parsing-Kaskade & Storage (runner.ts & save-helper.ts)
-│   ├── Gemini Vision API → analysiert PDFs direkt (AI-First)
+│   ├── Gemini Vision API → analysiert PDFs direkt (AI-First) & extrahiert Anbieter-Stammdaten (Name, Adresse, Ort)
 │   ├── Regex-Parser → Fallback für einfache Fälle
-│   └── Neon (PostgreSQL) → speichert Provider, Jobs, Dokumente, Energiemix, HKN-Herkunftsländer
+│   └── Neon (PostgreSQL) → speichert Provider (samt aktualisierter Adressdaten), Jobs, Dokumente, Energiemix, HKN-Herkunftsländer
 └── Supabase Storage → archiviert PDFs und Screenshots (Cloud)
 ```
 
@@ -114,5 +114,5 @@ npx tsx scripts/query.ts "SELECT p.name, em.* FROM energy_mix em JOIN documents 
 - **Backend:** Next.js API Routes, PostgreSQL (Neon.com)
 - **Speicher:** Supabase Storage (PDF-Archivierung in der Cloud)
 - **Scraping & Export:** Puppeteer (Web-Scraping und serverseitige PDF-Berichtserstellung im A4-Layout), DuckDuckGo-Suche
-- **Parsing:** Google Gemini 2.0 Flash (Vision + Text), pdf2json, Regex
+- **Parsing:** Google Gemini 2.5 Flash (Vision + Text), pdf2json, Regex
 - **Datenquelle:** Bundesnetzagentur Energielieferantenliste
