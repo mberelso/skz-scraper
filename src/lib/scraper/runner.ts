@@ -536,8 +536,6 @@ async function parseAndSaveMixFromImage(
     return null;
 }
 
-
-
 /**
  * Extract readable text from HTML using cheerio.
  * Removes scripts, styles, and cleans up whitespace.
@@ -564,5 +562,3 @@ function detectImageMimeFromBuffer(buffer: Buffer): string {
     if (buffer[0] === 0xff && buffer[1] === 0xd8) return 'image/jpeg';
     return 'image/png';
 }
-
-

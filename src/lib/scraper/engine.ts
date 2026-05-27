@@ -216,7 +216,13 @@ export class ScraperEngine {
                 const anyLinks = await page.evaluate(() =>
                     Array.from(document.querySelectorAll('a[href^="http"]'))
                         .map((a) => (a as HTMLAnchorElement).href)
-                        .filter((href) => !href.includes('duckduckgo.com') && !href.includes('duck.co') && !href.includes('bing.com') && !href.includes('microsoft.com'))
+                        .filter(
+                            (href) =>
+                                !href.includes('duckduckgo.com') &&
+                                !href.includes('duck.co') &&
+                                !href.includes('bing.com') &&
+                                !href.includes('microsoft.com')
+                        )
                 );
                 if (anyLinks.length === 0) {
                     console.error('  [SEARCH] No links found at all on search pages.');

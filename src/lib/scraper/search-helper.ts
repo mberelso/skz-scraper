@@ -69,7 +69,7 @@ export function cleanProviderNameForSearch(name: string): string {
  */
 export function getCleanedProviderWords(searchQuery: string): string[] {
     let clean = searchQuery.toLowerCase();
-    
+
     // Remove search keywords
     for (const kw of SKZ_KEYWORDS) {
         clean = clean.replace(new RegExp(`\\b${kw}\\b`, 'g'), '');
@@ -108,8 +108,8 @@ export function getCleanedProviderWords(searchQuery: string): string[] {
     // Split and extract words with length > 2
     return clean
         .split(/[\s,.\-\/&\(\)]+/)
-        .map(w => w.replace(/[^a-z0-9äöüß]/g, '').trim())
-        .filter(w => w.length > 2);
+        .map((w) => w.replace(/[^a-z0-9äöüß]/g, '').trim())
+        .filter((w) => w.length > 2);
 }
 
 /**
@@ -127,7 +127,7 @@ export function filterAndRankLinks(links: string[], searchQuery: string): string
     ];
 
     const cleanedWords = getCleanedProviderWords(searchQuery);
-    
+
     // Decode any redirect URLs (e.g. from Bing)
     const decodedLinks = links.map(decodeSearchUrl);
 
@@ -146,7 +146,7 @@ export function filterAndRankLinks(links: string[], searchQuery: string): string
         try {
             const hostname = new URL(url).hostname.toLowerCase();
             // Score based on matching any of the cleaned provider name words in the hostname
-            const matchesWord = cleanedWords.some(word => hostname.includes(word));
+            const matchesWord = cleanedWords.some((word) => hostname.includes(word));
             if (matchesWord) {
                 score += 100;
             }
@@ -240,7 +240,9 @@ export function scoreDocumentLinks(rawLinks: RawLink[]): { url: string; score: n
  * Find document links (PDF, PNG, JPG) on an HTML page that are relevant to Stromkennzeichnung.
  * Returns scored + sorted results. PDFs rank higher than images.
  */
-export async function findSkzDocumentLinks(page: Page): Promise<{ url: string; score: number; type: 'pdf' | 'image' }[]> {
+export async function findSkzDocumentLinks(
+    page: Page
+): Promise<{ url: string; score: number; type: 'pdf' | 'image' }[]> {
     const rawLinks = await page.evaluate(() => {
         // Collect both <a> links and <img> sources
         const links = Array.from(document.querySelectorAll('a')).map((a) => ({

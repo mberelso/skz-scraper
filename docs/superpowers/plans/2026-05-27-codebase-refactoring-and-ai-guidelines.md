@@ -13,6 +13,7 @@
 ### Task 1: AI Guidelines erstellen
 
 **Files:**
+
 - Create: `AGENTS.md`
 
 - [ ] **Step 1: Erstelle die AGENTS.md-Datei im Root-Verzeichnis**
@@ -23,17 +24,20 @@
 Diese Richtlinien müssen von allen KI-Assistenten bei der Arbeit an diesem Projekt zwingend befolgt werden.
 
 ## 1. Arbeitsweise & Benutzerpräferenzen
+
 - **Sprache:** Kommuniziere immer auf Deutsch mit dem Benutzer (Martin).
 - **Betriebssystem:** Der Benutzer arbeitet auf Windows. Verwende Windows-kompatible Pfade und Befehle.
 - **Wichtigste Verhaltensregeln:**
-  1. Sobald der Benutzer bestätigt hat, dass ein Feature funktioniert, aktualisiere automatisch die `README.md` mit den neuen Status- und Architekturdetails.
-  2. Wenn Aufgaben in `task.md` abgeschlossen sind, aktualisiere die Datei sofort, um den Fortschritt widerzuspiegeln.
-  3. Verwende niemals Platzhalter-Code. Code muss immer vollständig implementiert sein.
+    1. Sobald der Benutzer bestätigt hat, dass ein Feature funktioniert, aktualisiere automatisch die `README.md` mit den neuen Status- und Architekturdetails.
+    2. Wenn Aufgaben in `task.md` abgeschlossen sind, aktualisiere die Datei sofort, um den Fortschritt widerzuspiegeln.
+    3. Verwende niemals Platzhalter-Code. Code muss immer vollständig implementiert sein.
 
 ## 2. Architektur & Code-Richtlinien
 
 ### A. Datenmodell & Schema-Änderungen
+
 Wenn neue Spalten oder Felder zum Strommix hinzugefügt werden, müssen folgende Dateien synchronisiert werden:
+
 1. `schema.sql`: Dokumentation des aktuellen Zustands.
 2. `src/lib/parser/ai-extractor.ts`: Das Interface `DetailedEnergyMix` sowie der Extraktions-Prompt für Gemini.
 3. `src/lib/scraper/save-helper.ts`: Die INSERT-Queries in `validateAndSaveMix`.
@@ -41,20 +45,24 @@ Wenn neue Spalten oder Felder zum Strommix hinzugefügt werden, müssen folgende
 5. Tests: Mock-Daten in den Testdateien anpassen.
 
 ### B. Datenbank & Migrationen
+
 - Die Datenbank ist PostgreSQL (Neon.com). (MariaDB-Code wurde entfernt).
 - Modifikationen an der Live-Datenbank werden über idempotente (mehrfach ausführbare) TypeScript-Skripte in `scripts/` (z. B. `scripts/migrate-db.ts`) mittels `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` gelöst.
 
 ### C. Parsing-Kaskade (Regeln für Scraper-Logik)
+
 - Verändere nicht die Reihenfolge der Kaskade in `runner.ts` (z. B. Gemini Vision -> Gemini Text -> Regex).
 - Halte die Kern-Klassen `ScraperEngine` (`engine.ts`) und `runScrapeJob` (`runner.ts`) frei von komplexen Hilfsberechnungen. Nutze dafür die Hilfsdateien:
-  - `src/lib/scraper/search-helper.ts` (für Such- und Rankinglogik)
-  - `src/lib/scraper/save-helper.ts` (für Validierung und DB-Speicherung)
+    - `src/lib/scraper/search-helper.ts` (für Such- und Rankinglogik)
+    - `src/lib/scraper/save-helper.ts` (für Validierung und DB-Speicherung)
 
 ### D. Puppeteer-Ressourcen-Management
+
 - Schließe geöffnete Puppeteer-Seiten (`page.close()`) immer in `finally`-Blöcken, um Speicherlecks zu verhindern.
 - Die serverseitige PDF-Erstellung für A4-Berichte befindet sich in `src/lib/export.ts` und verwendet ebenfalls Puppeteer.
 
 ## 3. Testen & Qualitätssicherung
+
 - Führe vor jedem Abschluss einer Aufgabe die Tests aus:
   `npm run test` (bzw. `npx vitest run`)
 - Stelle sicher, dass alle bestehenden Tests grün bleiben.
@@ -72,11 +80,12 @@ git commit -m "docs: add AGENTS.md guidelines"
 ### Task 2: Search Helper extrahieren
 
 **Files:**
+
 - Create: `src/lib/scraper/search-helper.ts`
 - Modify: `src/lib/scraper/engine.ts`
 
 - [ ] **Step 1: Erstelle search-helper.ts**
-Verschiebe die Suchbewertungs- und Dokumentlink-Suchfunktionen aus `engine.ts` in die neue Datei.
+      Verschiebe die Suchbewertungs- und Dokumentlink-Suchfunktionen aus `engine.ts` in die neue Datei.
 
 ```typescript
 import { Page } from 'puppeteer';
@@ -142,8 +151,19 @@ export function filterAndRankLinks(links: string[], searchQuery: string): string
         }
 
         const irrelevantKeywords = [
-            'leitfaden', 'anleitung', 'guide', 'kontakt', 'netznutzer', 'mscons',
-            'invoic', 'remadv', 'preisblatt', 'tarif', 'agb', 'datenschutz', 'impressum'
+            'leitfaden',
+            'anleitung',
+            'guide',
+            'kontakt',
+            'netznutzer',
+            'mscons',
+            'invoic',
+            'remadv',
+            'preisblatt',
+            'tarif',
+            'agb',
+            'datenschutz',
+            'impressum',
         ];
         if (irrelevantKeywords.some((kw) => urlLower.includes(kw))) {
             score -= 100;
@@ -162,7 +182,9 @@ export function filterAndRankLinks(links: string[], searchQuery: string): string
  * Find document links (PDF, PNG, JPG) on an HTML page that are relevant to Stromkennzeichnung.
  * Returns scored + sorted results. PDFs rank higher than images.
  */
-export async function findSkzDocumentLinks(page: Page): Promise<{ url: string; score: number; type: 'pdf' | 'image' }[]> {
+export async function findSkzDocumentLinks(
+    page: Page
+): Promise<{ url: string; score: number; type: 'pdf' | 'image' }[]> {
     const rawLinks = await page.evaluate(() => {
         const links = Array.from(document.querySelectorAll('a')).map((a) => ({
             href: a.href,
@@ -227,17 +249,18 @@ export async function findSkzDocumentLinks(page: Page): Promise<{ url: string; s
 ```
 
 - [ ] **Step 2: Passe engine.ts an**
-Entferne die verschobenen Methoden und importiere sie stattdessen aus `search-helper.ts`.
+      Entferne die verschobenen Methoden und importiere sie stattdessen aus `search-helper.ts`.
 
 ```typescript
 // in src/lib/scraper/engine.ts oben hinzufügen:
 import { filterAndRankLinks, findSkzDocumentLinks } from './search-helper';
 ```
-*(Und Entfernen der Methoden `filterAndRankLinks` und `findSkzDocumentLinks` am Dateiende).*
+
+_(Und Entfernen der Methoden `filterAndRankLinks` und `findSkzDocumentLinks` am Dateiende)._
 
 - [ ] **Step 3: Führe die Tests aus**
-Führe `npx vitest run` aus.
-Erwartet: Alle Tests bestehen weiterhin.
+      Führe `npx vitest run` aus.
+      Erwartet: Alle Tests bestehen weiterhin.
 
 - [ ] **Step 4: Commit**
 
@@ -251,11 +274,12 @@ git commit -m "refactor: extract search-helper logic from engine"
 ### Task 3: Save Helper extrahieren
 
 **Files:**
+
 - Create: `src/lib/scraper/save-helper.ts`
 - Modify: `src/lib/scraper/runner.ts`
 
 - [ ] **Step 1: Erstelle save-helper.ts**
-Verschiebe `validateAndSaveMix` und `updateJobLog` in die neue Datei.
+      Verschiebe `validateAndSaveMix` und `updateJobLog` in die neue Datei.
 
 ```typescript
 import { query } from '@/lib/db';
@@ -386,17 +410,18 @@ export async function updateJobLog(jobId: number, message: string) {
 ```
 
 - [ ] **Step 2: Passe runner.ts an**
-Entferne die verschobenen Methoden aus `runner.ts` und importiere sie aus `save-helper.ts`.
+      Entferne die verschobenen Methoden aus `runner.ts` und importiere sie aus `save-helper.ts`.
 
 ```typescript
 // in src/lib/scraper/runner.ts oben hinzufügen:
 import { validateAndSaveMix, updateJobLog } from './save-helper';
 ```
-*(Und Entfernen der lokalen Implementierungen von `validateAndSaveMix` und `updateJobLog`).*
+
+_(Und Entfernen der lokalen Implementierungen von `validateAndSaveMix` und `updateJobLog`)._
 
 - [ ] **Step 3: Führe die Tests aus**
-Führe `npx vitest run` aus.
-Erwartet: Alle Tests bestehen weiterhin.
+      Führe `npx vitest run` aus.
+      Erwartet: Alle Tests bestehen weiterhin.
 
 - [ ] **Step 4: Commit**
 
@@ -410,28 +435,33 @@ git commit -m "refactor: extract save-helper logic from runner"
 ### Task 4: Unit-Tests aktualisieren
 
 **Files:**
+
 - Modify: `src/lib/scraper/engine.test.ts`
 
 - [ ] **Step 1: Teste search-helper.ts direkt**
-Statt der Kopiervorlage in `engine.test.ts` importieren wir jetzt die extrahierten Funktionen aus `search-helper.ts` direkt und führen die Tests dagegen aus.
+      Statt der Kopiervorlage in `engine.test.ts` importieren wir jetzt die extrahierten Funktionen aus `search-helper.ts` direkt und führen die Tests dagegen aus.
 
 Ersetze Zeilen 9–72 in `src/lib/scraper/engine.test.ts` mit:
+
 ```typescript
 import { scoreDocumentLinks } from './search-helper'; // Falls wir scoreDocumentLinks exportieren, andernfalls verwenden wir direkt findSkzDocumentLinks oder die Scoring-Hilfsfunktion aus search-helper.ts
 ```
-*Alternativ:* Wir exportieren auch die reine Scoring-Hilfsfunktion `scoreDocumentLinks` in `search-helper.ts`, um Unit-Tests extrem einfach zu halten.
+
+_Alternativ:_ Wir exportieren auch die reine Scoring-Hilfsfunktion `scoreDocumentLinks` in `search-helper.ts`, um Unit-Tests extrem einfach zu halten.
 
 Modifiziere `search-helper.ts` am Ende und exportiere eine Funktion `scoreDocumentLinks`:
+
 ```typescript
 export function scoreDocumentLinks(rawLinks: any[]): { url: string; score: number; type: 'pdf' | 'image' }[] {
     // ... reine Scoring-Berechnung für Unit-Tests ...
 }
 ```
+
 Und nutze sie sowohl in `findSkzDocumentLinks` als auch in `engine.test.ts`.
 
 - [ ] **Step 2: Führe die Tests aus**
-Führe `npx vitest run` aus.
-Erwartet: Alle Tests bestehen weiterhin.
+      Führe `npx vitest run` aus.
+      Erwartet: Alle Tests bestehen weiterhin.
 
 - [ ] **Step 3: Commit**
 

@@ -44,7 +44,7 @@ export interface DetailedEnergyMix {
     confidence: number; // 0-100
     extraction_method: 'gemini_vision' | 'gemini_text' | 'regex' | 'manual' | 'ocr';
     mix_type: 'gesamtmix' | 'unternehmensmix' | 'tarifmix' | 'unbekannt' | null;
-    
+
     // Optional extracted company info
     company_name?: string | null;
     company_address?: string | null;

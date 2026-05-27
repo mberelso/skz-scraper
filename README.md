@@ -24,7 +24,6 @@ Next.js App (Dashboard + API)
 2. **Gemini Text** (Fallback 1): Extrahierten Text an Gemini senden
 3. **Regex** (Fallback 2): Keyword-basierte Extraktion ohne API
 
-
 ## Setup
 
 ### Voraussetzungen

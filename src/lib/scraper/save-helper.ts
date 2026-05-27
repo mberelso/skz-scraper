@@ -103,10 +103,9 @@ export async function validateAndSaveMix(
 
         // Update provider details if extracted and missing or empty in DB
         try {
-            const providerRows: any[] = await query(
-                'SELECT name, address, zip, city FROM providers WHERE id = ?',
-                [providerId]
-            );
+            const providerRows: any[] = await query('SELECT name, address, zip, city FROM providers WHERE id = ?', [
+                providerId,
+            ]);
             if (providerRows.length > 0) {
                 const provider = providerRows[0];
                 const updates: string[] = [];
@@ -131,15 +130,12 @@ export async function validateAndSaveMix(
 
                 if (updates.length > 0) {
                     values.push(providerId);
-                    await query(
-                        `UPDATE providers SET ${updates.join(', ')}, updated_at = NOW() WHERE id = ?`,
-                        values
-                    );
+                    await query(`UPDATE providers SET ${updates.join(', ')}, updated_at = NOW() WHERE id = ?`, values);
                     console.log(`  [${logPrefix}] Provider-Stammdaten aktualisiert:`, {
                         name: mix.company_name,
                         address: mix.company_address,
                         zip: mix.company_zip,
-                        city: mix.company_city
+                        city: mix.company_city,
                     });
                 }
             }

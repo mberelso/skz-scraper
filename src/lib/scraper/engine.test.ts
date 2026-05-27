@@ -1,5 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { scoreDocumentLinks, RawLink, cleanProviderNameForSearch, getCleanedProviderWords, filterAndRankLinks, decodeSearchUrl } from './search-helper';
+import {
+    scoreDocumentLinks,
+    RawLink,
+    cleanProviderNameForSearch,
+    getCleanedProviderWords,
+    filterAndRankLinks,
+    decodeSearchUrl,
+} from './search-helper';
 
 // --- Tests ---
 
@@ -327,10 +334,7 @@ describe('SearchHelper name cleaning and matching', () => {
     });
 
     it('filterAndRankLinks findet Relevanz über geteilte Wörter im Hostname', () => {
-        const links = [
-            'https://www.roth-energie.de/stromkennzeichnung.pdf',
-            'https://www.generic.de/document.pdf',
-        ];
+        const links = ['https://www.roth-energie.de/stromkennzeichnung.pdf', 'https://www.generic.de/document.pdf'];
         const ranked = filterAndRankLinks(links, 'Adolf Roth GmbH & Co. KG Stromkennzeichnung PDF');
         expect(ranked).toHaveLength(2);
         expect(ranked[0]).toBe('https://www.roth-energie.de/stromkennzeichnung.pdf');
@@ -340,9 +344,12 @@ describe('SearchHelper name cleaning and matching', () => {
         const bingRedirect = 'https://www.bing.com/ck/a?!&&p=5812&u=a1aHR0cHM6Ly93d3cuYWdnZXJlbmVyZ2llLmRlLw&ntb=1';
         expect(decodeSearchUrl(bingRedirect)).toBe('https://www.aggerenergie.de/');
 
-        const ddgRedirect = 'https://duckduckgo.com/l/?uddg=https%3A%2F%2Fwww.aggerenergie.de%2Ffileadmin%2F1aggerenergie%2F60_service%2F6.2_servicethemen%2F20250701_Kennzeichnung_der_Stromlieferungen_2024.pdf&rut=123';
-        expect(decodeSearchUrl(ddgRedirect)).toBe('https://www.aggerenergie.de/fileadmin/1aggerenergie/60_service/6.2_servicethemen/20250701_Kennzeichnung_der_Stromlieferungen_2024.pdf');
-        
+        const ddgRedirect =
+            'https://duckduckgo.com/l/?uddg=https%3A%2F%2Fwww.aggerenergie.de%2Ffileadmin%2F1aggerenergie%2F60_service%2F6.2_servicethemen%2F20250701_Kennzeichnung_der_Stromlieferungen_2024.pdf&rut=123';
+        expect(decodeSearchUrl(ddgRedirect)).toBe(
+            'https://www.aggerenergie.de/fileadmin/1aggerenergie/60_service/6.2_servicethemen/20250701_Kennzeichnung_der_Stromlieferungen_2024.pdf'
+        );
+
         const normalUrl = 'https://www.aggerenergie.de/file.pdf';
         expect(decodeSearchUrl(normalUrl)).toBe(normalUrl);
     });

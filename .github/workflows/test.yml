@@ -1,37 +1,37 @@
 name: CI Test Suite
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
 
 jobs:
-  test:
-    name: Run Linting, Tests and Build
-    runs-on: ubuntu-latest
+    test:
+        name: Run Linting, Tests and Build
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '20'
+                  cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+            - name: Install dependencies
+              run: npm ci
 
-      - name: Check code formatting
-        run: npm run format:check
+            - name: Check code formatting
+              run: npm run format:check
 
-      - name: Lint code
-        run: npm run lint
+            - name: Lint code
+              run: npm run lint
 
-      - name: Run unit tests
-        run: npm run test
+            - name: Run unit tests
+              run: npm run test
 
-      - name: Build Next.js application
-        run: npm run build
+            - name: Build Next.js application
+              run: npm run build
