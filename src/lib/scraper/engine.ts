@@ -1,4 +1,5 @@
 import puppeteer, { Browser, Page } from 'puppeteer';
+import { filterAndRankLinks, findSkzDocumentLinks } from './search-helper';
 
 export class ScraperEngine {
     private browser: Browser | null = null;
@@ -103,7 +104,7 @@ export class ScraperEngine {
             }
 
             // HTML page — look for document links (PDF + images) containing SKZ keywords
-            const docLinks = await this.findSkzDocumentLinks(page);
+            const docLinks = await findSkzDocumentLinks(page);
 
             // If there are relevant document links, follow the best one
             if (docLinks.length > 0) {
@@ -197,7 +198,7 @@ export class ScraperEngine {
             }
 
             // Filter and rank search results
-            const filteredLinks = this.filterAndRankLinks(resultLinks, searchQuery);
+            const filteredLinks = filterAndRankLinks(resultLinks, searchQuery);
 
             if (filteredLinks.length === 0) {
                 console.error('  [SEARCH] All results were filtered out (likely generic/irrelevant).');
@@ -221,91 +222,6 @@ export class ScraperEngine {
             if (!page.isClosed()) await page.close();
             return null;
         }
-    }
-
-    /**
-     * Filter and rank search result links to avoid generic/irrelevant documents.
-     * Returns ranked list with best matches first.
-     */
-    private filterAndRankLinks(links: string[], searchQuery: string): string[] {
-        // Blacklist: Known generic/irrelevant domains
-        const blacklist = [
-            'bdew.de', // BDEW Leitfaden (generic guide, not provider-specific)
-            'wikipedia.org', // Encyclopedia
-            'gesetze-im-internet.de', // Legal texts
-            'bundesnetzagentur.de', // Regulator (generic info)
-            'umweltbundesamt.de', // Environmental agency
-            'energieverbraucherportal.de', // Consumer portal (generic)
-        ];
-
-        // Extract provider name from search query
-        const providerName = searchQuery.split(' ')[0]?.toLowerCase() ?? ''; // First word is usually provider name
-
-        // Score each link
-        const scored = links.map((url) => {
-            const urlLower = url.toLowerCase();
-            let score = 0;
-
-            // Blacklist check (-1000 points = effectively excluded)
-            if (blacklist.some((domain) => urlLower.includes(domain))) {
-                console.log(`  [FILTER] ❌ Blacklisted: ${url}`);
-                return { url, score: -1000 };
-            }
-
-            // Strongly prefer direct PDF links (+150 points)
-            if (urlLower.endsWith('.pdf') || urlLower.includes('.pdf?')) {
-                score += 150;
-                console.log(`  [FILTER] 📄 Direct PDF link: ${url}`);
-            }
-
-            // Prefer URLs containing provider name in domain (+100 points)
-            try {
-                const hostname = new URL(url).hostname.toLowerCase();
-                if (hostname.includes(providerName)) {
-                    score += 100;
-                    console.log(`  [FILTER] ✅ Provider domain match: ${url}`);
-                }
-            } catch {
-                // Invalid URL, skip
-            }
-
-            // Prefer URLs with "stromkennzeichnung" or "energiemix" (+30 points)
-            if (urlLower.includes('stromkennzeichnung') || urlLower.includes('energiemix')) {
-                score += 30;
-            }
-
-            // Penalize irrelevant documents (-100 points)
-            const irrelevantKeywords = [
-                'leitfaden',
-                'anleitung',
-                'guide',
-                'kontakt',
-                'netznutzer',
-                'mscons',
-                'invoic',
-                'remadv',
-                'preisblatt',
-                'tarif',
-                'agb',
-                'datenschutz',
-                'impressum',
-            ];
-            if (irrelevantKeywords.some((kw) => urlLower.includes(kw))) {
-                score -= 100;
-                console.log(`  [FILTER] ⚠️  Irrelevant keyword in: ${url}`);
-            }
-
-            return { url, score };
-        });
-
-        // Filter out blacklisted and sort by score
-        const filtered = scored
-            .filter((item) => item.score > -1000)
-            .sort((a, b) => b.score - a.score)
-            .map((item) => item.url);
-
-        console.log(`  [FILTER] Filtered ${links.length} → ${filtered.length} links`);
-        return filtered;
     }
 
     /** Max file size: 20 MB */
@@ -358,102 +274,5 @@ export class ScraperEngine {
     /** Alias for backward compat */
     private async downloadPdf(url: string): Promise<Buffer | null> {
         return this.downloadFile(url);
-    }
-
-    /**
-     * Find document links (PDF, PNG, JPG) on an HTML page that are relevant to Stromkennzeichnung.
-     * Returns scored + sorted results. PDFs rank higher than images.
-     */
-    private async findSkzDocumentLinks(page: Page): Promise<{ url: string; score: number; type: 'pdf' | 'image' }[]> {
-        const rawLinks = await page.evaluate(() => {
-            // Collect both <a> links and <img> sources
-            const links = Array.from(document.querySelectorAll('a')).map((a) => ({
-                href: a.href,
-                text: (a.textContent || '').toLowerCase().trim(),
-                title: (a.getAttribute('title') || '').toLowerCase(),
-                ariaLabel: (a.getAttribute('aria-label') || '').toLowerCase(),
-            }));
-
-            const images = Array.from(document.querySelectorAll('img')).map((img) => ({
-                href: img.src,
-                text: '',
-                title: (img.getAttribute('title') || '').toLowerCase(),
-                ariaLabel: (img.getAttribute('aria-label') || '').toLowerCase(),
-                alt: (img.getAttribute('alt') || '').toLowerCase(),
-            }));
-
-            return [...links, ...images].filter((link) => !!link.href && link.href.startsWith('http'));
-        });
-
-        const SKZ_KEYWORDS = [
-            'stromkennzeichnung',
-            'energiemix',
-            'strommix',
-            'energietraeger',
-            'energy-mix',
-            'strom-mix',
-            'kennzeichnung',
-            'energiequelle',
-        ];
-
-        const scored: { url: string; score: number; type: 'pdf' | 'image' }[] = [];
-
-        for (const link of rawLinks) {
-            const hrefLower = link.href.toLowerCase();
-
-            // Determine file type
-            const isPdf = hrefLower.endsWith('.pdf') || hrefLower.includes('.pdf?') || hrefLower.includes('/pdf/');
-            const isImage = /\.(png|jpe?g)(\?|$)/i.test(hrefLower);
-
-            if (!isPdf && !isImage) continue;
-
-            // Check keyword relevance in text, URL, title, aria-label, alt
-            const alt = (link as any).alt || '';
-            const combined = `${link.text} ${hrefLower} ${link.title} ${link.ariaLabel} ${alt}`;
-            const hasKeyword = SKZ_KEYWORDS.some((kw) => combined.includes(kw));
-
-            if (!hasKeyword) continue;
-
-            let score = 0;
-
-            // File type scoring: PDF preferred over image
-            if (isPdf) score += 50;
-            if (isImage) score += 30;
-
-            // Keyword in filename/URL is stronger signal
-            if (SKZ_KEYWORDS.some((kw) => hrefLower.includes(kw))) score += 30;
-
-            // Keyword in link text/alt is also strong
-            if (SKZ_KEYWORDS.some((kw) => link.text.includes(kw) || alt.includes(kw))) score += 20;
-
-            // Penalize generic/unrelated filenames
-            if (hrefLower.includes('logo') || hrefLower.includes('icon') || hrefLower.includes('banner')) {
-                score -= 100;
-            }
-
-            if (score > 0) {
-                scored.push({ url: link.href, score, type: isPdf ? 'pdf' : 'image' });
-            }
-        }
-
-        // Deduplicate by URL, keep highest score
-        const deduped = new Map<string, { url: string; score: number; type: 'pdf' | 'image' }>();
-        for (const item of scored) {
-            const existing = deduped.get(item.url);
-            if (!existing || item.score > existing.score) {
-                deduped.set(item.url, item);
-            }
-        }
-
-        const results = [...deduped.values()].sort((a, b) => b.score - a.score);
-
-        if (results.length > 0) {
-            console.log(`  [LINKS] Found ${results.length} relevant document link(s):`);
-            for (const r of results) {
-                console.log(`    ${r.type.toUpperCase()} (score ${r.score}): ${r.url}`);
-            }
-        }
-
-        return results;
     }
 }
