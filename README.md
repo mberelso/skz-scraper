@@ -8,11 +8,13 @@ Automatisiertes System zum Herunterladen, Archivieren und Auslesen von Stromkenn
 
 ```
 Next.js App (Dashboard + API)
-├── DuckDuckGo-Suche → findet Stromkennzeichnungs-PDFs
-├── Puppeteer → lädt Webseiten und PDFs herunter
-├── Gemini Vision API → analysiert PDFs direkt (AI-First)
-├── Regex-Parser → Fallback für einfache Fälle
-├── Neon (PostgreSQL) → speichert Provider, Jobs, Dokumente, Energiemix, HKN-Herkunftsländer
+├── Scraper-Engine (engine.ts & search-helper.ts)
+│   ├── DuckDuckGo-Suche → findet Stromkennzeichnungs-PDFs
+│   └── Puppeteer → lädt Webseiten und PDFs herunter
+├── Parsing-Kaskade & Storage (runner.ts & save-helper.ts)
+│   ├── Gemini Vision API → analysiert PDFs direkt (AI-First)
+│   ├── Regex-Parser → Fallback für einfache Fälle
+│   └── Neon (PostgreSQL) → speichert Provider, Jobs, Dokumente, Energiemix, HKN-Herkunftsländer
 └── Supabase Storage → archiviert PDFs und Screenshots (Cloud)
 ```
 
@@ -21,6 +23,7 @@ Next.js App (Dashboard + API)
 1. **Gemini Vision** (Primär): PDF als Bild an Gemini 2.0 Flash senden
 2. **Gemini Text** (Fallback 1): Extrahierten Text an Gemini senden
 3. **Regex** (Fallback 2): Keyword-basierte Extraktion ohne API
+
 
 ## Setup
 
