@@ -1,6 +1,12 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+let genAIInstance: GoogleGenerativeAI | null = null;
+function getGenAI(): GoogleGenerativeAI {
+    if (!genAIInstance) {
+        genAIInstance = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+    }
+    return genAIInstance;
+}
 
 export interface HknOrigin {
     country: string;
@@ -38,6 +44,12 @@ export interface DetailedEnergyMix {
     confidence: number; // 0-100
     extraction_method: 'gemini_vision' | 'gemini_text' | 'regex' | 'manual' | 'ocr';
     mix_type: 'gesamtmix' | 'unternehmensmix' | 'tarifmix' | 'unbekannt' | null;
+    
+    // Optional extracted company info
+    company_name?: string | null;
+    company_address?: string | null;
+    company_zip?: string | null;
+    company_city?: string | null;
 }
 
 /**
@@ -97,6 +109,13 @@ HERKUNFTSLÄNDER DER HKN (§ 42 Abs. 1 Nr. 3 EnWG):
 - Extrahiere diese als hkn_origins Array mit Land und Prozentanteil
 - Falls keine Herkunftsländer angegeben sind: hkn_origins = null
 
+STAMMDATEN DES ANBIETERS — Versuche, den Namen und die Anschrift des Energieversorgers (aus dem Impressum, Briefkopf oder der Kennzeichnung) zu extrahieren:
+- "company_name": Der offizielle Name des Anbieters (z.B. "AggerEnergie GmbH")
+- "company_address": Straße und Hausnummer (z.B. "Am Panzenberg 1")
+- "company_zip": 5-stellige Postleitzahl (z.B. "51643")
+- "company_city": Stadt (z.B. "Gummersbach")
+Falls diese Daten im Dokument absolut nicht auffindbar sind, verwende null.
+
 REGELN:
 - Suche nach dem Geltungsjahr/Berichtsjahr der Daten (meist 2022, 2023 oder 2024)
 - Prozent-Angaben als Zahl ohne %-Zeichen (z.B. 45.2 statt "45,2%")
@@ -130,7 +149,11 @@ Gib das Ergebnis AUSSCHLIESSLICH als JSON-Objekt zurück (kein Markdown, keine E
   "eeg_percentage": number | null,
   "tariff_name": string | null,
   "confidence": number,
-  "hkn_origins": [{"country": string, "percentage": number}] | null
+  "hkn_origins": [{"country": string, "percentage": number}] | null,
+  "company_name": string | null,
+  "company_address": string | null,
+  "company_zip": string | null,
+  "company_city": string | null
 }`;
 
 /**
@@ -213,7 +236,7 @@ export async function classifyDocument(
     }
 
     try {
-        const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+        const model = getGenAI().getGenerativeModel({ model: 'gemini-2.5-flash' });
         const base64 = buffer.toString('base64');
 
         const result = await model.generateContent([
@@ -256,7 +279,7 @@ export async function extractEnergyMixFromPDF(pdfBuffer: Buffer): Promise<Detail
     }
 
     return callGeminiWithRetry(async () => {
-        const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+        const model = getGenAI().getGenerativeModel({ model: 'gemini-2.5-flash' });
         const base64Pdf = pdfBuffer.toString('base64');
 
         console.log(`  [AI] Sending PDF (${(pdfBuffer.length / 1024).toFixed(0)} KB) to Gemini Vision...`);
@@ -281,7 +304,7 @@ export async function extractEnergyMixWithAI(text: string): Promise<DetailedEner
     }
 
     return callGeminiWithRetry(async () => {
-        const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+        const model = getGenAI().getGenerativeModel({ model: 'gemini-2.5-flash' });
         const prompt = `${EXTRACTION_PROMPT}\n\nHier ist der extrahierte Text des Dokuments:\n---\n${text.substring(0, 30000)}\n---`;
 
         console.log(`  [AI] Sending text (${text.length} chars) to Gemini for analysis...`);
@@ -307,7 +330,7 @@ export async function extractEnergyMixFromScreenshot(
     const detectedMime = mimeType || detectImageMime(imageBuffer);
 
     return callGeminiWithRetry(async () => {
-        const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+        const model = getGenAI().getGenerativeModel({ model: 'gemini-2.5-flash' });
         const base64Image = imageBuffer.toString('base64');
 
         console.log(

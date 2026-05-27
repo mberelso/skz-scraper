@@ -1,5 +1,6 @@
 import { ScraperEngine } from './engine';
 import { validateAndSaveMix, updateJobLog } from './save-helper';
+import { cleanProviderNameForSearch } from './search-helper';
 import { saveFile, slugify } from '@/lib/storage';
 import { query } from '@/lib/db';
 import PDFParser from 'pdf2json';
@@ -57,7 +58,8 @@ export async function runScrapeJob(providerId: number, providerName: string, ove
                     triedDirect = true;
                 } else {
                     // Build search query
-                    const searchQuery = `${providerName} Stromkennzeichnung Energiemix PDF`;
+                    const cleanName = cleanProviderNameForSearch(providerName);
+                    const searchQuery = `${cleanName} Stromkennzeichnung`;
                     console.log(`  [JOB] Search query: ${searchQuery}`);
                     await updateJobLog(jobId, `Suche: ${searchQuery}`);
                     scrapeResult = await scraper.searchAndScrape(searchQuery);

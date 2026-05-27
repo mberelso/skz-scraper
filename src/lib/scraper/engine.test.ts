@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { scoreDocumentLinks, RawLink } from './search-helper';
+import { scoreDocumentLinks, RawLink, cleanProviderNameForSearch, getCleanedProviderWords, filterAndRankLinks, decodeSearchUrl } from './search-helper';
 
 // --- Tests ---
 
@@ -15,8 +15,8 @@ describe('scoreDocumentLinks', () => {
         ];
         const result = scoreDocumentLinks(links);
         expect(result).toHaveLength(1);
-        expect(result[0].type).toBe('pdf');
-        expect(result[0].score).toBe(50 + 30); // pdf + keyword in URL
+        expect(result[0]!.type).toBe('pdf');
+        expect(result[0]!.score).toBe(50 + 30); // pdf + keyword in URL
     });
 
     it('findet PNG mit Keyword "stromkennzeichnung" im Linktext', () => {
@@ -30,8 +30,8 @@ describe('scoreDocumentLinks', () => {
         ];
         const result = scoreDocumentLinks(links);
         expect(result).toHaveLength(1);
-        expect(result[0].type).toBe('image');
-        expect(result[0].score).toBe(30 + 20); // image + keyword in text
+        expect(result[0]!.type).toBe('image');
+        expect(result[0]!.score).toBe(30 + 20); // image + keyword in text
     });
 
     it('bevorzugt PDF über PNG bei gleichem Keyword', () => {
@@ -51,8 +51,8 @@ describe('scoreDocumentLinks', () => {
         ];
         const result = scoreDocumentLinks(links);
         expect(result).toHaveLength(2);
-        expect(result[0].type).toBe('pdf');
-        expect(result[0].score).toBeGreaterThan(result[1].score);
+        expect(result[0]!.type).toBe('pdf');
+        expect(result[0]!.score).toBeGreaterThan(result[1]!.score);
     });
 
     it('ignoriert Nicht-Dokument-Links (HTML, ZIP, etc.)', () => {
@@ -105,7 +105,7 @@ describe('scoreDocumentLinks', () => {
         ];
         const result = scoreDocumentLinks(links);
         expect(result).toHaveLength(1);
-        expect(result[0].type).toBe('pdf');
+        expect(result[0]!.type).toBe('pdf');
     });
 
     it('erkennt Keyword im aria-label', () => {
@@ -119,7 +119,7 @@ describe('scoreDocumentLinks', () => {
         ];
         const result = scoreDocumentLinks(links);
         expect(result).toHaveLength(1);
-        expect(result[0].type).toBe('image');
+        expect(result[0]!.type).toBe('image');
     });
 
     it('filtert Logo/Icon-Links trotz Keyword aus', () => {
@@ -144,7 +144,7 @@ describe('scoreDocumentLinks', () => {
         const result = scoreDocumentLinks(links);
         expect(result).toHaveLength(1);
         // Should keep highest score (second has keyword in text too)
-        expect(result[0].score).toBe(50 + 30 + 20); // pdf + url keyword + text keyword
+        expect(result[0]!.score).toBe(50 + 30 + 20); // pdf + url keyword + text keyword
     });
 
     it('BayWa r.e. Szenario: findet PNG-Stromkennzeichnung auf Nachweise-Seite', () => {
@@ -210,8 +210,8 @@ describe('scoreDocumentLinks', () => {
         ];
         const result = scoreDocumentLinks(links);
         expect(result).toHaveLength(2);
-        expect(result[0].type).toBe('pdf');
-        expect(result[0].score).toBeGreaterThan(result[1].score);
+        expect(result[0]!.type).toBe('pdf');
+        expect(result[0]!.score).toBeGreaterThan(result[1]!.score);
     });
 
     it('erkennt JPG-Varianten (.jpg und .jpeg)', () => {
@@ -235,7 +235,7 @@ describe('scoreDocumentLinks', () => {
         ];
         const result = scoreDocumentLinks(links);
         expect(result).toHaveLength(1);
-        expect(result[0].type).toBe('pdf');
+        expect(result[0]!.type).toBe('pdf');
     });
 });
 
@@ -308,5 +308,42 @@ describe('Runner: resultType-Erkennung', () => {
         const sourceUrl = 'https://example.com/stromkennzeichnung.png';
         const ext = /\.jpe?g/i.test(sourceUrl) ? 'jpg' : 'png';
         expect(ext).toBe('png');
+    });
+});
+
+describe('SearchHelper name cleaning and matching', () => {
+    it('cleanProviderNameForSearch entfernt GmbH und Co. KG', () => {
+        expect(cleanProviderNameForSearch('Adolf Roth GmbH & Co. KG')).toBe('Adolf Roth');
+        expect(cleanProviderNameForSearch('AggerEnergie GmbH')).toBe('AggerEnergie');
+        expect(cleanProviderNameForSearch('1KOMMA5° Services GmbH')).toBe('1KOMMA5 Services');
+    });
+
+    it('getCleanedProviderWords extrahiert Markenwörter', () => {
+        const words = getCleanedProviderWords('Adolf Roth GmbH & Co. KG Stromkennzeichnung');
+        expect(words).toContain('adolf');
+        expect(words).toContain('roth');
+        const albstadtWords = getCleanedProviderWords('Albstadtwerke GmbH');
+        expect(albstadtWords).toContain('albstadtwerke');
+    });
+
+    it('filterAndRankLinks findet Relevanz über geteilte Wörter im Hostname', () => {
+        const links = [
+            'https://www.roth-energie.de/stromkennzeichnung.pdf',
+            'https://www.generic.de/document.pdf',
+        ];
+        const ranked = filterAndRankLinks(links, 'Adolf Roth GmbH & Co. KG Stromkennzeichnung PDF');
+        expect(ranked).toHaveLength(2);
+        expect(ranked[0]).toBe('https://www.roth-energie.de/stromkennzeichnung.pdf');
+    });
+
+    it('decodeSearchUrl decodiert Bing und DDG Redirect Links korrekt', () => {
+        const bingRedirect = 'https://www.bing.com/ck/a?!&&p=5812&u=a1aHR0cHM6Ly93d3cuYWdnZXJlbmVyZ2llLmRlLw&ntb=1';
+        expect(decodeSearchUrl(bingRedirect)).toBe('https://www.aggerenergie.de/');
+
+        const ddgRedirect = 'https://duckduckgo.com/l/?uddg=https%3A%2F%2Fwww.aggerenergie.de%2Ffileadmin%2F1aggerenergie%2F60_service%2F6.2_servicethemen%2F20250701_Kennzeichnung_der_Stromlieferungen_2024.pdf&rut=123';
+        expect(decodeSearchUrl(ddgRedirect)).toBe('https://www.aggerenergie.de/fileadmin/1aggerenergie/60_service/6.2_servicethemen/20250701_Kennzeichnung_der_Stromlieferungen_2024.pdf');
+        
+        const normalUrl = 'https://www.aggerenergie.de/file.pdf';
+        expect(decodeSearchUrl(normalUrl)).toBe(normalUrl);
     });
 });

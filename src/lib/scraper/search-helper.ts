@@ -20,6 +20,99 @@ const SKZ_KEYWORDS = [
 ];
 
 /**
+ * Decodes a Bing redirect URL if it is one, returning the direct target URL.
+ */
+export function decodeSearchUrl(url: string): string {
+    if (url.includes('bing.com/ck/a')) {
+        try {
+            const urlObj = new URL(url);
+            const u = urlObj.searchParams.get('u');
+            if (u && u.startsWith('a1')) {
+                const base64Part = u.substring(2);
+                // Standard base64 decoding in Node.js
+                const decoded = Buffer.from(base64Part, 'base64').toString('utf8');
+                if (decoded.startsWith('http')) {
+                    return decoded;
+                }
+            }
+        } catch (e) {
+            // Ignore decoding failure, return original
+        }
+    }
+    if (url.includes('duckduckgo.com/l/?uddg=')) {
+        try {
+            const urlObj = new URL(url);
+            const uddg = urlObj.searchParams.get('uddg');
+            if (uddg) {
+                return decodeURIComponent(uddg);
+            }
+        } catch (e) {
+            // Ignore decoding failure, return original
+        }
+    }
+    return url;
+}
+
+/**
+ * Clean a provider name to remove corporate suffixes (GmbH, AG, etc.) for a cleaner search query.
+ */
+export function cleanProviderNameForSearch(name: string): string {
+    return name
+        .replace(/\b(gmbh & co\.?\s*kg|gmbh & co\.?\s*ohg|gmbh|co\.?\s*kg|ag|eg|ug|se)\b/gi, '')
+        .replace(/[^a-zA-Z0-9äöüÄÖÜß\s\-&]/g, '') // Remove special chars except spaces, hyphens, and ampersands
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+
+/**
+ * Extract meaningful words from a search query to match against hostnames.
+ */
+export function getCleanedProviderWords(searchQuery: string): string[] {
+    let clean = searchQuery.toLowerCase();
+    
+    // Remove search keywords
+    for (const kw of SKZ_KEYWORDS) {
+        clean = clean.replace(new RegExp(`\\b${kw}\\b`, 'g'), '');
+    }
+    clean = clean.replace(/\bpdf\b/g, '');
+
+    // Remove corporate suffixes and generic words
+    const suffixes = [
+        'gmbh & co\\.? kg',
+        'gmbh & co\\.? ohg',
+        'gmbh',
+        'co\\.? kg',
+        'ag',
+        'eg',
+        'ug',
+        'se',
+        'solutions',
+        'service',
+        'services',
+        'energy',
+        'energie',
+        'strom',
+        'gas',
+        'versorgung',
+        'stadtwerke',
+        'stadtwerk',
+        'werke',
+        'werk',
+        'holding',
+        'deutschland',
+    ];
+    for (const suffix of suffixes) {
+        clean = clean.replace(new RegExp(`\\b${suffix}\\b`, 'g'), '');
+    }
+
+    // Split and extract words with length > 2
+    return clean
+        .split(/[\s,.\-\/&\(\)]+/)
+        .map(w => w.replace(/[^a-z0-9äöüß]/g, '').trim())
+        .filter(w => w.length > 2);
+}
+
+/**
  * Filter and rank search result links to avoid generic/irrelevant documents.
  * Returns ranked list with best matches first.
  */
@@ -33,9 +126,12 @@ export function filterAndRankLinks(links: string[], searchQuery: string): string
         'energieverbraucherportal.de', // Consumer portal (generic)
     ];
 
-    const providerName = searchQuery.split(' ')[0]?.toLowerCase() ?? '';
+    const cleanedWords = getCleanedProviderWords(searchQuery);
+    
+    // Decode any redirect URLs (e.g. from Bing)
+    const decodedLinks = links.map(decodeSearchUrl);
 
-    const scored = links.map((url) => {
+    const scored = decodedLinks.map((url) => {
         const urlLower = url.toLowerCase();
         let score = 0;
 
@@ -49,7 +145,9 @@ export function filterAndRankLinks(links: string[], searchQuery: string): string
 
         try {
             const hostname = new URL(url).hostname.toLowerCase();
-            if (hostname.includes(providerName)) {
+            // Score based on matching any of the cleaned provider name words in the hostname
+            const matchesWord = cleanedWords.some(word => hostname.includes(word));
+            if (matchesWord) {
                 score += 100;
             }
         } catch {

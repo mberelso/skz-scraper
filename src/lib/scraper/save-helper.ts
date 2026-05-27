@@ -101,6 +101,52 @@ export async function validateAndSaveMix(
             console.log(`  [${logPrefix}] ${mix.hkn_origins.length} HKN-Herkunftsländer gespeichert`);
         }
 
+        // Update provider details if extracted and missing or empty in DB
+        try {
+            const providerRows: any[] = await query(
+                'SELECT name, address, zip, city FROM providers WHERE id = ?',
+                [providerId]
+            );
+            if (providerRows.length > 0) {
+                const provider = providerRows[0];
+                const updates: string[] = [];
+                const values: any[] = [];
+
+                if (mix.company_name && (!provider.name || provider.name.length < 3)) {
+                    updates.push('name = ?');
+                    values.push(mix.company_name);
+                }
+                if (mix.company_address && mix.company_address !== provider.address) {
+                    updates.push('address = ?');
+                    values.push(mix.company_address);
+                }
+                if (mix.company_zip && mix.company_zip !== provider.zip) {
+                    updates.push('zip = ?');
+                    values.push(mix.company_zip);
+                }
+                if (mix.company_city && mix.company_city !== provider.city) {
+                    updates.push('city = ?');
+                    values.push(mix.company_city);
+                }
+
+                if (updates.length > 0) {
+                    values.push(providerId);
+                    await query(
+                        `UPDATE providers SET ${updates.join(', ')}, updated_at = NOW() WHERE id = ?`,
+                        values
+                    );
+                    console.log(`  [${logPrefix}] Provider-Stammdaten aktualisiert:`, {
+                        name: mix.company_name,
+                        address: mix.company_address,
+                        zip: mix.company_zip,
+                        city: mix.company_city
+                    });
+                }
+            }
+        } catch (err: any) {
+            console.error(`  [${logPrefix}] Fehler beim Aktualisieren der Provider-Stammdaten: ${err.message}`);
+        }
+
         const validationNote = warnings.length > 0 ? ` ⚠️ ${warnings.join('; ')}` : '';
         console.log(`  [${logPrefix}] Mix data saved to DB.`);
         await updateJobLog(

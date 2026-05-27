@@ -1,4 +1,4 @@
-import puppeteer, { Browser, Page } from 'puppeteer';
+import puppeteer, { Browser } from 'puppeteer';
 import { filterAndRankLinks, findSkzDocumentLinks } from './search-helper';
 
 export class ScraperEngine {
@@ -59,6 +59,9 @@ export class ScraperEngine {
             await page.setUserAgent(
                 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
             );
+            await page.evaluateOnNewDocument(() => {
+                Object.defineProperty(navigator, 'webdriver', { get: () => false });
+            });
 
             console.log(`  [SCRAPE] Navigating to ${url}...`);
             const response = await page.goto(url, { waitUntil: 'networkidle2', timeout: 45000 });
@@ -149,16 +152,18 @@ export class ScraperEngine {
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
         );
         await page.setExtraHTTPHeaders({ 'Accept-Language': 'de-DE,de;q=0.9,en;q=0.8' });
+        await page.evaluateOnNewDocument(() => {
+            Object.defineProperty(navigator, 'webdriver', { get: () => false });
+        });
 
         try {
-            // Strategy 1: DuckDuckGo HTML-only search (bypass Cloudflare and heavy JS/timeouts)
+            // Strategy 1: DuckDuckGo HTML-only search
             const ddgUrl = 'https://html.duckduckgo.com/html/?q=' + encodeURIComponent(searchQuery);
             console.log(`  [SEARCH] Searching DuckDuckGo (HTML): "${searchQuery}"`);
             await page.goto(ddgUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
 
             // Extract search result links
-            const resultLinks = await page.evaluate(() => {
-                // DuckDuckGo result links (multiple possible selectors for robustness)
+            let resultLinks = await page.evaluate(() => {
                 const selectors = [
                     'article a[data-testid="result-title-a"]', // Modern DDG
                     'a.result__a', // Classic DDG
@@ -170,22 +175,52 @@ export class ScraperEngine {
                     const links = Array.from(document.querySelectorAll(selector));
                     const urls = links
                         .map((a) => (a as HTMLAnchorElement).href)
-                        .filter((href) => href && href.startsWith('http') && !href.includes('duckduckgo.com'));
+                        .filter((href) => {
+                            if (!href || !href.startsWith('http')) return false;
+                            if (href.includes('duckduckgo.com/l/?uddg=')) return true;
+                            return !href.includes('duckduckgo.com');
+                        });
                     if (urls.length > 0) return urls;
                 }
                 return [];
             });
 
+            // Check if DDG is showing bot anomaly block
+            const isBlocked = await page.evaluate(() => {
+                const text = document.body.innerText || '';
+                return text.includes('anomaly') || text.includes('captcha') || text.includes('bots use');
+            });
+
+            if (resultLinks.length === 0 || isBlocked) {
+                console.warn('  [SEARCH] DuckDuckGo blocked or no results. Trying Bing Search (Fallback)...');
+                const bingUrl = 'https://www.bing.com/search?q=' + encodeURIComponent(searchQuery);
+                await page.goto(bingUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
+
+                resultLinks = await page.evaluate(() => {
+                    const links = Array.from(document.querySelectorAll('ol#b_results li.b_algo h2 a'));
+                    return links
+                        .map((a) => (a as HTMLAnchorElement).href)
+                        .filter((href) => {
+                            if (!href || !href.startsWith('http')) return false;
+                            if (href.includes('bing.com')) {
+                                return href.includes('/ck/a');
+                            }
+                            return true;
+                        });
+                });
+            }
+
             if (resultLinks.length === 0) {
-                console.warn('  [SEARCH] No DuckDuckGo results found. Page may require JS or layout changed.');
-                // Try to get any clickable links as last resort
+                console.warn('  [SEARCH] No search results found on DuckDuckGo or Bing.');
+                // Try to get any clickable links from last search page as last resort
                 const anyLinks = await page.evaluate(() =>
                     Array.from(document.querySelectorAll('a[href^="http"]'))
                         .map((a) => (a as HTMLAnchorElement).href)
-                        .filter((href) => !href.includes('duckduckgo.com') && !href.includes('duck.co'))
+                        .filter((href) => !href.includes('duckduckgo.com') && !href.includes('duck.co') && !href.includes('bing.com') && !href.includes('microsoft.com'))
                 );
                 if (anyLinks.length === 0) {
-                    console.error('  [SEARCH] No links found at all on DuckDuckGo page.');
+                    console.error('  [SEARCH] No links found at all on search pages.');
+                    await page.close();
                     return null;
                 }
                 // Use best fallback link
@@ -199,6 +234,8 @@ export class ScraperEngine {
 
             // Filter and rank search results
             const filteredLinks = filterAndRankLinks(resultLinks, searchQuery);
+            console.log(`  [SEARCH] Raw links found:`, resultLinks);
+            console.log(`  [SEARCH] Scored and ranked links:`, filteredLinks);
 
             if (filteredLinks.length === 0) {
                 console.error('  [SEARCH] All results were filtered out (likely generic/irrelevant).');
@@ -212,7 +249,6 @@ export class ScraperEngine {
                 await page.close();
                 return null;
             }
-            console.log(`  [SEARCH] Found ${resultLinks.length} result(s), ${filteredLinks.length} after filtering.`);
             console.log(`  [SEARCH] Target URL: ${targetLink}`);
 
             await page.close();
