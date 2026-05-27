@@ -150,3 +150,60 @@ CREATE TABLE IF NOT EXISTS audit_log (
 
 CREATE INDEX IF NOT EXISTS idx_audit_provider ON audit_log (provider_id);
 CREATE INDEX IF NOT EXISTS idx_audit_created ON audit_log (created_at DESC);
+
+-- 1. Jährliche Bundes-Konstanten & Bundesmix-Werte (BNetzA/UBA)
+CREATE TABLE IF NOT EXISTS federal_constants (
+    year INT PRIMARY KEY,
+    eeg_percentage DECIMAL(5,2) NOT NULL,
+    renewable_percentage DECIMAL(5,2) NOT NULL,
+    fossil_percentage DECIMAL(5,2) NOT NULL,
+    nuclear_percentage DECIMAL(5,2) NOT NULL,
+    co2_emission_g_kwh DECIMAL(6,2) NOT NULL,
+    radioactive_waste_mg_kwh DECIMAL(10,4) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 2. Provider Jahres-Statistiken (Strommengenlieferung)
+CREATE TABLE IF NOT EXISTS provider_yearly_stats (
+    id SERIAL PRIMARY KEY,
+    provider_id INT NOT NULL REFERENCES providers(id) ON DELETE CASCADE,
+    year INT NOT NULL,
+    delivered_volume_mwh DECIMAL(15,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT unique_provider_year UNIQUE (provider_id, year)
+);
+
+CREATE INDEX IF NOT EXISTS idx_provider_year_stats ON provider_yearly_stats (provider_id, year);
+
+-- 3. Tatsächlich entwertete HKN (UBA Herkunftsnachweisregister-Daten)
+CREATE TABLE IF NOT EXISTS hkn_cancellations (
+    id SERIAL PRIMARY KEY,
+    provider_id INT NOT NULL REFERENCES providers(id) ON DELETE CASCADE,
+    year INT NOT NULL,
+    country VARCHAR(100) NOT NULL,
+    amount_mwh DECIMAL(15,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT unique_provider_year_country UNIQUE (provider_id, year, country)
+);
+
+CREATE INDEX IF NOT EXISTS idx_hkn_cancellation_lookup ON hkn_cancellations (provider_id, year);
+
+-- 4. Compliance Audits (Prüfvermerke und Abgleichsstatus)
+CREATE TABLE IF NOT EXISTS compliance_audits (
+    id SERIAL PRIMARY KEY,
+    provider_id INT NOT NULL REFERENCES providers(id) ON DELETE CASCADE,
+    year INT NOT NULL,
+    status VARCHAR(50) DEFAULT 'offen' CHECK (status IN ('offen', 'plausibel', 'fehlerhaft_eeg', 'fehlerhaft_hkn', 'beanstandet')),
+    hkn_deviation_percent DECIMAL(8,2) DEFAULT NULL,
+    audit_note TEXT DEFAULT NULL,
+    audited_by VARCHAR(100) DEFAULT NULL,
+    audited_at TIMESTAMP DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT unique_audit_provider_year UNIQUE (provider_id, year)
+);
+
+CREATE INDEX IF NOT EXISTS idx_compliance_audit_lookup ON compliance_audits (provider_id, year);
+CREATE INDEX IF NOT EXISTS idx_compliance_audit_status ON compliance_audits (status);

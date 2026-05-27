@@ -1,5 +1,11 @@
 @import 'tailwindcss';
 
+@theme {
+    --color-primary: #d5781a;
+    --color-background-light: #f8f7f6;
+    --color-background-dark: #211911;
+}
+
 :root {
     --font-public-sans: 'Public Sans', sans-serif;
 }
