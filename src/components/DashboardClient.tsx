@@ -654,7 +654,9 @@ export default function DashboardClient({
                                                 </p>
                                             ) : (
                                                 recentJobs.slice(0, 5).map((job: any) => {
-                                                    const provider = providers.find((p: any) => p.id === job.provider_id);
+                                                    const provider = providers.find(
+                                                        (p: any) => p.id === job.provider_id
+                                                    );
                                                     return (
                                                         <div
                                                             key={job.id}
@@ -664,7 +666,9 @@ export default function DashboardClient({
                                                                     ? 'cursor-pointer hover:bg-slate-100 hover:border-slate-300 bg-slate-50 border-slate-100'
                                                                     : 'bg-slate-50 border-slate-100'
                                                             }`}
-                                                            title={provider ? `${provider.name} Details öffnen` : undefined}
+                                                            title={
+                                                                provider ? `${provider.name} Details öffnen` : undefined
+                                                            }
                                                         >
                                                             <div className="flex-1 min-w-0">
                                                                 <div className="text-sm font-semibold text-slate-900 truncate">
