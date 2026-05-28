@@ -607,7 +607,7 @@ export default function DashboardClient({
                                                 <>
                                                     <button
                                                         type="button"
-                                                        onClick={() => handleBatchScrape(50)}
+                                                        onClick={() => handleBatchScrape({ limit: 50 })}
                                                         disabled={batchLoading}
                                                         className="inline-flex items-center gap-2 px-6 py-2.5 text-white font-semibold rounded-lg shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90"
                                                         style={{
