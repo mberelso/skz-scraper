@@ -70,6 +70,8 @@ npm run dev
 - Dynamischer Editor für HKN-Herkunftsländer (Länder und Prozentanteile hinzufügen/entfernen)
 - Manuelles Scraping pro Anbieter (optional mit direkter PDF-URL zur Umgehung von Suchmaschinen-Sperren)
 - Interaktiver Live-Update-Kippschalter oben rechts im Header (automatische Aktualisierung an-/ausschaltbar)
+- **Live-Monitor-Direktlink:** Jeder Job im Live-Monitor ist klickbar und öffnet augenblicklich das zugehörige Provider-Detailmodal zur schnellen Fehlersuche oder Analyse.
+- **Interaktiver Behörden-Workflow:** Die Übersichtskarten zum behördlichen Arbeitsablauf leiten per Klick direkt in die jeweilige Ansicht weiter (Schritt 1 → Scraper-Engine, Schritt 2 → Datenmatching, Schritt 3 → Compliance & Audit).
 - **Mehrfachauswahl & Export-Center:** Komfortable Checkboxen zur Auswahl bestimmter Anbieter und ein zentraler Export-Center-Button im Header zur Erzeugung strukturierter Behördenberichte (A4-PDFs via Puppeteer) oder aggregierter CSV-Dateien.
 - **Tastatur-Barrierefreiheit (Accessibility):** Alle Modale (Export-Center, Provider-Details, Erstellung) besitzen eine Tastatur-Falle (Focus Trap) und schließen sich augenblicklich per `Esc`-Taste.
 
