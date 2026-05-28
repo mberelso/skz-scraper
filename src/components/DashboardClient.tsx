@@ -269,7 +269,7 @@ export default function DashboardClient({
     const handleBatchScrape = async (options?: { limit?: number; providerIds?: number[] }) => {
         const limit = options?.limit;
         const providerIds = options?.providerIds;
-        const count = providerIds ? providerIds.length : (limit || totalProviders);
+        const count = providerIds ? providerIds.length : limit || totalProviders;
 
         if (!confirm(`Batch-Scrape für ${count} Provider starten? Dies kann einige Minuten dauern.`)) {
             return;
@@ -877,7 +877,11 @@ export default function DashboardClient({
                                 ) : (
                                     <>
                                         <button
-                                            onClick={() => handleBatchScrape({ providerIds: filteredProviders.map((p: any) => p.id) })}
+                                            onClick={() =>
+                                                handleBatchScrape({
+                                                    providerIds: filteredProviders.map((p: any) => p.id),
+                                                })
+                                            }
                                             disabled={batchLoading || batchActive || filteredProviders.length === 0}
                                             className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm disabled:opacity-50"
                                         >
@@ -894,12 +898,18 @@ export default function DashboardClient({
                                             disabled={
                                                 batchLoading ||
                                                 batchActive ||
-                                                filteredProviders.filter((p: any) => p.latest_job_status !== 'success').length === 0
+                                                filteredProviders.filter((p: any) => p.latest_job_status !== 'success')
+                                                    .length === 0
                                             }
                                             className="bg-[#d5781a] hover:bg-[#d5781a]/90 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm disabled:opacity-50"
                                         >
                                             <span className="material-symbols-outlined text-sm">replay</span>
-                                            Nur unvollständige gefilterte scrapen ({filteredProviders.filter((p: any) => p.latest_job_status !== 'success').length})
+                                            Nur unvollständige gefilterte scrapen (
+                                            {
+                                                filteredProviders.filter((p: any) => p.latest_job_status !== 'success')
+                                                    .length
+                                            }
+                                            )
                                         </button>
                                     </>
                                 )}
@@ -915,7 +925,8 @@ export default function DashboardClient({
                                                 <span className="relative inline-flex rounded-full h-3 w-3 bg-[#d5781a]"></span>
                                             </span>
                                             <span className="text-sm font-bold text-slate-800">
-                                                Laufender Batch-Scrape: Job {batchStatus.current} von {batchStatus.total}
+                                                Laufender Batch-Scrape: Job {batchStatus.current} von{' '}
+                                                {batchStatus.total}
                                             </span>
                                             {batchStatus.currentProvider && (
                                                 <span className="text-xs font-medium text-slate-500">
