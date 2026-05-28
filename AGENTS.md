@@ -45,3 +45,7 @@ Wenn neue Spalten oder Felder zum Strommix hinzugefügt werden, müssen folgende
 - Führe vor jedem Abschluss einer Aufgabe die Tests aus:
   `npm run test` (bzw. `npx vitest run`)
 - Stelle sicher, dass alle bestehenden Tests grün bleiben.
+- **Code-Formatierung & Linting:** 
+  - Führe vor jedem Commit/Push immer `npm run format` (Formatierung mit Prettier) und `npm run lint` (ESLint-Prüfung) aus. Die Pipeline darf keine Fehler aufweisen.
+  - Achte in JSX/TSX-Dateien besonders darauf, Anführungszeichen in Textbereichen zu escapen (z. B. `&quot;` statt `"`), um `react/no-unescaped-entities` Fehler zu vermeiden.
+
