@@ -853,6 +853,150 @@ export default function DashboardClient({
                                 </div>
                             </div>
 
+                            {/* Batch Aktionsleiste */}
+                            <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4 flex flex-wrap items-center gap-3">
+                                <span className="text-sm font-semibold text-slate-700">Batch-Aktionen:</span>
+                                {selectedProviderIds.length > 0 ? (
+                                    <>
+                                        <button
+                                            onClick={() => handleBatchScrape({ providerIds: selectedProviderIds })}
+                                            disabled={batchLoading || batchActive}
+                                            className="bg-primary hover:bg-primary/95 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm disabled:opacity-50"
+                                        >
+                                            <span className="material-symbols-outlined text-sm">play_arrow</span>
+                                            Ausgewählte scrapen ({selectedProviderIds.length})
+                                        </button>
+                                        <button
+                                            onClick={() => setSelectedProviderIds([])}
+                                            className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all"
+                                        >
+                                            <span className="material-symbols-outlined text-sm">deselect</span>
+                                            Auswahl aufheben
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <button
+                                            onClick={() => handleBatchScrape({ providerIds: filteredProviders.map((p: any) => p.id) })}
+                                            disabled={batchLoading || batchActive || filteredProviders.length === 0}
+                                            className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm disabled:opacity-50"
+                                        >
+                                            <span className="material-symbols-outlined text-sm">play_arrow</span>
+                                            Gefilterte scrapen ({filteredProviders.length})
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                const incompleteIds = filteredProviders
+                                                    .filter((p: any) => p.latest_job_status !== 'success')
+                                                    .map((p: any) => p.id);
+                                                handleBatchScrape({ providerIds: incompleteIds });
+                                            }}
+                                            disabled={
+                                                batchLoading ||
+                                                batchActive ||
+                                                filteredProviders.filter((p: any) => p.latest_job_status !== 'success').length === 0
+                                            }
+                                            className="bg-[#d5781a] hover:bg-[#d5781a]/90 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm disabled:opacity-50"
+                                        >
+                                            <span className="material-symbols-outlined text-sm">replay</span>
+                                            Nur unvollständige gefilterte scrapen ({filteredProviders.filter((p: any) => p.latest_job_status !== 'success').length})
+                                        </button>
+                                    </>
+                                )}
+                            </div>
+
+                            {/* Batch-Status-Anzeige in der Scraper-Engine */}
+                            {batchStatus?.isRunning && (
+                                <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4 space-y-3">
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-3">
+                                            <span className="relative flex h-3 w-3">
+                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d5781a] opacity-75"></span>
+                                                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#d5781a]"></span>
+                                            </span>
+                                            <span className="text-sm font-bold text-slate-800">
+                                                Laufender Batch-Scrape: Job {batchStatus.current} von {batchStatus.total}
+                                            </span>
+                                            {batchStatus.currentProvider && (
+                                                <span className="text-xs font-medium text-slate-500">
+                                                    → {batchStatus.currentProvider}
+                                                </span>
+                                            )}
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <button
+                                                onClick={() => setShowTerminal(!showTerminal)}
+                                                className="text-xs font-bold px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 flex items-center gap-1.5"
+                                            >
+                                                <span className="material-symbols-outlined text-sm">terminal</span>
+                                                {showTerminal ? 'Terminal ausblenden' : 'Terminal einblenden'}
+                                            </button>
+                                            <button
+                                                onClick={handleStopBatch}
+                                                className="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all"
+                                            >
+                                                <span className="material-symbols-outlined text-sm">stop</span>
+                                                Abbrechen
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="w-full bg-slate-200 rounded-full h-2">
+                                        <div
+                                            className="h-2 rounded-full transition-all duration-300 bg-[#d5781a]"
+                                            style={{ width: `${(batchStatus.current / batchStatus.total) * 100}%` }}
+                                        ></div>
+                                    </div>
+
+                                    {/* Live Terminal */}
+                                    {showTerminal && (
+                                        <div className="bg-slate-950 text-slate-100 p-4 rounded-lg font-mono text-[11px] h-60 overflow-y-auto border border-slate-800 shadow-inner flex flex-col space-y-1">
+                                            <div className="text-[#a3e635] border-b border-slate-800 pb-1.5 mb-1.5 flex items-center justify-between">
+                                                <span>⚡ SKZ-Cockpit Live Terminal v1.0.0</span>
+                                                <span className="animate-pulse">● LIVE POLLING</span>
+                                            </div>
+                                            <div className="flex-1 overflow-y-auto space-y-1">
+                                                {batchJobs.length === 0 ? (
+                                                    <div className="text-slate-500">Warte auf Logs...</div>
+                                                ) : (
+                                                    [...batchJobs].reverse().map((job: any) => (
+                                                        <div
+                                                            key={job.id}
+                                                            className="leading-relaxed hover:bg-slate-900/50 px-1 rounded transition-colors"
+                                                        >
+                                                            <span className="text-slate-500">
+                                                                [{new Date(job.started_at).toLocaleTimeString()}]
+                                                            </span>{' '}
+                                                            <span className="text-indigo-400 font-bold">
+                                                                {job.provider_name}:
+                                                            </span>{' '}
+                                                            <span
+                                                                className={
+                                                                    job.status === 'success'
+                                                                        ? 'text-green-400'
+                                                                        : job.status === 'failed'
+                                                                          ? 'text-red-400 font-semibold'
+                                                                          : job.status === 'running'
+                                                                            ? 'text-yellow-400'
+                                                                            : 'text-yellow-500'
+                                                                }
+                                                            >
+                                                                {job.status === 'success'
+                                                                    ? '✅'
+                                                                    : job.status === 'failed'
+                                                                      ? '❌'
+                                                                      : '⏳'}{' '}
+                                                                {job.log_message}
+                                                            </span>
+                                                        </div>
+                                                    ))
+                                                )}
+                                                <div ref={terminalEndRef} />
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
                             {/* Provider Table */}
                             <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                                 <div className="p-6 border-b border-slate-100 flex items-center justify-between">
