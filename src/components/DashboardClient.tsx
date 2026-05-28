@@ -54,12 +54,13 @@ export default function DashboardClient({
 
     const [showTerminal, setShowTerminal] = useState(false);
     const [batchJobs, setBatchJobs] = useState<any[]>([]);
-    const terminalEndRef = useRef<HTMLDivElement>(null);
+    const [showBatchStatusPanel, setShowBatchStatusPanel] = useState(false);
+    const terminalContainerRef = useRef<HTMLDivElement>(null);
 
-    // Auto scroll terminal
+    // Auto scroll terminal internally within its container (no page jumping)
     useEffect(() => {
-        if (showTerminal && terminalEndRef.current) {
-            terminalEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        if (showTerminal && terminalContainerRef.current) {
+            terminalContainerRef.current.scrollTop = terminalContainerRef.current.scrollHeight;
         }
     }, [batchJobs, showTerminal]);
 
@@ -104,6 +105,9 @@ export default function DashboardClient({
                 if (data.recentJobs) {
                     setBatchJobs(data.recentJobs);
                 }
+                if (data.isRunning) {
+                    setShowBatchStatusPanel(true);
+                }
 
                 refreshCounterRef.current++;
                 if (data.isRunning && refreshCounterRef.current >= 3) {
@@ -132,7 +136,10 @@ export default function DashboardClient({
         fetch('/api/scrape-batch')
             .then((r) => r.json())
             .then((data) => {
-                if (data.isRunning) setBatchActive(true);
+                if (data.isRunning) {
+                    setBatchActive(true);
+                    setShowBatchStatusPanel(true);
+                }
                 setBatchStatus(data);
                 if (data.recentJobs) setBatchJobs(data.recentJobs);
             })
@@ -291,6 +298,7 @@ export default function DashboardClient({
 
             setBatchResult({ success: true, message: data.message });
             setBatchActive(true);
+            setShowBatchStatusPanel(true);
             setTimeout(() => refreshData(), 3000);
         } catch (err: any) {
             setBatchResult({ success: false, message: err.message });
@@ -916,22 +924,32 @@ export default function DashboardClient({
                             </div>
 
                             {/* Batch-Status-Anzeige in der Scraper-Engine */}
-                            {batchStatus?.isRunning && (
+                            {showBatchStatusPanel && (
                                 <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4 space-y-3">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-3">
-                                            <span className="relative flex h-3 w-3">
-                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d5781a] opacity-75"></span>
-                                                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#d5781a]"></span>
-                                            </span>
-                                            <span className="text-sm font-bold text-slate-800">
-                                                Laufender Batch-Scrape: Job {batchStatus.current} von{' '}
-                                                {batchStatus.total}
-                                            </span>
-                                            {batchStatus.currentProvider && (
-                                                <span className="text-xs font-medium text-slate-500">
-                                                    → {batchStatus.currentProvider}
-                                                </span>
+                                            {batchStatus?.isRunning ? (
+                                                <>
+                                                    <span className="relative flex h-3 w-3">
+                                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d5781a] opacity-75"></span>
+                                                        <span className="relative inline-flex rounded-full h-3 w-3 bg-[#d5781a]"></span>
+                                                    </span>
+                                                    <span className="text-sm font-bold text-slate-800">
+                                                        Laufender Batch-Scrape: Job {batchStatus.current} von {batchStatus.total}
+                                                    </span>
+                                                    {batchStatus.currentProvider && (
+                                                        <span className="text-xs font-medium text-slate-500">
+                                                            → {batchStatus.currentProvider}
+                                                        </span>
+                                                    )}
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <span className="inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                                                    <span className="text-sm font-bold text-slate-800">
+                                                        Batch-Scrape beendet ({batchStatus?.total || 0} Jobs verarbeitet)
+                                                    </span>
+                                                </>
                                             )}
                                         </div>
                                         <div className="flex items-center gap-2">
@@ -942,30 +960,49 @@ export default function DashboardClient({
                                                 <span className="material-symbols-outlined text-sm">terminal</span>
                                                 {showTerminal ? 'Terminal ausblenden' : 'Terminal einblenden'}
                                             </button>
-                                            <button
-                                                onClick={handleStopBatch}
-                                                className="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all"
-                                            >
-                                                <span className="material-symbols-outlined text-sm">stop</span>
-                                                Abbrechen
-                                            </button>
+                                            {batchStatus?.isRunning ? (
+                                                <button
+                                                    onClick={handleStopBatch}
+                                                    className="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all"
+                                                >
+                                                    <span className="material-symbols-outlined text-sm">stop</span>
+                                                    Abbrechen
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    onClick={() => setShowBatchStatusPanel(false)}
+                                                    className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all border border-slate-200"
+                                                >
+                                                    <span className="material-symbols-outlined text-sm">close</span>
+                                                    Schließen
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
-                                    <div className="w-full bg-slate-200 rounded-full h-2">
-                                        <div
-                                            className="h-2 rounded-full transition-all duration-300 bg-[#d5781a]"
-                                            style={{ width: `${(batchStatus.current / batchStatus.total) * 100}%` }}
-                                        ></div>
-                                    </div>
+                                    {batchStatus?.isRunning && (
+                                        <div className="w-full bg-slate-200 rounded-full h-2">
+                                            <div
+                                                className="h-2 rounded-full transition-all duration-300 bg-[#d5781a]"
+                                                style={{ width: `${(batchStatus.current / batchStatus.total) * 100}%` }}
+                                            ></div>
+                                        </div>
+                                    )}
 
                                     {/* Live Terminal */}
                                     {showTerminal && (
-                                        <div className="bg-slate-950 text-slate-100 p-4 rounded-lg font-mono text-[11px] h-60 overflow-y-auto border border-slate-800 shadow-inner flex flex-col space-y-1">
+                                        <div
+                                            ref={terminalContainerRef}
+                                            className="bg-slate-950 text-slate-100 p-4 rounded-lg font-mono text-[11px] h-60 overflow-y-auto border border-slate-800 shadow-inner flex flex-col space-y-1"
+                                        >
                                             <div className="text-[#a3e635] border-b border-slate-800 pb-1.5 mb-1.5 flex items-center justify-between">
                                                 <span>⚡ SKZ-Cockpit Live Terminal v1.0.0</span>
-                                                <span className="animate-pulse">● LIVE POLLING</span>
+                                                {batchStatus?.isRunning ? (
+                                                    <span className="animate-pulse text-[#a3e635]">● LIVE POLLING</span>
+                                                ) : (
+                                                    <span className="text-slate-500">● INAKTIV</span>
+                                                )}
                                             </div>
-                                            <div className="flex-1 overflow-y-auto space-y-1">
+                                            <div className="flex-1 space-y-1">
                                                 {batchJobs.length === 0 ? (
                                                     <div className="text-slate-500">Warte auf Logs...</div>
                                                 ) : (
@@ -1001,7 +1038,6 @@ export default function DashboardClient({
                                                         </div>
                                                     ))
                                                 )}
-                                                <div ref={terminalEndRef} />
                                             </div>
                                         </div>
                                     )}
