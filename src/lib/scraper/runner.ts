@@ -123,9 +123,17 @@ export async function runScrapeJob(providerId: number, providerName: string, ove
                 );
                 documentId = Number(docInsert.insertId);
             } catch (e: any) {
-                if (e.code === 'ER_DUP_ENTRY' || e.code === '23505' || e.message?.includes('unique constraint') || e.message?.includes('duplicate key')) {
+                if (
+                    e.code === 'ER_DUP_ENTRY' ||
+                    e.code === '23505' ||
+                    e.message?.includes('unique constraint') ||
+                    e.message?.includes('duplicate key')
+                ) {
                     console.warn('  [JOB] Duplicate PDF. Fetching existing document ID...');
-                    const rows: any = await query('SELECT id FROM documents WHERE file_hash = ?', [savedPdf.fileHash]);
+                    const rows: any = await query('SELECT id FROM documents WHERE provider_id = ? AND file_hash = ?', [
+                        providerId,
+                        savedPdf.fileHash,
+                    ]);
                     if (rows.length > 0) documentId = rows[0].id;
                 } else {
                     throw e;
@@ -184,9 +192,17 @@ export async function runScrapeJob(providerId: number, providerName: string, ove
                 );
                 documentId = Number(docInsert.insertId);
             } catch (e: any) {
-                if (e.code === 'ER_DUP_ENTRY' || e.code === '23505' || e.message?.includes('unique constraint') || e.message?.includes('duplicate key')) {
+                if (
+                    e.code === 'ER_DUP_ENTRY' ||
+                    e.code === '23505' ||
+                    e.message?.includes('unique constraint') ||
+                    e.message?.includes('duplicate key')
+                ) {
                     console.warn('  [JOB] Duplicate image. Fetching existing document ID...');
-                    const rows: any = await query('SELECT id FROM documents WHERE file_hash = ?', [savedImg.fileHash]);
+                    const rows: any = await query('SELECT id FROM documents WHERE provider_id = ? AND file_hash = ?', [
+                        providerId,
+                        savedImg.fileHash,
+                    ]);
                     if (rows.length > 0) documentId = rows[0].id;
                 } else {
                     throw e;
@@ -249,9 +265,17 @@ export async function runScrapeJob(providerId: number, providerName: string, ove
                 );
                 documentId = Number(docInsert.insertId);
             } catch (e: any) {
-                if (e.code === 'ER_DUP_ENTRY' || e.code === '23505' || e.message?.includes('unique constraint') || e.message?.includes('duplicate key')) {
+                if (
+                    e.code === 'ER_DUP_ENTRY' ||
+                    e.code === '23505' ||
+                    e.message?.includes('unique constraint') ||
+                    e.message?.includes('duplicate key')
+                ) {
                     console.warn('  [JOB] Duplicate screenshot. Fetching existing document ID...');
-                    const rows: any = await query('SELECT id FROM documents WHERE file_hash = ?', [savedImg.fileHash]);
+                    const rows: any = await query('SELECT id FROM documents WHERE provider_id = ? AND file_hash = ?', [
+                        providerId,
+                        savedImg.fileHash,
+                    ]);
                     if (rows.length > 0) documentId = rows[0].id;
                 } else {
                     throw e;

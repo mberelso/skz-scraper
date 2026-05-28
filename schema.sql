@@ -42,11 +42,12 @@ CREATE TABLE IF NOT EXISTS documents (
     provider_id INT DEFAULT NULL REFERENCES providers(id) ON DELETE CASCADE,
     file_type VARCHAR(50) NOT NULL CHECK (file_type IN ('pdf', 'html', 'image', 'manual')),
     file_path VARCHAR(512) NOT NULL,
-    file_hash VARCHAR(64) UNIQUE,
+    file_hash VARCHAR(64),
     source_url VARCHAR(1024) DEFAULT NULL,
     original_filename VARCHAR(512) DEFAULT NULL,
     reporting_year INT DEFAULT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT unique_provider_file_hash UNIQUE (provider_id, file_hash)
 );
 
 CREATE INDEX IF NOT EXISTS idx_provider_id ON documents (provider_id);

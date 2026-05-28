@@ -31,11 +31,32 @@ export async function POST(request: Request) {
             scrapeRequestSchema
         );
 
+        // Check if another scrape job is already running
+        const batchStatus: any[] = await query('SELECT is_running FROM batch_status WHERE id = 1');
+        if (batchStatus.length > 0 && batchStatus[0].is_running) {
+            return NextResponse.json({ error: 'Ein anderer Scrape-Job läuft bereits. Bitte warten.' }, { status: 409 });
+        }
+
+        // Set batch_status to active for this single job so the terminal can poll it
+        await query(
+            'UPDATE batch_status SET is_running = TRUE, current_index = 1, total = 1, current_provider = ? WHERE id = 1',
+            [providerName]
+        );
+
         // Fire and forget — don't block the HTTP response
         // Log errors but don't propagate to the client
-        runScrapeJob(providerId, providerName, url).catch((err) => {
-            console.error(`[API] Background scrape failed for ${providerName}:`, err.message);
-        });
+        runScrapeJob(providerId, providerName, url)
+            .catch((err) => {
+                console.error(`[API] Background scrape failed for ${providerName}:`, err.message);
+            })
+            .finally(async () => {
+                // Reset batch status after the single job completes
+                await query(
+                    'UPDATE batch_status SET is_running = FALSE, current_index = 0, total = 0, current_provider = NULL WHERE id = 1'
+                ).catch((e) => {
+                    console.error('[API] Failed to reset batch status:', e.message);
+                });
+            });
 
         return NextResponse.json({
             success: true,

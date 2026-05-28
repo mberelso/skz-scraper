@@ -60,10 +60,12 @@ export default function ProviderModal({
     provider,
     onClose,
     onRefresh,
+    onScrapeStarted,
 }: {
     provider: any;
     onClose: () => void;
     onRefresh: () => void;
+    onScrapeStarted?: () => void;
 }) {
     const [url, setUrl] = useState(provider.skz_url || '');
     const [loading, setLoading] = useState(false);
@@ -213,6 +215,11 @@ export default function ProviderModal({
                 success: true,
                 message: data.message || 'Job gestartet! Status wird live im Dashboard aktualisiert.',
             });
+
+            if (onScrapeStarted) {
+                onScrapeStarted();
+            }
+
             setTimeout(() => onRefresh(), 2000);
         } catch (err: any) {
             setResult({ success: false, message: err.message });

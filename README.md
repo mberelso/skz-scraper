@@ -74,6 +74,9 @@ npm run dev
 - **Interaktiver Behörden-Workflow:** Die Übersichtskarten zum behördlichen Arbeitsablauf leiten per Klick direkt in die jeweilige Ansicht weiter (Schritt 1 → Scraper-Engine, Schritt 2 → Datenmatching, Schritt 3 → Compliance & Audit).
 - **Mehrfachauswahl & Export-Center:** Komfortable Checkboxen zur Auswahl bestimmter Anbieter und ein zentraler Export-Center-Button im Header zur Erzeugung strukturierter Behördenberichte (A4-PDFs via Puppeteer) oder aggregierter CSV-Dateien.
 - **Tastatur-Barrierefreiheit (Accessibility):** Alle Modale (Export-Center, Provider-Details, Erstellung) besitzen eine Tastatur-Falle (Focus Trap) und schließen sich augenblicklich per `Esc`-Taste.
+- **Flexible Batch-Scrapes (Scraper-Engine):** Komfortable Aktionsleiste zum Anstoßen von Batch-Scrapes für gefilterte, ausgewählte oder unvollständige Anbieter.
+- **Live-Log-Terminal (Scraper-Engine):** Aufklappbares Terminal-Fenster im Dashboard, das Log-Meldungen von laufenden Batch-Scrapes sowie manuell im Detail-Modal gestarteten Einzel-Jobs live per Smooth Auto-Scroll anzeigt.
+- **Dokumenten-Duplikate pro Anbieter:** Ermöglicht mehreren Anbietern das Teilen derselben PDF-Datei im jeweiligen Archiv (Migration von globalem `UNIQUE(file_hash)` auf composite `UNIQUE(provider_id, file_hash)`).
 
 ### Batch-Scraping (CLI)
 

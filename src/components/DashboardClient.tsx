@@ -935,7 +935,8 @@ export default function DashboardClient({
                                                         <span className="relative inline-flex rounded-full h-3 w-3 bg-[#d5781a]"></span>
                                                     </span>
                                                     <span className="text-sm font-bold text-slate-800">
-                                                        Laufender Batch-Scrape: Job {batchStatus.current} von {batchStatus.total}
+                                                        Laufender Batch-Scrape: Job {batchStatus.current} von{' '}
+                                                        {batchStatus.total}
                                                     </span>
                                                     {batchStatus.currentProvider && (
                                                         <span className="text-xs font-medium text-slate-500">
@@ -947,7 +948,8 @@ export default function DashboardClient({
                                                 <>
                                                     <span className="inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                                                     <span className="text-sm font-bold text-slate-800">
-                                                        Batch-Scrape beendet ({batchStatus?.total || 0} Jobs verarbeitet)
+                                                        Batch-Scrape beendet ({batchStatus?.total || 0} Jobs
+                                                        verarbeitet)
                                                     </span>
                                                 </>
                                             )}
@@ -1329,6 +1331,12 @@ export default function DashboardClient({
                     provider={selectedProvider}
                     onClose={() => setSelectedProvider(null)}
                     onRefresh={refreshData}
+                    onScrapeStarted={() => {
+                        setBatchActive(true);
+                        setShowBatchStatusPanel(true);
+                        setShowTerminal(true);
+                        setActiveTab('scraper');
+                    }}
                 />
             )}
 
