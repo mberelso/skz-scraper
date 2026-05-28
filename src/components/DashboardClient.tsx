@@ -653,46 +653,55 @@ export default function DashboardClient({
                                                     Keine Jobs in der Warteschlange
                                                 </p>
                                             ) : (
-                                                recentJobs.slice(0, 5).map((job: any) => (
-                                                    <div
-                                                        key={job.id}
-                                                        className="flex items-center justify-between p-3 rounded-lg bg-slate-50 border border-slate-100"
-                                                    >
-                                                        <div className="flex-1 min-w-0">
-                                                            <div className="text-sm font-semibold text-slate-900 truncate">
-                                                                {job.provider_name}
+                                                recentJobs.slice(0, 5).map((job: any) => {
+                                                    const provider = providers.find((p: any) => p.id === job.provider_id);
+                                                    return (
+                                                        <div
+                                                            key={job.id}
+                                                            onClick={() => provider && setSelectedProvider(provider)}
+                                                            className={`flex items-center justify-between p-3 rounded-lg border transition-all duration-150 ${
+                                                                provider
+                                                                    ? 'cursor-pointer hover:bg-slate-100 hover:border-slate-300 bg-slate-50 border-slate-100'
+                                                                    : 'bg-slate-50 border-slate-100'
+                                                            }`}
+                                                            title={provider ? `${provider.name} Details öffnen` : undefined}
+                                                        >
+                                                            <div className="flex-1 min-w-0">
+                                                                <div className="text-sm font-semibold text-slate-900 truncate">
+                                                                    {job.provider_name}
+                                                                </div>
+                                                                <div
+                                                                    className="text-xs text-slate-400"
+                                                                    suppressHydrationWarning
+                                                                >
+                                                                    {formatJobDate(job.started_at)}
+                                                                </div>
                                                             </div>
-                                                            <div
-                                                                className="text-xs text-slate-400"
-                                                                suppressHydrationWarning
-                                                            >
-                                                                {formatJobDate(job.started_at)}
+                                                            <div className="ml-3">
+                                                                {job.status === 'running' && (
+                                                                    <span className="px-2 py-1 text-xs font-bold rounded-full bg-blue-100 text-blue-700">
+                                                                        Laufend
+                                                                    </span>
+                                                                )}
+                                                                {job.status === 'success' && (
+                                                                    <span className="px-2 py-1 text-xs font-bold rounded-full bg-green-100 text-green-700">
+                                                                        Erfolg
+                                                                    </span>
+                                                                )}
+                                                                {job.status === 'failed' && (
+                                                                    <span className="px-2 py-1 text-xs font-bold rounded-full bg-red-100 text-red-700">
+                                                                        Fehler
+                                                                    </span>
+                                                                )}
+                                                                {job.status === 'partial' && (
+                                                                    <span className="px-2 py-1 text-xs font-bold rounded-full bg-yellow-100 text-yellow-700">
+                                                                        Teilweise
+                                                                    </span>
+                                                                )}
                                                             </div>
                                                         </div>
-                                                        <div className="ml-3">
-                                                            {job.status === 'running' && (
-                                                                <span className="px-2 py-1 text-xs font-bold rounded-full bg-blue-100 text-blue-700">
-                                                                    Laufend
-                                                                </span>
-                                                            )}
-                                                            {job.status === 'success' && (
-                                                                <span className="px-2 py-1 text-xs font-bold rounded-full bg-green-100 text-green-700">
-                                                                    Erfolg
-                                                                </span>
-                                                            )}
-                                                            {job.status === 'failed' && (
-                                                                <span className="px-2 py-1 text-xs font-bold rounded-full bg-red-100 text-red-700">
-                                                                    Fehler
-                                                                </span>
-                                                            )}
-                                                            {job.status === 'partial' && (
-                                                                <span className="px-2 py-1 text-xs font-bold rounded-full bg-yellow-100 text-yellow-700">
-                                                                    Teilweise
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                ))
+                                                    );
+                                                })
                                             )}
                                         </div>
                                     </div>
