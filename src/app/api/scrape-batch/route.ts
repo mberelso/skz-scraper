@@ -49,13 +49,27 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Batch läuft bereits' }, { status: 409 });
         }
 
+        const body = await request.json().catch(() => ({}));
+        const providerIds = body.providerIds;
+
         const { searchParams } = new URL(request.url);
         const limitParam = searchParams.get('limit');
         const limit = limitParam ? parseInt(limitParam, 10) : undefined;
 
-        let sql: string;
-        if (limit) {
-            sql = `
+        let providers: any[] = [];
+
+        if (Array.isArray(providerIds) && providerIds.length > 0) {
+            // Fetch only specified providers, preserving priority ordering
+            const placeholders = providerIds.map(() => '?').join(',');
+            const sql = `
+                SELECT id, name, priority 
+                FROM providers 
+                WHERE id IN (${placeholders})
+                ORDER BY priority DESC, id ASC
+            `;
+            providers = await query(sql, providerIds);
+        } else if (limit) {
+            const sql = `
                 SELECT p.id, p.name, p.priority
                 FROM providers p
                 LEFT JOIN (
@@ -69,11 +83,11 @@ export async function POST(request: Request) {
                 ORDER BY p.priority DESC, p.id ASC
                 LIMIT ${limit}
             `;
+            providers = await query(sql);
         } else {
-            sql = 'SELECT id, name FROM providers WHERE active = TRUE ORDER BY priority DESC, id ASC';
+            const sql = 'SELECT id, name FROM providers WHERE active = TRUE ORDER BY priority DESC, id ASC';
+            providers = await query(sql);
         }
-
-        const providers: any[] = await query(sql);
 
         if (providers.length === 0) {
             return NextResponse.json({ error: 'Keine aktiven Provider gefunden' }, { status: 400 });
@@ -110,9 +124,20 @@ export async function POST(request: Request) {
 export async function GET(_request: Request) {
     try {
         const status = await getBatchStatus();
-        return NextResponse.json(status);
+        const recentJobs = await query(`
+            SELECT j.id, j.provider_id, p.name as provider_name, j.status, j.log_message, j.started_at, j.finished_at
+            FROM scrape_jobs j
+            JOIN providers p ON j.provider_id = p.id
+            ORDER BY j.id DESC LIMIT 15
+        `);
+        return NextResponse.json({
+            ...status,
+            recentJobs: JSON.parse(
+                JSON.stringify(recentJobs, (_key, value) => (typeof value === 'bigint' ? Number(value) : value))
+            ),
+        });
     } catch (error: any) {
-        return NextResponse.json({ isRunning: false, current: 0, total: 0, currentProvider: null });
+        return NextResponse.json({ isRunning: false, current: 0, total: 0, currentProvider: null, recentJobs: [] });
     }
 }
 
