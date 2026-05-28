@@ -52,6 +52,17 @@ export default function DashboardClient({
     const batchPollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const refreshCounterRef = useRef<number>(0);
 
+    const [showTerminal, setShowTerminal] = useState(false);
+    const [batchJobs, setBatchJobs] = useState<any[]>([]);
+    const terminalEndRef = useRef<HTMLDivElement>(null);
+
+    // Auto scroll terminal
+    useEffect(() => {
+        if (showTerminal && terminalEndRef.current) {
+            terminalEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [batchJobs, showTerminal]);
+
     const hasRunningJob = recentJobs.some((j: any) => j.status === 'running');
 
     // Live-polling: refresh every 4s if enabled
@@ -90,6 +101,9 @@ export default function DashboardClient({
                 const res = await fetch('/api/scrape-batch');
                 const data = await res.json();
                 setBatchStatus(data);
+                if (data.recentJobs) {
+                    setBatchJobs(data.recentJobs);
+                }
 
                 refreshCounterRef.current++;
                 if (data.isRunning && refreshCounterRef.current >= 3) {
@@ -120,6 +134,7 @@ export default function DashboardClient({
             .then((data) => {
                 if (data.isRunning) setBatchActive(true);
                 setBatchStatus(data);
+                if (data.recentJobs) setBatchJobs(data.recentJobs);
             })
             .catch(() => {});
     }, []);
@@ -251,8 +266,11 @@ export default function DashboardClient({
         setFileNumberValue('');
     };
 
-    const handleBatchScrape = async (limit?: number) => {
-        const count = limit || totalProviders;
+    const handleBatchScrape = async (options?: { limit?: number; providerIds?: number[] }) => {
+        const limit = options?.limit;
+        const providerIds = options?.providerIds;
+        const count = providerIds ? providerIds.length : (limit || totalProviders);
+
         if (!confirm(`Batch-Scrape für ${count} Provider starten? Dies kann einige Minuten dauern.`)) {
             return;
         }
@@ -265,6 +283,7 @@ export default function DashboardClient({
             const res = await fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                body: providerIds ? JSON.stringify({ providerIds }) : undefined,
             });
             const data = await res.json();
 
