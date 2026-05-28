@@ -715,7 +715,10 @@ export default function DashboardClient({
                                     Behördlicher Arbeitsablauf nach § 42 EnWG
                                 </h3>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                    <div className="bg-slate-50 p-5 rounded-lg border border-slate-200 space-y-2">
+                                    <div
+                                        onClick={() => setActiveTab('scraper')}
+                                        className="bg-slate-50 p-5 rounded-lg border border-slate-200 space-y-2 cursor-pointer hover:shadow-md hover:border-orange-300 hover:-translate-y-0.5 transition-all duration-200"
+                                    >
                                         <div className="text-xs font-bold text-[#d5781a] uppercase tracking-wider">
                                             Schritt 1
                                         </div>
@@ -727,7 +730,10 @@ export default function DashboardClient({
                                             direkt von deren Webseiten.
                                         </p>
                                     </div>
-                                    <div className="bg-slate-50 p-5 rounded-lg border border-slate-200 space-y-2">
+                                    <div
+                                        onClick={() => setActiveTab('matching')}
+                                        className="bg-slate-50 p-5 rounded-lg border border-slate-200 space-y-2 cursor-pointer hover:shadow-md hover:border-indigo-300 hover:-translate-y-0.5 transition-all duration-200"
+                                    >
                                         <div className="text-xs font-bold text-indigo-600 uppercase tracking-wider">
                                             Schritt 2
                                         </div>
@@ -737,7 +743,10 @@ export default function DashboardClient({
                                             Strommengen ein (Einheit 1).
                                         </p>
                                     </div>
-                                    <div className="bg-slate-50 p-5 rounded-lg border border-slate-200 space-y-2">
+                                    <div
+                                        onClick={() => setActiveTab('compliance')}
+                                        className="bg-slate-50 p-5 rounded-lg border border-slate-200 space-y-2 cursor-pointer hover:shadow-md hover:border-green-300 hover:-translate-y-0.5 transition-all duration-200"
+                                    >
                                         <div className="text-xs font-bold text-green-600 uppercase tracking-wider">
                                             Schritt 3
                                         </div>
