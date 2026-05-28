@@ -6,29 +6,30 @@ Dieses Dokument spezifiziert die Erweiterung des SKZ-Scrapers zu einem behördli
 
 ## 1. Systemarchitektur & Workflow (4-Säulen-Modell)
 
-Das System wird in vier funktionale Arbeitsbereiche unterteilt, um eine klare Aufgabentrennung zwischen der Datenerfassung (*Einheit 1*) und der rechtlichen Prüfung (*Einheit 2*) zu gewährleisten:
+Das System wird in vier funktionale Arbeitsbereiche unterteilt, um eine klare Aufgabentrennung zwischen der Datenerfassung (_Einheit 1_) und der rechtlichen Prüfung (_Einheit 2_) zu gewährleisten:
 
 ```mermaid
 graph TD
     A[Dashboard / Cockpit] --> B[Scraper - Datenerfassung]
     A --> C[Datenmatching - Zusammenführung]
     A --> D[Compliance - Audit & Auswertung]
-    
+
     subgraph Einheit 1 - Datenerfassung & Import
         B
         C
     end
-    
+
     subgraph Einheit 2 - Prüfung & Bescheide
         D
     end
 ```
 
 ### Die 4 Arbeitsbereiche (Tabs)
+
 1. **Dashboard (Cockpit):** Globale Statistiken zur aktuellen Kampagne (Fortschritt der Erfassung, Anzahl beanstandeter Versorger, aggregierte Quoten).
 2. **Scraper (Datenerfassung):** Das bestehende Dashboard mit den Scraper-Läufen, Jobs, Logs, Supabase-Dokumenten und der Gemini-basierten Extraktion der Stromkennzeichnung.
-3. **Datenmatching (Datenzusammenführung):** Arbeitsbereich für *Einheit 1*. Ermöglicht den Import von UBA-HKN-Entwertungsberichten und Stromliefermengen (CSV) sowie die manuelle Nachpflege/Korrektur dieser Daten pro Anbieter und Jahr.
-4. **Compliance (Prüfung & Auswertung):** Arbeitsbereich für *Einheit 2*. Hier läuft die Plausibilitäts-Engine. Es werden Abweichungen berechnet, Fehler farblich markiert und Prüfer können Notizen (Prüfvermerke) verfassen sowie den Status (`plausibel`, `beanstandet`, etc.) festlegen.
+3. **Datenmatching (Datenzusammenführung):** Arbeitsbereich für _Einheit 1_. Ermöglicht den Import von UBA-HKN-Entwertungsberichten und Stromliefermengen (CSV) sowie die manuelle Nachpflege/Korrektur dieser Daten pro Anbieter und Jahr.
+4. **Compliance (Prüfung & Auswertung):** Arbeitsbereich für _Einheit 2_. Hier läuft die Plausibilitäts-Engine. Es werden Abweichungen berechnet, Fehler farblich markiert und Prüfer können Notizen (Prüfvermerke) verfassen sowie den Status (`plausibel`, `beanstandet`, etc.) festlegen.
 
 ---
 
@@ -102,6 +103,7 @@ CREATE INDEX IF NOT EXISTS idx_compliance_audit_status ON compliance_audits (sta
 Einheit 1 kann Entwertungs- und Lieferdaten über ein standardisiertes CSV-Format hochladen.
 
 ### CSV-Struktur
+
 ```csv
 anbieter_name,berichtsjahr,strommenge_mwh,hkn_land,hkn_menge_mwh
 AggerEnergie GmbH,2024,100000.00,Schweden,32000.00
@@ -110,9 +112,11 @@ Stadtwerke Leipzig GmbH,2024,450000.00,Lettland,12000.00
 ```
 
 ### Matching-Prozedur im Backend
+
 Beim Upload einer Datei wird für jede Zeile folgendes Schema angewandt:
+
 1. **Provider-Identifikation:** Das System sucht den Provider in `providers` anhand des Feldes `anbieter_name`.
-   * *Fallback-Matching:* Wenn kein exakter Treffer existiert, wird der Name normalisiert (Entfernung von GmbH, AG, Co. KG, Groß-/Kleinschreibung) und abgeglichen. Schlägt dies fehl, wird die Zeile im Import-Log als "Unbekannter Anbieter - Manuelle Zuordnung erforderlich" markiert.
+    - _Fallback-Matching:_ Wenn kein exakter Treffer existiert, wird der Name normalisiert (Entfernung von GmbH, AG, Co. KG, Groß-/Kleinschreibung) und abgeglichen. Schlägt dies fehl, wird die Zeile im Import-Log als "Unbekannter Anbieter - Manuelle Zuordnung erforderlich" markiert.
 2. **Strommenge speichern:** Der Wert `strommenge_mwh` wird in `provider_yearly_stats` für das angegebene Jahr eingetragen (mittels `INSERT ... ON CONFLICT (provider_id, year) DO UPDATE`).
 3. **HKN-Entwertungen speichern:** Für jedes angegebene `hkn_land` wird die `hkn_menge_mwh` in `hkn_cancellations` gespeichert. Existiert für den Provider, das Jahr und das Land bereits ein Eintrag, wird dieser aktualisiert.
 
@@ -123,19 +127,22 @@ Beim Upload einer Datei wird für jede Zeile folgendes Schema angewandt:
 Die Engine führt pro Anbieter und Jahr folgende mathematische Abgleiche durch, basierend auf dem BDEW-Leitfaden:
 
 ### 1. HKN-Mengen-Abgleich (Soll vs. Ist)
-* **Soll-HKN-Volumen ($V_{\text{Soll}}$) in MWh:**
+
+- **Soll-HKN-Volumen ($V_{\text{Soll}}$) in MWh:**
   $$V_{\text{Soll}} = \frac{\text{SKZ-HKN-\%} \times \text{Gelieferte Strommenge (MWh)}}{100}$$
-  *(SKZ-HKN-% entspricht `hkn_percentage` aus der Tabelle `energy_mix`)*
-* **Ist-HKN-Volumen ($V_{\text{Ist}}$) in MWh:**
+  _(SKZ-HKN-% entspricht `hkn_percentage` aus der Tabelle `energy_mix`)_
+- **Ist-HKN-Volumen ($V_{\text{Ist}}$) in MWh:**
   Summe aller `amount_mwh` aus `hkn_cancellations` für diesen Provider und dieses Jahr.
-* **Prozentuale Mengen-Abweichung (Behörden-Filterkriterium):**
+- **Prozentuale Mengen-Abweichung (Behörden-Filterkriterium):**
   $$\text{Abweichung (\%)} = \frac{V_{\text{Ist}} - V_{\text{Soll}}}{V_{\text{Soll}}} \times 100$$
-  * *Interpretation:* Ein negativer Wert (z. B. $-8,50\%$) bedeutet eine Unterdeckung von HKN-Zertifikaten (Verstoß).
-* **Prozentpunkt-Abweichung im deklarierten Strommix:**
+    - _Interpretation:_ Ein negativer Wert (z. B. $-8,50\%$) bedeutet eine Unterdeckung von HKN-Zertifikaten (Verstoß).
+- **Prozentpunkt-Abweichung im deklarierten Strommix:**
   $$\text{Differenz (Prozentpunkte)} = \left(\frac{V_{\text{Ist}}}{\text{Gelieferte Strommenge}} \times 100\right) - \text{SKZ-HKN-\%}$$
 
 ### 2. Validierungs- und Alarmregeln (BDEW-Leitfaden)
+
 Das System generiert bei folgenden Bedingungen Warnungen:
+
 1. **EEG-Abweichung (Kritisch):** Weicht der in der SKZ extrahierte `eeg_percentage` vom gesetzlich festgesetzten Sollwert des Bundes in `federal_constants.eeg_percentage` ab, wird eine rote Warnung ausgegeben.
 2. **HKN-Unterdeckung (Kritisch):** Wenn die prozentuale Mengen-Abweichung negativ ist und die Toleranzgrenze (0,5 %) überschreitet.
 3. **Länder-Diskrepanz (Medium):** Weicht die Menge der deklarierten Länderanteile im Strommix (`hkn_origins`) signifikant von den tatsächlich entwerteten HKN-Ländern in `hkn_cancellations` ab (z. B. Versorger deklariert "Island", entwertet hat er laut UBA aber "Norwegen").
@@ -147,39 +154,47 @@ Das System generiert bei folgenden Bedingungen Warnungen:
 Das Front-End wird durch einen zentralen "Compliance-Bereich" ergänzt, der für Einheit 2 optimiert ist.
 
 ### 1. Compliance Dashboard & Tabellen-Ansicht
+
 Die Tabelle zeigt alle Anbieter mit ihren Berechnungsdaten für das gewählte Berichtsjahr:
-* **Spalten:** Anbietername | Gelieferte Strommenge (MWh) | SKZ-Status | HKN-Soll (MWh) | HKN-Ist (MWh) | HKN-Abweichung (%) | Differenz (Prozentpunkte) | EEG-Check | Länder-Check | Status | Aktionen
-* **Farbkodierung (Ampelsystem):**
-  * `Grün` (Plausibel): Alle Prüfungen bestanden, Abweichung innerhalb der Toleranz.
-  * `Gelb` (Warnung): Geringe Abweichung (z. B. HKN-Abweichung < 1 % oder Länderanteile weichen leicht ab).
-  * `Rot` (Kritisch): HKN-Unterdeckung > 1 % oder falsche EEG-Quote ausgewiesen.
+
+- **Spalten:** Anbietername | Gelieferte Strommenge (MWh) | SKZ-Status | HKN-Soll (MWh) | HKN-Ist (MWh) | HKN-Abweichung (%) | Differenz (Prozentpunkte) | EEG-Check | Länder-Check | Status | Aktionen
+- **Farbkodierung (Ampelsystem):**
+    - `Grün` (Plausibel): Alle Prüfungen bestanden, Abweichung innerhalb der Toleranz.
+    - `Gelb` (Warnung): Geringe Abweichung (z. B. HKN-Abweichung < 1 % oder Länderanteile weichen leicht ab).
+    - `Rot` (Kritisch): HKN-Unterdeckung > 1 % oder falsche EEG-Quote ausgewiesen.
 
 ### 2. Behörden-Filterleiste
+
 Die Compliance-Tabelle besitzt eine erweiterte Filterleiste, um Problemfälle gezielt zu isolieren:
-* **Filter nach Status:** `Alle` | `Offen` | `Plausibel` | `Beanstandet`
-* **Filter nach HKN-Abweichung (Richtung & Grad):**
-  * *Richtung:* `Alle` | `Unterdeckung (negativ)` | `Überdeckung (positiv)`
-  * *Grad:* Schieberegler oder Eingabefeld für den Prozentsatz der Abweichung (z. B. *"Zeige nur Abweichungen > X %"*).
+
+- **Filter nach Status:** `Alle` | `Offen` | `Plausibel` | `Beanstandet`
+- **Filter nach HKN-Abweichung (Richtung & Grad):**
+    - _Richtung:_ `Alle` | `Unterdeckung (negativ)` | `Überdeckung (positiv)`
+    - _Grad:_ Schieberegler oder Eingabefeld für den Prozentsatz der Abweichung (z. B. _"Zeige nur Abweichungen > X %"_).
 
 ### 3. Audit- & Prüfvermerk-Modal
+
 Bei Klick auf "Prüfen" öffnet sich die Detailkarte für den Sachbearbeiter von Einheit 2:
-* Visualisierung des Soll/Ist-Vergleichs als Balkendiagramm.
-* Auflistung aller automatischen Fehlermeldungen (z.B. *"Achtung: EEG-Quote beträgt 56,1 % statt der vorgeschriebenen 57,9 %"*).
-* **Eingabebereich für Prüfvermerk:**
-  * Status-Dropdown (`plausibel`, `beanstandet`, `fehlerhaft_hkn`, etc.).
-  * Textfeld für den Prüfvermerk (z. B. *"Schriftliche Anhörung des Versorgers am 28.05.2026 eingeleitet wegen Unterdeckung von 400 MWh"*).
-  * Speichern-Button: Trägt die Notiz und den Status in `compliance_audits` ein und aktualisiert den Gesamtstatus des Anbieters.
+
+- Visualisierung des Soll/Ist-Vergleichs als Balkendiagramm.
+- Auflistung aller automatischen Fehlermeldungen (z.B. _"Achtung: EEG-Quote beträgt 56,1 % statt der vorgeschriebenen 57,9 %"_).
+- **Eingabebereich für Prüfvermerk:**
+    - Status-Dropdown (`plausibel`, `beanstandet`, `fehlerhaft_hkn`, etc.).
+    - Textfeld für den Prüfvermerk (z. B. _"Schriftliche Anhörung des Versorgers am 28.05.2026 eingeleitet wegen Unterdeckung von 400 MWh"_).
+    - Speichern-Button: Trägt die Notiz und den Status in `compliance_audits` ein und aktualisiert den Gesamtstatus des Anbieters.
 
 ---
 
 ## 6. Verifikationsplan
 
 ### Automatisierte Tests (Vitest)
+
 1. **Matching-Engine-Tests:** Unit-Tests zur Überprüfung der CSV-Matching-Logik (inklusive fehlertolerantem Namensabgleich).
 2. **Rechen-Engine-Tests:** Mathematische Überprüfung der HKN-Abweichungsformeln mit Mock-Daten (Soll/Ist-Vergleich, Mengen-Abweichung in %, Prozentpunkte).
 3. **BDEW-Validierungs-Tests:** Testen der Alarmregeln (Korrekter Fehlerwurf bei falscher EEG-Quote oder Länderdiskrepanzen).
 
 ### Manuelle Verifikation (E2E-Tests)
+
 1. Hochladen einer Test-CSV im Datenmatching-Bereich für das Jahr 2024.
 2. Überprüfung der Datenübernahme im Datenmatching-Tab.
 3. Wechsel zum Compliance-Tab, Filtern nach "Unterdeckung > 5 %" und Verifizieren der farblichen Markierung.

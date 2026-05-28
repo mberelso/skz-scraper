@@ -160,9 +160,7 @@ export default function MatchingTab({ currentYear, onYearChange }: MatchingTabPr
         }
 
         const countryNorm = newCountry.trim();
-        const existingIdx = tempCancellations.findIndex(
-            (c) => c.country.toLowerCase() === countryNorm.toLowerCase()
-        );
+        const existingIdx = tempCancellations.findIndex((c) => c.country.toLowerCase() === countryNorm.toLowerCase());
 
         if (existingIdx >= 0) {
             // Update existing
@@ -218,10 +216,7 @@ export default function MatchingTab({ currentYear, onYearChange }: MatchingTabPr
     const filteredProviders = providers.filter((p) => {
         if (!searchQuery) return true;
         const q = searchQuery.toLowerCase();
-        return (
-            p.name.toLowerCase().includes(q) ||
-            (p.file_number && p.file_number.toLowerCase().includes(q))
-        );
+        return p.name.toLowerCase().includes(q) || (p.file_number && p.file_number.toLowerCase().includes(q));
     });
 
     const years = [2023, 2024, 2025, 2026];
@@ -232,7 +227,9 @@ export default function MatchingTab({ currentYear, onYearChange }: MatchingTabPr
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h2 className="text-2xl font-bold text-slate-900">Einheit 1: Datenmatching & HKN-Erfassung</h2>
-                    <p className="text-slate-500">Zusammenführung von Liefervolumen und Herkunftsnachweisen (§ 42 EnWG)</p>
+                    <p className="text-slate-500">
+                        Zusammenführung von Liefervolumen und Herkunftsnachweisen (§ 42 EnWG)
+                    </p>
                 </div>
                 <div className="flex items-center gap-3">
                     <label className="text-sm font-semibold text-slate-600">Berichtsjahr:</label>
@@ -257,7 +254,8 @@ export default function MatchingTab({ currentYear, onYearChange }: MatchingTabPr
                     HKN- & Mengen-Import (CSV)
                 </h3>
                 <p className="text-sm text-slate-500 mb-6">
-                    Laden Sie die vom Umweltbundesamt (UBA) oder den Providern gemeldeten HKN-Entwertungen und gelieferten Strommengen hoch.
+                    Laden Sie die vom Umweltbundesamt (UBA) oder den Providern gemeldeten HKN-Entwertungen und
+                    gelieferten Strommengen hoch.
                 </p>
 
                 <form onSubmit={handleCsvUpload} className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
@@ -286,7 +284,9 @@ export default function MatchingTab({ currentYear, onYearChange }: MatchingTabPr
                             >
                                 {importing ? (
                                     <>
-                                        <span className="material-symbols-outlined animate-spin text-base">refresh</span>
+                                        <span className="material-symbols-outlined animate-spin text-base">
+                                            refresh
+                                        </span>
                                         Importiere...
                                     </>
                                 ) : (
@@ -304,12 +304,13 @@ export default function MatchingTab({ currentYear, onYearChange }: MatchingTabPr
                                 Erwartetes CSV-Format:
                             </div>
                             <pre className="bg-white border border-slate-100 p-2.5 rounded font-mono text-[10px] text-slate-700 block overflow-x-auto">
-                                anbieter_name,berichtsjahr,strommenge_mwh,hkn_land,hkn_menge_mwh{"\n"}
-                                AggerEnergie GmbH,2024,85000,Norwegen,35000{"\n"}
+                                anbieter_name,berichtsjahr,strommenge_mwh,hkn_land,hkn_menge_mwh{'\n'}
+                                AggerEnergie GmbH,2024,85000,Norwegen,35000{'\n'}
                                 Stadtwerke Leipzig AG,2024,240000,Island,80000
                             </pre>
                             <p>
-                                * Der Importeur gleicht die Namen fehlertolerant ab (z.B. werden Rechtsformen wie GmbH oder AG ignoriert).
+                                * Der Importeur gleicht die Namen fehlertolerant ab (z.B. werden Rechtsformen wie GmbH
+                                oder AG ignoriert).
                             </p>
                         </div>
                     </div>
@@ -332,7 +333,9 @@ export default function MatchingTab({ currentYear, onYearChange }: MatchingTabPr
                             <div className="grid grid-cols-2 gap-4 text-xs font-semibold">
                                 <div className="bg-white p-3 rounded border border-slate-100 shadow-sm">
                                     <div className="text-slate-500">Erfolgreich importiert:</div>
-                                    <div className="text-xl text-green-600">{importResult.importedCount} Datensätze</div>
+                                    <div className="text-xl text-green-600">
+                                        {importResult.importedCount} Datensätze
+                                    </div>
                                 </div>
                                 <div className="bg-white p-3 rounded border border-slate-100 shadow-sm">
                                     <div className="text-slate-500">Fehlgeschlagen / Ignoriert:</div>
@@ -407,7 +410,10 @@ export default function MatchingTab({ currentYear, onYearChange }: MatchingTabPr
                                 </tr>
                             ) : (
                                 filteredProviders.map((provider) => {
-                                    const totalHkn = provider.cancellations.reduce((acc, curr) => acc + curr.amount_mwh, 0);
+                                    const totalHkn = provider.cancellations.reduce(
+                                        (acc, curr) => acc + curr.amount_mwh,
+                                        0
+                                    );
 
                                     return (
                                         <tr key={provider.id} className="hover:bg-slate-50 transition-colors">
@@ -428,7 +434,8 @@ export default function MatchingTab({ currentYear, onYearChange }: MatchingTabPr
                                                             autoFocus
                                                             onKeyDown={(e) => {
                                                                 if (e.key === 'Enter') handleSaveVolume(provider.id);
-                                                                if (e.key === 'Escape') setEditingVolumeProviderId(null);
+                                                                if (e.key === 'Escape')
+                                                                    setEditingVolumeProviderId(null);
                                                             }}
                                                         />
                                                         <button
@@ -453,7 +460,9 @@ export default function MatchingTab({ currentYear, onYearChange }: MatchingTabPr
                                                         className="cursor-pointer hover:bg-slate-100/80 px-3 py-1.5 rounded-lg inline-flex items-center gap-1.5 text-sm font-bold text-slate-800 transition-colors"
                                                     >
                                                         {provider.delivered_volume_mwh.toLocaleString('de-DE')} MWh
-                                                        <span className="material-symbols-outlined text-[14px] text-slate-400">edit</span>
+                                                        <span className="material-symbols-outlined text-[14px] text-slate-400">
+                                                            edit
+                                                        </span>
                                                     </div>
                                                 )}
                                             </td>
@@ -470,7 +479,9 @@ export default function MatchingTab({ currentYear, onYearChange }: MatchingTabPr
                                                                 key={i}
                                                                 className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-slate-100 text-slate-700 text-xs font-semibold border border-slate-200"
                                                             >
-                                                                <span className="font-bold text-slate-800">{c.country}:</span>
+                                                                <span className="font-bold text-slate-800">
+                                                                    {c.country}:
+                                                                </span>
                                                                 {c.amount_mwh.toLocaleString('de-DE')} MWh
                                                             </span>
                                                         ))}
@@ -542,7 +553,9 @@ export default function MatchingTab({ currentYear, onYearChange }: MatchingTabPr
                                                 className="flex items-center justify-between px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-200 text-sm font-semibold"
                                             >
                                                 <div className="flex items-center gap-2">
-                                                    <span className="material-symbols-outlined text-slate-400 text-lg">flag</span>
+                                                    <span className="material-symbols-outlined text-slate-400 text-lg">
+                                                        flag
+                                                    </span>
                                                     <span className="text-slate-800">{c.country}</span>
                                                 </div>
                                                 <div className="flex items-center gap-3">
@@ -554,7 +567,9 @@ export default function MatchingTab({ currentYear, onYearChange }: MatchingTabPr
                                                         onClick={() => handleRemoveCancellation(i)}
                                                         className="text-red-500 hover:text-red-700 p-1 hover:bg-red-50 rounded-md transition-colors"
                                                     >
-                                                        <span className="material-symbols-outlined text-base">delete</span>
+                                                        <span className="material-symbols-outlined text-base">
+                                                            delete
+                                                        </span>
                                                     </button>
                                                 </div>
                                             </div>
@@ -565,7 +580,9 @@ export default function MatchingTab({ currentYear, onYearChange }: MatchingTabPr
 
                             {/* Add New Cancellation Form */}
                             <div className="bg-slate-50 rounded-xl p-4 border border-slate-200 space-y-3">
-                                <label className="text-xs font-bold text-slate-700 block">Neuen HKN-Posten hinzufügen</label>
+                                <label className="text-xs font-bold text-slate-700 block">
+                                    Neuen HKN-Posten hinzufügen
+                                </label>
                                 <div className="grid grid-cols-2 gap-3">
                                     <div>
                                         <input

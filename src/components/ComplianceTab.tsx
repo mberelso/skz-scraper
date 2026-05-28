@@ -120,8 +120,7 @@ export default function ComplianceTab({ currentYear, onYearChange }: ComplianceT
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
             const matches =
-                a.provider_name.toLowerCase().includes(q) ||
-                (a.file_number && a.file_number.toLowerCase().includes(q));
+                a.provider_name.toLowerCase().includes(q) || (a.file_number && a.file_number.toLowerCase().includes(q));
             if (!matches) return false;
         }
 
@@ -184,7 +183,9 @@ export default function ComplianceTab({ currentYear, onYearChange }: ComplianceT
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h2 className="text-2xl font-bold text-slate-900">Einheit 2: Compliance & Audit Hub</h2>
-                    <p className="text-slate-500">Soll/Ist-Abgleich der HKN-Quote und Ausstellung von Prüfvermerken (§ 42 EnWG)</p>
+                    <p className="text-slate-500">
+                        Soll/Ist-Abgleich der HKN-Quote und Ausstellung von Prüfvermerken (§ 42 EnWG)
+                    </p>
                     {constants && (
                         <div className="text-xs text-slate-500 mt-2 flex items-center gap-2">
                             <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-semibold text-indigo-700 ring-1 ring-inset ring-indigo-700/10">
@@ -241,7 +242,9 @@ export default function ComplianceTab({ currentYear, onYearChange }: ComplianceT
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                     {/* Search */}
                     <div className="lg:col-span-1">
-                        <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Anbieter-Suche</label>
+                        <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase">
+                            Anbieter-Suche
+                        </label>
                         <input
                             type="text"
                             placeholder="Musterwerke..."
@@ -270,7 +273,9 @@ export default function ComplianceTab({ currentYear, onYearChange }: ComplianceT
 
                     {/* Direction Filter */}
                     <div>
-                        <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase">Abweichungsrichtung</label>
+                        <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase">
+                            Abweichungsrichtung
+                        </label>
                         <select
                             value={directionFilter}
                             onChange={(e) => setDirectionFilter(e.target.value)}
@@ -348,7 +353,8 @@ export default function ComplianceTab({ currentYear, onYearChange }: ComplianceT
                                           ? 'text-green-600 bg-green-50 border-green-100'
                                           : 'text-slate-600 bg-slate-50 border-slate-100';
 
-                                    const calculatedMixHkn = a.delivered_volume_mwh > 0 ? (a.ist_mwh / a.delivered_volume_mwh) * 100 : 0;
+                                    const calculatedMixHkn =
+                                        a.delivered_volume_mwh > 0 ? (a.ist_mwh / a.delivered_volume_mwh) * 100 : 0;
 
                                     return (
                                         <tr key={a.provider_id} className="hover:bg-slate-50/50 transition-colors">
@@ -356,7 +362,9 @@ export default function ComplianceTab({ currentYear, onYearChange }: ComplianceT
                                                 {a.file_number || '-'}
                                             </td>
                                             <td className="px-6 py-4">
-                                                <div className="font-semibold text-slate-900 text-sm">{a.provider_name}</div>
+                                                <div className="font-semibold text-slate-900 text-sm">
+                                                    {a.provider_name}
+                                                </div>
                                                 {a.hkn_percentage > 0 ? (
                                                     <div className="text-[10px] text-indigo-600 font-bold uppercase tracking-wider mt-0.5">
                                                         Soll-Mix HKN: {a.hkn_percentage}%
@@ -374,13 +382,17 @@ export default function ComplianceTab({ currentYear, onYearChange }: ComplianceT
                                                 <div className="text-xs font-bold text-slate-900">
                                                     {formatMwh(a.soll_mwh)}
                                                 </div>
-                                                <div className="text-[10px] text-slate-400">{formatPercent(a.hkn_percentage)} Soll-Quote</div>
+                                                <div className="text-[10px] text-slate-400">
+                                                    {formatPercent(a.hkn_percentage)} Soll-Quote
+                                                </div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="text-xs font-bold text-slate-900">
                                                     {formatMwh(a.ist_mwh)}
                                                 </div>
-                                                <div className="text-[10px] text-slate-400">{formatPercent(calculatedMixHkn)} Ist-Quote</div>
+                                                <div className="text-[10px] text-slate-400">
+                                                    {formatPercent(calculatedMixHkn)} Ist-Quote
+                                                </div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <span
@@ -397,7 +409,9 @@ export default function ComplianceTab({ currentYear, onYearChange }: ComplianceT
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
-                                                <span className={`px-2.5 py-1 rounded-full text-xs font-bold border ${conf.color}`}>
+                                                <span
+                                                    className={`px-2.5 py-1 rounded-full text-xs font-bold border ${conf.color}`}
+                                                >
                                                     {conf.label}
                                                 </span>
                                             </td>
@@ -405,12 +419,17 @@ export default function ComplianceTab({ currentYear, onYearChange }: ComplianceT
                                                 {a.audited_by ? (
                                                     <div className="space-y-0.5">
                                                         <div className="text-xs font-bold text-slate-800 flex items-center gap-1">
-                                                            <span className="material-symbols-outlined text-xs text-slate-400">person</span>
+                                                            <span className="material-symbols-outlined text-xs text-slate-400">
+                                                                person
+                                                            </span>
                                                             {a.audited_by}
                                                         </div>
                                                         {a.audit_note && (
-                                                            <div className="text-[11px] text-slate-500 italic truncate" title={a.audit_note}>
-                                                                "{a.audit_note}"
+                                                            <div
+                                                                className="text-[11px] text-slate-500 italic truncate"
+                                                                title={a.audit_note}
+                                                            >
+                                                                &quot;{a.audit_note}&quot;
                                                             </div>
                                                         )}
                                                     </div>
@@ -489,13 +508,17 @@ export default function ComplianceTab({ currentYear, onYearChange }: ComplianceT
                                 {/* Calculation Summary */}
                                 <div className="grid grid-cols-3 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
                                     <div className="text-center">
-                                        <div className="text-[10px] text-slate-400 uppercase font-bold">Soll-Menge HKN</div>
+                                        <div className="text-[10px] text-slate-400 uppercase font-bold">
+                                            Soll-Menge HKN
+                                        </div>
                                         <div className="text-sm font-bold text-slate-800 mt-1">
                                             {formatMwh(selectedAudit.soll_mwh)}
                                         </div>
                                     </div>
                                     <div className="text-center border-x border-slate-200">
-                                        <div className="text-[10px] text-slate-400 uppercase font-bold">Ist-Menge HKN</div>
+                                        <div className="text-[10px] text-slate-400 uppercase font-bold">
+                                            Ist-Menge HKN
+                                        </div>
                                         <div className="text-sm font-bold text-slate-800 mt-1">
                                             {formatMwh(selectedAudit.ist_mwh)}
                                         </div>
@@ -532,10 +555,26 @@ export default function ComplianceTab({ currentYear, onYearChange }: ComplianceT
                                     </label>
                                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                                         {[
-                                            { id: 'plausibel', label: 'Plausibel', color: 'peer-checked:bg-green-50 peer-checked:text-green-800 peer-checked:border-green-300' },
-                                            { id: 'fehlerhaft_hkn', label: 'HKN falsch', color: 'peer-checked:bg-orange-50 peer-checked:text-orange-800 peer-checked:border-orange-300' },
-                                            { id: 'fehlerhaft_eeg', label: 'EEG falsch', color: 'peer-checked:bg-yellow-50 peer-checked:text-yellow-800 peer-checked:border-yellow-300' },
-                                            { id: 'beanstandet', label: 'Beanstandet', color: 'peer-checked:bg-red-50 peer-checked:text-red-800 peer-checked:border-red-300' },
+                                            {
+                                                id: 'plausibel',
+                                                label: 'Plausibel',
+                                                color: 'peer-checked:bg-green-50 peer-checked:text-green-800 peer-checked:border-green-300',
+                                            },
+                                            {
+                                                id: 'fehlerhaft_hkn',
+                                                label: 'HKN falsch',
+                                                color: 'peer-checked:bg-orange-50 peer-checked:text-orange-800 peer-checked:border-orange-300',
+                                            },
+                                            {
+                                                id: 'fehlerhaft_eeg',
+                                                label: 'EEG falsch',
+                                                color: 'peer-checked:bg-yellow-50 peer-checked:text-yellow-800 peer-checked:border-yellow-300',
+                                            },
+                                            {
+                                                id: 'beanstandet',
+                                                label: 'Beanstandet',
+                                                color: 'peer-checked:bg-red-50 peer-checked:text-red-800 peer-checked:border-red-300',
+                                            },
                                         ].map((opt) => (
                                             <div key={opt.id}>
                                                 <input
@@ -582,12 +621,16 @@ export default function ComplianceTab({ currentYear, onYearChange }: ComplianceT
                                 >
                                     {savingAudit ? (
                                         <>
-                                            <span className="material-symbols-outlined animate-spin text-sm">refresh</span>
+                                            <span className="material-symbols-outlined animate-spin text-sm">
+                                                refresh
+                                            </span>
                                             Speichere...
                                         </>
                                     ) : (
                                         <>
-                                            <span className="material-symbols-outlined text-sm">assignment_turned_in</span>
+                                            <span className="material-symbols-outlined text-sm">
+                                                assignment_turned_in
+                                            </span>
                                             Audit-Ergebnis speichern
                                         </>
                                     )}

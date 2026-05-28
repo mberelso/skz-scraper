@@ -72,10 +72,7 @@ export async function POST(request: Request) {
         // 2. HKN-Entwertungen speichern (falls übergeben)
         if (cancellations !== undefined && Array.isArray(cancellations)) {
             // Erst alle bestehenden HKNs für diesen Provider in diesem Jahr löschen
-            await query(
-                `DELETE FROM hkn_cancellations WHERE provider_id = ? AND year = ?`,
-                [provider_id, year]
-            );
+            await query(`DELETE FROM hkn_cancellations WHERE provider_id = ? AND year = ?`, [provider_id, year]);
 
             // Dann neue einfügen
             for (const c of cancellations) {
