@@ -115,6 +115,12 @@ export function getCleanedProviderWords(searchQuery: string): string[] {
 /**
  * Filter and rank search result links to avoid generic/irrelevant documents.
  * Returns ranked list with best matches first.
+ *
+ * Wichtig: Treffer auf der Domain des Anbieters wiegen deutlich schwerer als
+ * fremde PDFs, sonst wird die Stromkennzeichnung eines ANDEREN Versorgers
+ * gespeichert (z.B. fremdes Stadtwerk-PDF rankt vor der Anbieter-Homepage).
+ * Wenn der Anbietername in keinem Link vorkommt, wird lieber gar nichts
+ * zurückgegeben als ein fremdes Dokument.
  */
 export function filterAndRankLinks(links: string[], searchQuery: string): string[] {
     const blacklist = [
@@ -124,6 +130,21 @@ export function filterAndRankLinks(links: string[], searchQuery: string): string
         'bundesnetzagentur.de', // Regulator (generic info)
         'umweltbundesamt.de', // Environmental agency
         'energieverbraucherportal.de', // Consumer portal (generic)
+        'duckduckgo.com', // Search engine ads/redirects (y.js)
+        'bing.com', // Search engine ads
+        'apps.apple.com', // App stores
+        'play.google.com',
+        'northdata.de', // Company registers / business directories
+        'creditreform.de',
+        'insolvenz-radar.de',
+        'provenexpert.com', // Review/PR portals
+        'firmenpresse.de',
+        'fair-news.de',
+        'linkedin.com',
+        'xing.com',
+        'facebook.com',
+        'instagram.com',
+        'youtube.com',
     ];
 
     const cleanedWords = getCleanedProviderWords(searchQuery);
@@ -134,21 +155,30 @@ export function filterAndRankLinks(links: string[], searchQuery: string): string
     const scored = decodedLinks.map((url) => {
         const urlLower = url.toLowerCase();
         let score = 0;
+        let matchesProvider = false;
 
         if (blacklist.some((domain) => urlLower.includes(domain))) {
-            return { url, score: -1000 };
+            return { url, score: -1000, matchesProvider };
         }
 
-        if (urlLower.endsWith('.pdf') || urlLower.includes('.pdf?')) {
-            score += 150;
+        // PDF detection incl. paths like "/Strommix.pdf/uuid?download=true"
+        if (/\.pdf($|[?#\/])/.test(urlLower)) {
+            score += 100;
         }
 
         try {
-            const hostname = new URL(url).hostname.toLowerCase();
-            // Score based on matching any of the cleaned provider name words in the hostname
-            const matchesWord = cleanedWords.some((word) => hostname.includes(word));
-            if (matchesWord) {
-                score += 100;
+            const parsed = new URL(url);
+            const hostname = parsed.hostname.toLowerCase();
+            const pathAndQuery = (parsed.pathname + parsed.search).toLowerCase();
+
+            // Provider name in hostname = strongest signal (own website)
+            if (cleanedWords.some((word) => hostname.includes(word))) {
+                score += 400;
+                matchesProvider = true;
+            } else if (cleanedWords.some((word) => pathAndQuery.includes(word))) {
+                // Provider name in path (e.g. doc hosted on a CDN)
+                score += 150;
+                matchesProvider = true;
             }
         } catch {
             // Invalid URL, skip
@@ -177,13 +207,18 @@ export function filterAndRankLinks(links: string[], searchQuery: string): string
             score -= 100;
         }
 
-        return { url, score };
+        return { url, score, matchesProvider };
     });
 
-    return scored
-        .filter((item) => item.score > -1000)
-        .sort((a, b) => b.score - a.score)
-        .map((item) => item.url);
+    let candidates = scored.filter((item) => item.score > -1000);
+
+    // Guard against wrong-provider documents: if we know the provider's name words,
+    // only accept links that actually reference the provider (hostname or path).
+    if (cleanedWords.length > 0) {
+        candidates = candidates.filter((item) => item.matchesProvider);
+    }
+
+    return candidates.sort((a, b) => b.score - a.score).map((item) => item.url);
 }
 
 /**

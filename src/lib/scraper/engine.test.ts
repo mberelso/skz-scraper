@@ -336,8 +336,74 @@ describe('SearchHelper name cleaning and matching', () => {
     it('filterAndRankLinks findet Relevanz über geteilte Wörter im Hostname', () => {
         const links = ['https://www.roth-energie.de/stromkennzeichnung.pdf', 'https://www.generic.de/document.pdf'];
         const ranked = filterAndRankLinks(links, 'Adolf Roth GmbH & Co. KG Stromkennzeichnung PDF');
-        expect(ranked).toHaveLength(2);
+        // generic.de enthält den Anbieternamen nicht und wird verworfen (Schutz vor Fremd-Dokumenten)
+        expect(ranked).toHaveLength(1);
         expect(ranked[0]).toBe('https://www.roth-energie.de/stromkennzeichnung.pdf');
+    });
+
+    it('filterAndRankLinks bevorzugt Anbieter-Domain vor fremdem PDF (WerraEnergie-Szenario)', () => {
+        const links = [
+            'https://gemeindestromwadgassen.de/wp-content/uploads/2026/06/Stromkennzeichnung-der-Stromlieferungen-2025.pdf',
+            'https://www.werraenergie.de/documents/6021286/6112312/Strommix+ab+01.07.2026.pdf/a979806e-1b01?download=true',
+            'https://www.werraenergie.de/',
+        ];
+        const ranked = filterAndRankLinks(links, 'Werraenergie GmbH Stromkennzeichnung');
+        // Fremdes PDF darf NICHT gewinnen — eigenes Strommix-PDF zuerst, dann Homepage
+        expect(ranked[0]).toBe(
+            'https://www.werraenergie.de/documents/6021286/6112312/Strommix+ab+01.07.2026.pdf/a979806e-1b01?download=true'
+        );
+        expect(ranked).not.toContain(
+            'https://gemeindestromwadgassen.de/wp-content/uploads/2026/06/Stromkennzeichnung-der-Stromlieferungen-2025.pdf'
+        );
+    });
+
+    it('filterAndRankLinks bevorzugt Anbieter-Homepage vor fremdem PDF (Vonovia-Szenario)', () => {
+        const links = [
+            'https://www.ewagkamenz.de/wp-content/uploads/2025/07/044-1-Informationen-zur-Stromlieferung-Stromkennzeichnung.pdf',
+            'https://www.energie.vonovia.de/',
+        ];
+        const ranked = filterAndRankLinks(links, 'Vonovia Energie GmbH Stromkennzeichnung');
+        expect(ranked[0]).toBe('https://www.energie.vonovia.de/');
+        expect(ranked).not.toContain(
+            'https://www.ewagkamenz.de/wp-content/uploads/2025/07/044-1-Informationen-zur-Stromlieferung-Stromkennzeichnung.pdf'
+        );
+    });
+
+    it('filterAndRankLinks akzeptiert Anbietername im Pfad (CDN-Hosting)', () => {
+        const links = [
+            'https://8485739.fs1.hubspotusercontent-eu1.net/hubfs/8485739/ROTH Energie/Stromkennzeichnung_2023.pdf',
+            'https://www.stadtwerke-irgendwo.de/stromkennzeichnung.pdf',
+        ];
+        const ranked = filterAndRankLinks(links, 'Adolf Roth GmbH & Co. KG Stromkennzeichnung');
+        expect(ranked).toHaveLength(1);
+        expect(ranked[0]).toContain('hubspotusercontent');
+    });
+
+    it('filterAndRankLinks gibt leere Liste zurück wenn kein Link zum Anbieter passt', () => {
+        const links = [
+            'https://www.fremdes-stadtwerk.de/stromkennzeichnung.pdf',
+            'https://www.anderes-ewerk.de/energiemix.pdf',
+        ];
+        const ranked = filterAndRankLinks(links, 'Voltego GmbH Stromkennzeichnung');
+        expect(ranked).toHaveLength(0);
+    });
+
+    it('filterAndRankLinks behält Links wenn Anbietername keine verwertbaren Wörter ergibt', () => {
+        // "24/7 Strom GmbH" → alle Wörter zu kurz/generisch → kein Anbieter-Guard möglich
+        const links = ['https://www.beispiel-energie.de/stromkennzeichnung.pdf'];
+        const ranked = filterAndRankLinks(links, '24/7 Strom GmbH Stromkennzeichnung');
+        expect(ranked).toHaveLength(1);
+    });
+
+    it('filterAndRankLinks verwirft Firmenverzeichnisse und Werbe-Links', () => {
+        const links = [
+            'https://www.northdata.de/Voltego GmbH, Krefeld/HRB 17514',
+            'https://duckduckgo.com/y.js?ad_domain=unsubby.com&u3=https://www.bing.com/aclick',
+            'https://www.provenexpert.com/de-de/voltego-gmbh/',
+            'https://www.voltego.de/stromkennzeichnung',
+        ];
+        const ranked = filterAndRankLinks(links, 'Voltego GmbH Stromkennzeichnung');
+        expect(ranked).toEqual(['https://www.voltego.de/stromkennzeichnung']);
     });
 
     it('decodeSearchUrl decodiert Bing und DDG Redirect Links korrekt', () => {

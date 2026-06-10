@@ -64,7 +64,46 @@ export class ScraperEngine {
             });
 
             console.log(`  [SCRAPE] Navigating to ${url}...`);
-            const response = await page.goto(url, { waitUntil: 'networkidle2', timeout: 45000 });
+            let response;
+            try {
+                response = await page.goto(url, { waitUntil: 'networkidle2', timeout: 45000 });
+            } catch (e: any) {
+                // Download links (Content-Disposition: attachment) abort navigation —
+                // fetch the file directly and detect its type via magic bytes.
+                if (e.message?.includes('net::ERR_ABORTED')) {
+                    console.log('  [SCRAPE] Navigation aborted (Download-Link). Fetching raw buffer...');
+                    const buffer = await this.downloadFile(url);
+                    if (buffer && buffer.length > 4) {
+                        if (buffer.subarray(0, 4).toString('latin1') === '%PDF') {
+                            return {
+                                html: '',
+                                screenshot: Buffer.from([]),
+                                pdfLinks: [],
+                                pdfBuffer: buffer,
+                                imageBuffer: null,
+                                isPdf: true,
+                                isImage: false,
+                                sourceUrl: url,
+                            };
+                        }
+                        const isPng = buffer[0] === 0x89 && buffer[1] === 0x50;
+                        const isJpg = buffer[0] === 0xff && buffer[1] === 0xd8;
+                        if (isPng || isJpg) {
+                            return {
+                                html: '',
+                                screenshot: Buffer.from([]),
+                                pdfLinks: [],
+                                pdfBuffer: null,
+                                imageBuffer: buffer,
+                                isPdf: false,
+                                isImage: true,
+                                sourceUrl: url,
+                            };
+                        }
+                    }
+                }
+                throw e;
+            }
 
             if (!response) {
                 throw new Error('No response received from ' + url);
@@ -141,8 +180,47 @@ export class ScraperEngine {
     }
 
     /**
-     * Search DuckDuckGo for a provider's Stromkennzeichnung.
-     * DuckDuckGo has much less anti-bot protection than Google.
+     * Extract result links from a DuckDuckGo search page (html. or lite. variant).
+     */
+    private async extractDdgLinks(page: import('puppeteer').Page): Promise<string[]> {
+        return page.evaluate(() => {
+            const selectors = [
+                'article a[data-testid="result-title-a"]', // Modern DDG
+                'a.result__a', // Classic DDG (html.duckduckgo.com)
+                'a.result-link', // DDG Lite (lite.duckduckgo.com)
+                '.results a[href^="http"]', // Fallback
+                '#links a[href^="http"]', // Another fallback
+            ];
+
+            for (const selector of selectors) {
+                const links = Array.from(document.querySelectorAll(selector));
+                const urls = links
+                    .map((a) => (a as HTMLAnchorElement).href)
+                    .filter((href) => {
+                        if (!href || !href.startsWith('http')) return false;
+                        if (href.includes('duckduckgo.com/l/?uddg=')) return true;
+                        return !href.includes('duckduckgo.com');
+                    });
+                if (urls.length > 0) return urls;
+            }
+            return [];
+        });
+    }
+
+    /** Check if a search page is showing a bot/captcha block */
+    private async isSearchBlocked(page: import('puppeteer').Page): Promise<boolean> {
+        return page.evaluate(() => {
+            const text = document.body?.innerText || '';
+            return text.includes('anomaly') || text.includes('captcha') || text.includes('bots use');
+        });
+    }
+
+    /**
+     * Search for a provider's Stromkennzeichnung.
+     * Tries DuckDuckGo HTML → DuckDuckGo Lite → Bing. Each engine failure
+     * (timeout, block) falls through to the next instead of aborting.
+     * Throws a descriptive error when nothing usable was found, so the
+     * runner's retry loop can kick in and the job log shows the real cause.
      */
     async searchAndScrape(searchQuery: string) {
         if (!this.browser) await this.init();
@@ -157,85 +235,68 @@ export class ScraperEngine {
         });
 
         try {
+            let resultLinks: string[] = [];
+            const encoded = encodeURIComponent(searchQuery);
+
             // Strategy 1: DuckDuckGo HTML-only search
-            const ddgUrl = 'https://html.duckduckgo.com/html/?q=' + encodeURIComponent(searchQuery);
-            console.log(`  [SEARCH] Searching DuckDuckGo (HTML): "${searchQuery}"`);
-            await page.goto(ddgUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
-
-            // Extract search result links
-            let resultLinks = await page.evaluate(() => {
-                const selectors = [
-                    'article a[data-testid="result-title-a"]', // Modern DDG
-                    'a.result__a', // Classic DDG
-                    '.results a[href^="http"]', // Fallback
-                    '#links a[href^="http"]', // Another fallback
-                ];
-
-                for (const selector of selectors) {
-                    const links = Array.from(document.querySelectorAll(selector));
-                    const urls = links
-                        .map((a) => (a as HTMLAnchorElement).href)
-                        .filter((href) => {
-                            if (!href || !href.startsWith('http')) return false;
-                            if (href.includes('duckduckgo.com/l/?uddg=')) return true;
-                            return !href.includes('duckduckgo.com');
-                        });
-                    if (urls.length > 0) return urls;
-                }
-                return [];
-            });
-
-            // Check if DDG is showing bot anomaly block
-            const isBlocked = await page.evaluate(() => {
-                const text = document.body.innerText || '';
-                return text.includes('anomaly') || text.includes('captcha') || text.includes('bots use');
-            });
-
-            if (resultLinks.length === 0 || isBlocked) {
-                console.warn('  [SEARCH] DuckDuckGo blocked or no results. Trying Bing Search (Fallback)...');
-                const bingUrl = 'https://www.bing.com/search?q=' + encodeURIComponent(searchQuery);
-                await page.goto(bingUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
-
-                resultLinks = await page.evaluate(() => {
-                    const links = Array.from(document.querySelectorAll('ol#b_results li.b_algo h2 a'));
-                    return links
-                        .map((a) => (a as HTMLAnchorElement).href)
-                        .filter((href) => {
-                            if (!href || !href.startsWith('http')) return false;
-                            if (href.includes('bing.com')) {
-                                return href.includes('/ck/a');
-                            }
-                            return true;
-                        });
+            try {
+                console.log(`  [SEARCH] Searching DuckDuckGo (HTML): "${searchQuery}"`);
+                await page.goto(`https://html.duckduckgo.com/html/?q=${encoded}`, {
+                    waitUntil: 'domcontentloaded',
+                    timeout: 30000,
                 });
+                if (await this.isSearchBlocked(page)) {
+                    console.warn('  [SEARCH] DuckDuckGo HTML shows bot block.');
+                } else {
+                    resultLinks = await this.extractDdgLinks(page);
+                }
+            } catch (e: any) {
+                console.warn(`  [SEARCH] DuckDuckGo HTML failed: ${e.message}`);
+            }
+
+            // Strategy 2: DuckDuckGo Lite (separate endpoint, often not blocked together)
+            if (resultLinks.length === 0) {
+                try {
+                    console.warn('  [SEARCH] Trying DuckDuckGo Lite (Fallback)...');
+                    await page.goto(`https://lite.duckduckgo.com/lite/?q=${encoded}`, {
+                        waitUntil: 'domcontentloaded',
+                        timeout: 30000,
+                    });
+                    if (!(await this.isSearchBlocked(page))) {
+                        resultLinks = await this.extractDdgLinks(page);
+                    }
+                } catch (e: any) {
+                    console.warn(`  [SEARCH] DuckDuckGo Lite failed: ${e.message}`);
+                }
+            }
+
+            // Strategy 3: Bing
+            if (resultLinks.length === 0) {
+                try {
+                    console.warn('  [SEARCH] Trying Bing Search (Fallback)...');
+                    await page.goto(`https://www.bing.com/search?q=${encoded}`, {
+                        waitUntil: 'domcontentloaded',
+                        timeout: 30000,
+                    });
+                    resultLinks = await page.evaluate(() => {
+                        const links = Array.from(document.querySelectorAll('ol#b_results li.b_algo h2 a'));
+                        return links
+                            .map((a) => (a as HTMLAnchorElement).href)
+                            .filter((href) => {
+                                if (!href || !href.startsWith('http')) return false;
+                                if (href.includes('bing.com')) {
+                                    return href.includes('/ck/a');
+                                }
+                                return true;
+                            });
+                    });
+                } catch (e: any) {
+                    console.warn(`  [SEARCH] Bing failed: ${e.message}`);
+                }
             }
 
             if (resultLinks.length === 0) {
-                console.warn('  [SEARCH] No search results found on DuckDuckGo or Bing.');
-                // Try to get any clickable links from last search page as last resort
-                const anyLinks = await page.evaluate(() =>
-                    Array.from(document.querySelectorAll('a[href^="http"]'))
-                        .map((a) => (a as HTMLAnchorElement).href)
-                        .filter(
-                            (href) =>
-                                !href.includes('duckduckgo.com') &&
-                                !href.includes('duck.co') &&
-                                !href.includes('bing.com') &&
-                                !href.includes('microsoft.com')
-                        )
-                );
-                if (anyLinks.length === 0) {
-                    console.error('  [SEARCH] No links found at all on search pages.');
-                    await page.close();
-                    return null;
-                }
-                // Use best fallback link
-                const fallbackLink = anyLinks[0];
-                if (fallbackLink) {
-                    console.log(`  [SEARCH] Found ${anyLinks.length} fallback link(s). Using: ${fallbackLink}`);
-                    await page.close();
-                    return await this.scrapePage(fallbackLink);
-                }
+                throw new Error('Suchmaschinen nicht erreichbar oder blockiert (DuckDuckGo + Bing ohne Ergebnisse)');
             }
 
             // Filter and rank search results
@@ -243,17 +304,9 @@ export class ScraperEngine {
             console.log(`  [SEARCH] Raw links found:`, resultLinks);
             console.log(`  [SEARCH] Scored and ranked links:`, filteredLinks);
 
-            if (filteredLinks.length === 0) {
-                console.error('  [SEARCH] All results were filtered out (likely generic/irrelevant).');
-                await page.close();
-                return null;
-            }
-
             const targetLink = filteredLinks[0];
             if (!targetLink) {
-                console.error('  [SEARCH] No target link found after filtering.');
-                await page.close();
-                return null;
+                throw new Error('Keine zum Anbieter passenden Suchergebnisse (nur fremde/generische Treffer)');
             }
             console.log(`  [SEARCH] Target URL: ${targetLink}`);
 
@@ -262,7 +315,7 @@ export class ScraperEngine {
         } catch (e: any) {
             console.error('  [SEARCH] searchAndScrape failed:', e.message);
             if (!page.isClosed()) await page.close();
-            return null;
+            throw e;
         }
     }
 
