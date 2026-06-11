@@ -31,6 +31,11 @@ export async function POST(request: Request) {
             scrapeRequestSchema
         );
 
+        // Manuell übergebene URL als skz_url für künftige Läufe hinterlegen
+        if (url) {
+            await query('UPDATE providers SET skz_url = ?, updated_at = NOW() WHERE id = ?', [url, providerId]);
+        }
+
         // Check if another scrape job is already running
         const batchStatus: any[] = await query('SELECT is_running FROM batch_status WHERE id = 1');
         if (batchStatus.length > 0 && batchStatus[0].is_running) {

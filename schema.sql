@@ -96,7 +96,10 @@ CREATE TABLE IF NOT EXISTS energy_mix (
     confidence INT DEFAULT NULL,
     extraction_method VARCHAR(50) DEFAULT NULL CHECK (extraction_method IN ('gemini_vision', 'gemini_text', 'regex', 'manual', 'ocr')),
     mix_type VARCHAR(50) DEFAULT NULL CHECK (mix_type IN ('gesamtmix', 'unternehmensmix', 'tarifmix', 'unbekannt')),
-    
+
+    -- Quellen-Wächter: NULL = plausibel, 'unbestaetigt' = fremde Domain (prüfen!), 'bestaetigt' = manuell bestätigt
+    source_status VARCHAR(20) DEFAULT NULL CHECK (source_status IN ('unbestaetigt', 'bestaetigt')),
+
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

@@ -38,7 +38,8 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
                 em.confidence,
                 em.extraction_method,
                 em.tariff_name,
-                em.mix_type
+                em.mix_type,
+                em.source_status
             FROM documents d
             LEFT JOIN energy_mix em ON em.document_id = d.id
             WHERE d.provider_id = ?
@@ -67,7 +68,8 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
                 em.confidence,
                 em.extraction_method,
                 em.tariff_name,
-                em.mix_type
+                em.mix_type,
+                em.source_status
             FROM energy_mix em
             WHERE em.provider_id = ? AND em.document_id IS NULL
 

@@ -113,6 +113,24 @@ export function getCleanedProviderWords(searchQuery: string): string[] {
 }
 
 /**
+ * Quellen-Wächter: Prüft, ob eine Quell-URL zum Anbieter passt (Name im Hostname oder Pfad).
+ * Rückgabe: true = passt, false = fremde Quelle (prüfen!), null = nicht beurteilbar
+ * (Anbietername ergibt keine verwertbaren Wörter oder URL ungültig).
+ */
+export function sourceMatchesProvider(sourceUrl: string, providerName: string): boolean | null {
+    const words = getCleanedProviderWords(providerName);
+    if (words.length === 0) return null;
+    try {
+        const parsed = new URL(sourceUrl);
+        const hostname = parsed.hostname.toLowerCase();
+        const pathAndQuery = decodeURIComponent(parsed.pathname + parsed.search).toLowerCase();
+        return words.some((w) => hostname.includes(w) || pathAndQuery.includes(w));
+    } catch {
+        return null;
+    }
+}
+
+/**
  * Filter and rank search result links to avoid generic/irrelevant documents.
  * Returns ranked list with best matches first.
  *

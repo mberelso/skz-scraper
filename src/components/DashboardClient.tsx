@@ -7,6 +7,7 @@ import CreateProviderModal from './CreateProviderModal';
 import ExportCenterModal from './ExportCenterModal';
 import MatchingTab from './MatchingTab';
 import ComplianceTab from './ComplianceTab';
+import { categorizeFailure, FAILURE_CATEGORY_META, FailureCategory } from '@/lib/failure-triage';
 
 const formatJobDate = (dateVal: any) => {
     if (!dateVal) return '-';
@@ -45,6 +46,7 @@ export default function DashboardClient({
     const [statusFilter, setStatusFilter] = useState<string>('all');
     const [dataFilter, setDataFilter] = useState<string>('all');
     const [reviewFilter, setReviewFilter] = useState<string>('all');
+    const [triageFilter, setTriageFilter] = useState<FailureCategory | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(50);
     const [livePollingEnabled, setLivePollingEnabled] = useState(true);
@@ -189,9 +191,29 @@ export default function DashboardClient({
         if (dataFilter === 'with_data' && !p.last_mix_year) return false;
         if (dataFilter === 'no_data' && p.last_mix_year) return false;
         if (dataFilter === 'low_confidence' && (p.last_confidence === null || p.last_confidence >= 40)) return false;
+        if (dataFilter === 'source_check' && !p.has_unverified_source) return false;
+        if (dataFilter === 'duplicate' && !p.has_duplicate_doc) return false;
         if (reviewFilter !== 'all' && (p.review_status || 'offen') !== reviewFilter) return false;
+        if (
+            triageFilter &&
+            (p.latest_job_status !== 'failed' || categorizeFailure(p.latest_job_log) !== triageFilter)
+        )
+            return false;
         return true;
     });
+
+    // Fehler-Triage: Fehlschläge nach Ursache gruppieren
+    const failureGroups = providers.reduce(
+        (acc: Partial<Record<FailureCategory, number>>, p: any) => {
+            if (p.latest_job_status === 'failed') {
+                const cat = categorizeFailure(p.latest_job_log);
+                acc[cat] = (acc[cat] || 0) + 1;
+            }
+            return acc;
+        },
+        {} as Partial<Record<FailureCategory, number>>
+    );
+    const totalFailures = (Object.values(failureGroups) as number[]).reduce((a, b) => a + b, 0);
 
     const sortedProviders = [...filteredProviders].sort((a: any, b: any) => {
         let aVal = a[sortColumn];
@@ -240,7 +262,7 @@ export default function DashboardClient({
 
     useEffect(() => {
         setCurrentPage(1);
-    }, [searchQuery, statusFilter, dataFilter, reviewFilter]);
+    }, [searchQuery, statusFilter, dataFilter, reviewFilter, triageFilter]);
 
     const handleFileNumberEdit = async (providerId: number, newFileNumber: string) => {
         try {
@@ -564,7 +586,7 @@ export default function DashboardClient({
                                                 Batch-Verarbeitung
                                             </h3>
                                             <p className="text-sm text-slate-500 mt-1">
-                                                Mehrere Provider nacheinander scrapen (4s Pause zwischen Jobs)
+                                                Mehrere Provider nacheinander scrapen (8s Pause zwischen Jobs)
                                             </p>
                                         </div>
 
@@ -632,6 +654,37 @@ export default function DashboardClient({
                                                             play_arrow
                                                         </span>
                                                         <span>Alle {totalProviders} scrapen</span>
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => {
+                                                            const failedIds = providers
+                                                                .filter(
+                                                                    (p: any) => p.latest_job_status === 'failed'
+                                                                )
+                                                                .map((p: any) => p.id);
+                                                            handleBatchScrape({ providerIds: failedIds });
+                                                        }}
+                                                        disabled={
+                                                            batchLoading ||
+                                                            providers.filter(
+                                                                (p: any) => p.latest_job_status === 'failed'
+                                                            ).length === 0
+                                                        }
+                                                        className="inline-flex items-center gap-2 px-6 py-2.5 text-white font-semibold rounded-lg shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 bg-red-600"
+                                                    >
+                                                        <span className="material-symbols-outlined text-base">
+                                                            replay
+                                                        </span>
+                                                        <span>
+                                                            Fehlgeschlagene erneut (
+                                                            {
+                                                                providers.filter(
+                                                                    (p: any) => p.latest_job_status === 'failed'
+                                                                ).length
+                                                            }
+                                                            )
+                                                        </span>
                                                     </button>
                                                 </>
                                             )}
@@ -827,6 +880,8 @@ export default function DashboardClient({
                                         <option value="with_data">Mit Strommix</option>
                                         <option value="no_data">Ohne Strommix</option>
                                         <option value="low_confidence">Niedrige Konfidenz (&lt;40%)</option>
+                                        <option value="source_check">⚠ Quelle prüfen</option>
+                                        <option value="duplicate">Duplikat-Verdacht</option>
                                     </select>
                                     <select
                                         value={reviewFilter}
@@ -841,13 +896,15 @@ export default function DashboardClient({
                                     {(searchQuery ||
                                         statusFilter !== 'all' ||
                                         dataFilter !== 'all' ||
-                                        reviewFilter !== 'all') && (
+                                        reviewFilter !== 'all' ||
+                                        triageFilter) && (
                                         <button
                                             onClick={() => {
                                                 setSearchQuery('');
                                                 setStatusFilter('all');
                                                 setDataFilter('all');
                                                 setReviewFilter('all');
+                                                setTriageFilter(null);
                                             }}
                                             className="text-xs text-red-600 hover:text-red-800 font-medium px-3 py-2 border border-red-200 rounded-lg hover:border-red-400 flex items-center gap-2"
                                         >
@@ -860,6 +917,55 @@ export default function DashboardClient({
                                     </span>
                                 </div>
                             </div>
+
+                            {/* Fehler-Triage */}
+                            {totalFailures > 0 && (
+                                <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+                                    <div className="flex items-center gap-2 mb-3">
+                                        <span className="material-symbols-outlined text-red-500 text-xl">
+                                            troubleshoot
+                                        </span>
+                                        <h3 className="text-sm font-bold text-slate-800">
+                                            Fehler-Triage — {totalFailures} fehlgeschlagene Anbieter nach Ursache
+                                        </h3>
+                                        {triageFilter && (
+                                            <button
+                                                onClick={() => setTriageFilter(null)}
+                                                className="ml-auto text-xs text-red-600 hover:text-red-800 font-medium"
+                                            >
+                                                Triage-Filter aufheben ✕
+                                            </button>
+                                        )}
+                                    </div>
+                                    <div className="flex flex-wrap gap-2">
+                                        {(
+                                            Object.entries(failureGroups) as [FailureCategory, number][]
+                                        )
+                                            .sort((a, b) => b[1] - a[1])
+                                            .map(([cat, count]) => (
+                                                <button
+                                                    key={cat}
+                                                    onClick={() =>
+                                                        setTriageFilter(triageFilter === cat ? null : cat)
+                                                    }
+                                                    title={FAILURE_CATEGORY_META[cat].hint}
+                                                    className={`px-3 py-1.5 rounded-full text-xs font-bold border transition-all ${
+                                                        triageFilter === cat
+                                                            ? 'bg-red-600 border-red-600 text-white shadow-sm'
+                                                            : 'bg-red-50 border-red-200 text-red-700 hover:bg-red-100'
+                                                    }`}
+                                                >
+                                                    {FAILURE_CATEGORY_META[cat].label} ({count})
+                                                </button>
+                                            ))}
+                                    </div>
+                                    {triageFilter && (
+                                        <p className="mt-2 text-xs text-slate-500">
+                                            💡 {FAILURE_CATEGORY_META[triageFilter].hint}
+                                        </p>
+                                    )}
+                                </div>
+                            )}
 
                             {/* Batch Aktionsleiste */}
                             <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4 flex flex-wrap items-center gap-3">
@@ -1131,8 +1237,24 @@ export default function DashboardClient({
                                                         />
                                                     </td>
                                                     <td className="px-6 py-4">
-                                                        <div className="text-sm font-semibold text-slate-900">
+                                                        <div className="text-sm font-semibold text-slate-900 flex items-center gap-1.5 flex-wrap">
                                                             {provider.name}
+                                                            {provider.has_unverified_source && (
+                                                                <span
+                                                                    className="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 font-bold cursor-help"
+                                                                    title="Mindestens ein Strommix stammt von einer Domain, die nicht zum Anbieter passt — in den Details prüfen!"
+                                                                >
+                                                                    ⚠ Quelle prüfen
+                                                                </span>
+                                                            )}
+                                                            {provider.has_duplicate_doc && (
+                                                                <span
+                                                                    className="text-[10px] px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 font-bold cursor-help"
+                                                                    title="Ein Dokument dieses Anbieters existiert identisch (gleicher Hash) auch bei einem anderen Anbieter — fast immer ein Fehlgriff des Scrapers."
+                                                                >
+                                                                    Duplikat
+                                                                </span>
+                                                            )}
                                                         </div>
                                                         <div className="text-xs text-slate-400">
                                                             {provider.city || '-'}
@@ -1200,7 +1322,12 @@ export default function DashboardClient({
                                                         )}
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">
-                                                        <StatusBadge status={provider.latest_job_status} />
+                                                        <div
+                                                            title={provider.latest_job_log || undefined}
+                                                            className={provider.latest_job_log ? 'cursor-help' : ''}
+                                                        >
+                                                            <StatusBadge status={provider.latest_job_status} />
+                                                        </div>
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">
                                                         {provider.last_mix_year ? (

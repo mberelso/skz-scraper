@@ -12,7 +12,8 @@ export async function validateAndSaveMix(
     providerId: number,
     jobId: number,
     logPrefix: string,
-    successMsg: string
+    successMsg: string,
+    sourceUnverified = false
 ): Promise<number | null> {
     const sum = (mix.renewable ?? 0) + (mix.fossil ?? 0) + (mix.nuclear ?? 0);
     const warnings: string[] = [];
@@ -58,8 +59,8 @@ export async function validateAndSaveMix(
                 coal_percentage, natural_gas_percentage, other_fossil_percentage,
                 eeg_funded_percentage, hkn_percentage, mieterstrom_percentage,
                 co2_emission_g_kwh, radioactive_waste_mg_kwh,
-                eeg_percentage, tariff_name, confidence, extraction_method, mix_type
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                eeg_percentage, tariff_name, confidence, extraction_method, mix_type, source_status
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 documentId,
                 providerId,
@@ -85,6 +86,7 @@ export async function validateAndSaveMix(
                 mix.confidence,
                 mix.extraction_method,
                 mix.mix_type ?? null,
+                sourceUnverified ? 'unbestaetigt' : null,
             ]
         );
         const mixId = Number(insertResult.insertId);

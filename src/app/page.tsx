@@ -23,6 +23,16 @@ async function getDashboardData() {
         p.updated_at,
         (SELECT status FROM scrape_jobs WHERE provider_id = p.id ORDER BY id DESC LIMIT 1) as latest_job_status,
         (SELECT finished_at FROM scrape_jobs WHERE provider_id = p.id ORDER BY id DESC LIMIT 1) as latest_job_date,
+        (SELECT log_message FROM scrape_jobs WHERE provider_id = p.id ORDER BY id DESC LIMIT 1) as latest_job_log,
+        EXISTS (
+            SELECT 1 FROM energy_mix em
+            WHERE em.provider_id = p.id AND em.source_status = 'unbestaetigt'
+        ) as has_unverified_source,
+        EXISTS (
+            SELECT 1 FROM documents d
+            JOIN documents d2 ON d2.file_hash = d.file_hash AND d2.provider_id != d.provider_id
+            WHERE d.provider_id = p.id AND d.file_type != 'manual' AND d.file_hash IS NOT NULL
+        ) as has_duplicate_doc,
         (SELECT COUNT(*) FROM documents WHERE provider_id = p.id) as document_count,
         (SELECT year FROM energy_mix em
          WHERE em.provider_id = p.id

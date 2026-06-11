@@ -40,7 +40,7 @@ export async function DELETE(_request: Request, { params }: { params: Promise<{ 
             DELETE FROM energy_mix
             WHERE provider_id = ?
               AND document_id IS NULL
-              AND ABS(TIMESTAMPDIFF(SECOND, created_at, (SELECT created_at FROM documents WHERE id = ?))) < 60
+              AND ABS(EXTRACT(EPOCH FROM (created_at - (SELECT created_at FROM documents WHERE id = ?)))) < 60
         `,
             [doc.provider_id, docId]
         ));

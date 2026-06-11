@@ -28,6 +28,7 @@ interface ArchiveDoc {
     extraction_method: string | null;
     tariff_name: string | null;
     mix_type: string | null;
+    source_status: string | null;
     hkn_origins: HknOrigin[] | null;
 }
 
@@ -590,6 +591,23 @@ export default function ProviderModal({
             onRefresh();
         } catch (err: any) {
             alert('Fehler beim Löschen: ' + err.message);
+        }
+    };
+
+    // Quellen-Wächter: Unbestätigte Quelle bestätigen (Domain wandert in die Whitelist)
+    const [confirmingSourceId, setConfirmingSourceId] = useState<number | null>(null);
+    const handleConfirmSource = async (mixId: number) => {
+        setConfirmingSourceId(mixId);
+        try {
+            const res = await fetch(`/api/energy-mix/${mixId}/source`, { method: 'POST' });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error);
+            await fetchArchiveData();
+            onRefresh();
+        } catch (err: any) {
+            alert('Fehler beim Bestätigen: ' + err.message);
+        } finally {
+            setConfirmingSourceId(null);
         }
     };
 
@@ -1927,7 +1945,7 @@ export default function ProviderModal({
                                                                 <span className="text-gray-300">-</span>
                                                             )}
                                                         </td>
-                                                        <td className="py-2 px-2 max-w-[150px]">
+                                                        <td className="py-2 px-2 max-w-[180px]">
                                                             {doc.source_url ? (
                                                                 <a
                                                                     href={doc.source_url}
@@ -1946,6 +1964,54 @@ export default function ProviderModal({
                                                                 </a>
                                                             ) : (
                                                                 <span className="text-gray-300 text-xs">-</span>
+                                                            )}
+                                                            {doc.source_status === 'unbestaetigt' && (
+                                                                <div className="mt-1 flex items-center gap-1.5 flex-wrap">
+                                                                    <span
+                                                                        className="text-[10px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 font-bold"
+                                                                        title="Die Quelle passt nicht zum Anbieternamen — Dokument öffnen und prüfen, ob es wirklich zu diesem Anbieter gehört!"
+                                                                    >
+                                                                        ⚠ Quelle prüfen
+                                                                    </span>
+                                                                    {doc.mix_id != null && (
+                                                                        <button
+                                                                            onClick={() =>
+                                                                                handleConfirmSource(doc.mix_id!)
+                                                                            }
+                                                                            disabled={
+                                                                                confirmingSourceId === doc.mix_id
+                                                                            }
+                                                                            className="text-[10px] px-1.5 py-0.5 rounded bg-green-600 hover:bg-green-700 text-white font-bold disabled:opacity-50"
+                                                                            title="Quelle gehört zum Anbieter — Domain dauerhaft als vertrauenswürdig markieren"
+                                                                        >
+                                                                            {confirmingSourceId === doc.mix_id
+                                                                                ? '...'
+                                                                                : '✓ Bestätigen'}
+                                                                        </button>
+                                                                    )}
+                                                                    {doc.id != null && (
+                                                                        <button
+                                                                            onClick={() =>
+                                                                                handleDeleteDocument(
+                                                                                    doc.id,
+                                                                                    doc.original_filename
+                                                                                )
+                                                                            }
+                                                                            className="text-[10px] px-1.5 py-0.5 rounded bg-red-600 hover:bg-red-700 text-white font-bold"
+                                                                            title="Fremdes Dokument — Dokument, Daten und Datei löschen"
+                                                                        >
+                                                                            ✕ Verwerfen
+                                                                        </button>
+                                                                    )}
+                                                                </div>
+                                                            )}
+                                                            {doc.source_status === 'bestaetigt' && (
+                                                                <span
+                                                                    className="mt-1 inline-block text-[10px] px-1.5 py-0.5 rounded bg-green-50 text-green-700 font-medium"
+                                                                    title="Quelle wurde manuell bestätigt"
+                                                                >
+                                                                    ✓ Quelle bestätigt
+                                                                </span>
                                                             )}
                                                         </td>
                                                         <td className="py-2 px-2 text-right">
@@ -2020,6 +2086,29 @@ export default function ProviderModal({
                         {/* Actions */}
                         <div className="border-t border-gray-100 pt-6">
                             <h3 className="text-sm font-bold text-gray-800 mb-3">Scraper manuell starten</h3>
+
+                            {provider.latest_job_status === 'failed' && (
+                                <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                                    <div className="flex items-start gap-2">
+                                        <span className="text-red-500 text-sm">⚠</span>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="text-xs font-bold text-red-700 mb-0.5">
+                                                Letzter Scrape fehlgeschlagen
+                                            </div>
+                                            {provider.latest_job_log && (
+                                                <div className="text-xs text-red-600 break-words">
+                                                    {provider.latest_job_log}
+                                                </div>
+                                            )}
+                                            <div className="text-xs text-slate-500 mt-1.5">
+                                                💡 Tipp: Stromkennzeichnungs-Seite des Anbieters manuell suchen, die
+                                                URL unten eintragen und direkt scrapen — sie wird beim Speichern als
+                                                skz_url für künftige Läufe hinterlegt.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
 
                             <div className="mb-4">
                                 <label className="block text-xs font-medium text-gray-700 mb-1">

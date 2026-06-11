@@ -1,6 +1,6 @@
 import { ScraperEngine } from './engine';
 import { validateAndSaveMix, updateJobLog } from './save-helper';
-import { cleanProviderNameForSearch } from './search-helper';
+import { cleanProviderNameForSearch, sourceMatchesProvider } from './search-helper';
 import { saveFile, slugify } from '@/lib/storage';
 import { query } from '@/lib/db';
 import PDFParser from 'pdf2json';
@@ -102,6 +102,28 @@ export async function runScrapeJob(providerId: number, providerName: string, ove
         const providerSlug = slugify(providerName);
         const sourceUrl = scrapeResult.sourceUrl || null;
 
+        // Quellen-Wächter: Passt die Quelle zum Anbieter? Fremde Domains (sofern nicht
+        // per trusted_sources bestätigt) werden am Mix als 'unbestaetigt' markiert und
+        // der Job endet höchstens mit 'partial' — nie mit stillem 'success'.
+        let sourceUnverified = sourceUrl != null && sourceMatchesProvider(sourceUrl, providerName) === false;
+        if (sourceUnverified && sourceUrl) {
+            try {
+                const domain = new URL(sourceUrl).hostname.toLowerCase().replace(/^www\./, '');
+                const trusted: any[] = await query(
+                    'SELECT 1 FROM trusted_sources WHERE provider_id = ? AND domain = ?',
+                    [providerId, domain]
+                );
+                if (trusted.length > 0) sourceUnverified = false;
+            } catch (e: any) {
+                console.warn(`  [JOB] trusted_sources lookup failed: ${e.message}`);
+            }
+        }
+        if (sourceUnverified) {
+            console.warn(`  [JOB] ⚠️ Quelle passt nicht zum Anbieter: ${sourceUrl}`);
+        }
+        const successStatus = sourceUnverified ? 'partial' : 'success';
+        const sourceNote = sourceUnverified ? ' ⚠️ Quelle unbestätigt (fremde Domain) — bitte prüfen!' : '';
+
         if (scrapeResult.isPdf && scrapeResult.pdfBuffer) {
             console.log(`  [JOB] PDF found (${(scrapeResult.pdfBuffer.length / 1024).toFixed(0)} KB). Saving...`);
             await updateJobLog(jobId, 'PDF gefunden, wird gespeichert...');
@@ -142,15 +164,22 @@ export async function runScrapeJob(providerId: number, providerName: string, ove
 
             if (documentId) {
                 await updateJobLog(jobId, 'PDF wird analysiert...');
-                const reportingYear = await parseAndSaveMix(documentId, scrapeResult.pdfBuffer, jobId, providerId);
+                const reportingYear = await parseAndSaveMix(
+                    documentId,
+                    scrapeResult.pdfBuffer,
+                    jobId,
+                    providerId,
+                    sourceUnverified
+                );
 
                 // Update reporting_year on document if extracted
                 if (reportingYear) {
                     await query('UPDATE documents SET reporting_year = ? WHERE id = ?', [reportingYear, documentId]);
                     await query(
-                        "UPDATE scrape_jobs SET status = 'success', log_message = ?, finished_at = NOW() WHERE id = ?",
+                        'UPDATE scrape_jobs SET status = ?, log_message = ?, finished_at = NOW() WHERE id = ?',
                         [
-                            `✅ Daten extrahiert aus PDF (Jahr: ${reportingYear}). Quelle: ${sourceUrl || 'unbekannt'}`,
+                            successStatus,
+                            `✅ Daten extrahiert aus PDF (Jahr: ${reportingYear}). Quelle: ${sourceUrl || 'unbekannt'}${sourceNote}`,
                             jobId,
                         ]
                     );
@@ -215,15 +244,17 @@ export async function runScrapeJob(providerId: number, providerName: string, ove
                     documentId,
                     scrapeResult.imageBuffer,
                     jobId,
-                    providerId
+                    providerId,
+                    sourceUnverified
                 );
 
                 if (reportingYear) {
                     await query('UPDATE documents SET reporting_year = ? WHERE id = ?', [reportingYear, documentId]);
                     await query(
-                        "UPDATE scrape_jobs SET status = 'success', log_message = ?, finished_at = NOW() WHERE id = ?",
+                        'UPDATE scrape_jobs SET status = ?, log_message = ?, finished_at = NOW() WHERE id = ?',
                         [
-                            `✅ Daten aus SKZ-Bild extrahiert (Jahr: ${reportingYear}). Quelle: ${sourceUrl || 'unbekannt'}`,
+                            successStatus,
+                            `✅ Daten aus SKZ-Bild extrahiert (Jahr: ${reportingYear}). Quelle: ${sourceUrl || 'unbekannt'}${sourceNote}`,
                             jobId,
                         ]
                     );
@@ -290,14 +321,15 @@ export async function runScrapeJob(providerId: number, providerName: string, ove
                     scrapeResult.screenshot,
                     scrapeResult.html,
                     jobId,
-                    providerId
+                    providerId,
+                    sourceUnverified
                 );
 
                 if (reportingYear) {
                     await query('UPDATE documents SET reporting_year = ? WHERE id = ?', [reportingYear, documentId]);
                     await query(
-                        "UPDATE scrape_jobs SET status = 'success', log_message = ?, finished_at = NOW() WHERE id = ?",
-                        [`HTML analysiert: ${sourceUrl || 'unbekannt'}`, jobId]
+                        'UPDATE scrape_jobs SET status = ?, log_message = ?, finished_at = NOW() WHERE id = ?',
+                        [successStatus, `HTML analysiert: ${sourceUrl || 'unbekannt'}${sourceNote}`, jobId]
                     );
                 } else {
                     await query(
@@ -335,7 +367,8 @@ async function parseAndSaveMix(
     documentId: number,
     pdfBuffer: Buffer,
     jobId: number,
-    providerId: number
+    providerId: number,
+    sourceUnverified = false
 ): Promise<number | null> {
     let mix: DetailedEnergyMix | null = null;
 
@@ -379,7 +412,7 @@ async function parseAndSaveMix(
 
     // === Save result ===
     if (mix) {
-        return validateAndSaveMix(mix, documentId, providerId, jobId, 'PARSE', 'Daten extrahiert');
+        return validateAndSaveMix(mix, documentId, providerId, jobId, 'PARSE', 'Daten extrahiert', sourceUnverified);
     } else {
         console.warn('  [PARSE] ❌ No energy mix data found (all methods failed).');
         await updateJobLog(jobId, 'Keine Stromkennzeichnungsdaten extrahierbar');
@@ -411,7 +444,8 @@ async function parseAndSaveMixFromHtml(
     screenshotBuffer: Buffer,
     htmlContent: string,
     jobId: number,
-    providerId: number
+    providerId: number,
+    sourceUnverified = false
 ): Promise<number | null> {
     let mix: DetailedEnergyMix | null = null;
 
@@ -487,7 +521,15 @@ async function parseAndSaveMixFromHtml(
 
     // === Save result ===
     if (mix) {
-        return validateAndSaveMix(mix, documentId, providerId, jobId, 'PARSE HTML', 'HTML analysiert');
+        return validateAndSaveMix(
+            mix,
+            documentId,
+            providerId,
+            jobId,
+            'PARSE HTML',
+            'HTML analysiert',
+            sourceUnverified
+        );
     } else {
         console.warn('  [PARSE HTML] ❌ No energy mix data found (all methods failed).');
         await updateJobLog(jobId, 'Keine Stromkennzeichnungsdaten aus HTML extrahierbar');
@@ -503,7 +545,8 @@ async function parseAndSaveMixFromImage(
     documentId: number,
     imageBuffer: Buffer,
     jobId: number,
-    providerId: number
+    providerId: number,
+    sourceUnverified = false
 ): Promise<number | null> {
     let mix: DetailedEnergyMix | null = null;
 
@@ -552,7 +595,7 @@ async function parseAndSaveMixFromImage(
 
     // === Save result ===
     if (mix) {
-        return validateAndSaveMix(mix, documentId, providerId, jobId, 'PARSE IMG', 'Bild analysiert');
+        return validateAndSaveMix(mix, documentId, providerId, jobId, 'PARSE IMG', 'Bild analysiert', sourceUnverified);
     } else {
         console.warn('  [PARSE IMG] ❌ No energy mix data found from image.');
         await updateJobLog(jobId, 'Keine Stromkennzeichnungsdaten aus Bild extrahierbar');

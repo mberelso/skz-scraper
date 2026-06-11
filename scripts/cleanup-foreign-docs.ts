@@ -7,27 +7,15 @@
  * Löschen:  npx tsx scripts/cleanup-foreign-docs.ts --execute
  */
 import { query } from '../src/lib/db';
-import { getCleanedProviderWords } from '../src/lib/scraper/search-helper';
+import { sourceMatchesProvider } from '../src/lib/scraper/search-helper';
 import { deleteFile } from '../src/lib/storage';
 
 const EXECUTE = process.argv.includes('--execute');
 
 // Manuell verifizierte Ausnahmen: Domain passt nicht zum Namen, gehört aber doch zum Anbieter
 // doc#60: bmv-classic.de = "BMV Energie" = Bernburger Mineralölvertrieb Lühmann (Akronym-Domain)
+// Hinweis: Künftige Bestätigungen laufen über die trusted_sources-Tabelle (UI: "Quelle bestätigen").
 const KEEP_DOC_IDS = new Set([60]);
-
-function sourceMatchesProvider(sourceUrl: string, providerName: string): boolean | null {
-    const words = getCleanedProviderWords(providerName);
-    if (words.length === 0) return null; // nicht beurteilbar
-    try {
-        const parsed = new URL(sourceUrl);
-        const hostname = parsed.hostname.toLowerCase();
-        const pathAndQuery = decodeURIComponent(parsed.pathname + parsed.search).toLowerCase();
-        return words.some((w) => hostname.includes(w) || pathAndQuery.includes(w));
-    } catch {
-        return null;
-    }
-}
 
 async function main() {
     const docs: any[] = await query(
