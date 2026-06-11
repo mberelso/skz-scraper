@@ -1,0 +1,18 @@
+# Einheitliche Zeilenenden: LF im Repo UND im Working Tree (Prettier-Standard).
+# Verhindert die "LF will be replaced by CRLF"-Warnungen unter Windows.
+* text=auto eol=lf
+
+# Windows-Skripte brauchen CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Binärdateien nie anfassen
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
