@@ -4,9 +4,9 @@ import { sourceMatchesProvider } from './scraper/search-helper';
 
 describe('categorizeFailure', () => {
     it('erkennt Suchmaschinen-Blockade', () => {
-        expect(categorizeFailure('Suchmaschinen nicht erreichbar oder blockiert (DuckDuckGo + Bing ohne Ergebnisse)')).toBe(
-            'suchmaschine_blockiert'
-        );
+        expect(
+            categorizeFailure('Suchmaschinen nicht erreichbar oder blockiert (DuckDuckGo + Bing ohne Ergebnisse)')
+        ).toBe('suchmaschine_blockiert');
     });
 
     it('erkennt fehlende Treffer', () => {
@@ -47,10 +47,7 @@ describe('sourceMatchesProvider (Quellen-Wächter)', () => {
 
     it('akzeptiert Anbieternamen im Pfad (CDN)', () => {
         expect(
-            sourceMatchesProvider(
-                'https://cdn.hubspot.net/hubfs/ROTH%20Energie/skz.pdf',
-                'Adolf Roth GmbH & Co. KG'
-            )
+            sourceMatchesProvider('https://cdn.hubspot.net/hubfs/ROTH%20Energie/skz.pdf', 'Adolf Roth GmbH & Co. KG')
         ).toBe(true);
     });
 

@@ -1,4 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { validateEnergyMixPlausibility, ValidationIssue } from '../validations/energy-mix';
+
+export const PROMPT_VERSION = 'v2-energy-mix-2025-01';
 
 let genAIInstance: GoogleGenerativeAI | null = null;
 function getGenAI(): GoogleGenerativeAI {
@@ -44,6 +47,13 @@ export interface DetailedEnergyMix {
     confidence: number; // 0-100
     extraction_method: 'gemini_vision' | 'gemini_text' | 'regex' | 'manual' | 'ocr';
     mix_type: 'gesamtmix' | 'unternehmensmix' | 'tarifmix' | 'unbekannt' | null;
+
+    // KI Rohdaten & Audit-Persistierung
+    raw_prompt?: string | null;
+    raw_response?: string | null;
+    model_name?: string | null;
+    prompt_version?: string | null;
+    validation_warnings?: ValidationIssue[] | null;
 
     // Optional extracted company info
     company_name?: string | null;
@@ -157,11 +167,13 @@ Gib das Ergebnis AUSSCHLIESSLICH als JSON-Objekt zurück (kein Markdown, keine E
 }`;
 
 /**
- * Parse Gemini JSON response, handle is_skz=false, and normalize to DetailedEnergyMix.
+ * Parse Gemini JSON response, handle is_skz=false, run Zod plausibility checks and attach raw persistence metadata.
  */
 function parseGeminiResponse(
     responseText: string,
-    method: DetailedEnergyMix['extraction_method']
+    method: DetailedEnergyMix['extraction_method'],
+    rawPrompt?: string,
+    modelName: string = 'gemini-2.5-flash'
 ): DetailedEnergyMix | null {
     const jsonStr = responseText.replace(/```json|```/g, '').trim();
     const parsed = JSON.parse(jsonStr);
@@ -190,13 +202,45 @@ function parseGeminiResponse(
         parsed.hkn_origins = null;
     }
 
+    // Run Plausibility checks
+    const validation = validateEnergyMixPlausibility({
+        renewable: parsed.renewable ?? 0,
+        fossil: parsed.fossil ?? 0,
+        nuclear: parsed.nuclear ?? 0,
+        year: parsed.year,
+        co2: parsed.co2,
+        solar: parsed.solar,
+        wind: parsed.wind,
+        hydro: parsed.hydro,
+        biomass: parsed.biomass,
+        other_renewable: parsed.other_renewable,
+        coal: parsed.coal,
+        natural_gas: parsed.natural_gas,
+        other_fossil: parsed.other_fossil,
+    });
+
+    let confidence = parsed.confidence ?? 80;
+    if (!validation.isValid) {
+        console.warn(`  [AI] Validation errors found in extraction:`, validation.errors);
+        confidence = Math.max(0, confidence - 30);
+    }
+    if (validation.warnings.length > 0) {
+        console.log(`  [AI] Validation warnings:`, validation.warnings.map((w) => w.message).join(' | '));
+    }
+
     console.log(
-        `  [AI] Extraction successful (confidence: ${parsed.confidence}%, mix_type: ${parsed.mix_type || 'unbekannt'})`
+        `  [AI] Extraction successful (confidence: ${confidence}%, mix_type: ${parsed.mix_type || 'unbekannt'})`
     );
 
     return {
         ...parsed,
+        confidence,
         extraction_method: method,
+        raw_prompt: rawPrompt || EXTRACTION_PROMPT,
+        raw_response: responseText,
+        model_name: modelName,
+        prompt_version: PROMPT_VERSION,
+        validation_warnings: [...validation.errors, ...validation.warnings],
     };
 }
 

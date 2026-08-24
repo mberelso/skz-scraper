@@ -194,10 +194,7 @@ export default function DashboardClient({
         if (dataFilter === 'source_check' && !p.has_unverified_source) return false;
         if (dataFilter === 'duplicate' && !p.has_duplicate_doc) return false;
         if (reviewFilter !== 'all' && (p.review_status || 'offen') !== reviewFilter) return false;
-        if (
-            triageFilter &&
-            (p.latest_job_status !== 'failed' || categorizeFailure(p.latest_job_log) !== triageFilter)
-        )
+        if (triageFilter && (p.latest_job_status !== 'failed' || categorizeFailure(p.latest_job_log) !== triageFilter))
             return false;
         return true;
     });
@@ -659,9 +656,7 @@ export default function DashboardClient({
                                                         type="button"
                                                         onClick={() => {
                                                             const failedIds = providers
-                                                                .filter(
-                                                                    (p: any) => p.latest_job_status === 'failed'
-                                                                )
+                                                                .filter((p: any) => p.latest_job_status === 'failed')
                                                                 .map((p: any) => p.id);
                                                             handleBatchScrape({ providerIds: failedIds });
                                                         }}
@@ -938,16 +933,12 @@ export default function DashboardClient({
                                         )}
                                     </div>
                                     <div className="flex flex-wrap gap-2">
-                                        {(
-                                            Object.entries(failureGroups) as [FailureCategory, number][]
-                                        )
+                                        {(Object.entries(failureGroups) as [FailureCategory, number][])
                                             .sort((a, b) => b[1] - a[1])
                                             .map(([cat, count]) => (
                                                 <button
                                                     key={cat}
-                                                    onClick={() =>
-                                                        setTriageFilter(triageFilter === cat ? null : cat)
-                                                    }
+                                                    onClick={() => setTriageFilter(triageFilter === cat ? null : cat)}
                                                     title={FAILURE_CATEGORY_META[cat].hint}
                                                     className={`px-3 py-1.5 rounded-full text-xs font-bold border transition-all ${
                                                         triageFilter === cat

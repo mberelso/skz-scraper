@@ -1978,9 +1978,7 @@ export default function ProviderModal({
                                                                             onClick={() =>
                                                                                 handleConfirmSource(doc.mix_id!)
                                                                             }
-                                                                            disabled={
-                                                                                confirmingSourceId === doc.mix_id
-                                                                            }
+                                                                            disabled={confirmingSourceId === doc.mix_id}
                                                                             className="text-[10px] px-1.5 py-0.5 rounded bg-green-600 hover:bg-green-700 text-white font-bold disabled:opacity-50"
                                                                             title="Quelle gehört zum Anbieter — Domain dauerhaft als vertrauenswürdig markieren"
                                                                         >
@@ -2101,9 +2099,9 @@ export default function ProviderModal({
                                                 </div>
                                             )}
                                             <div className="text-xs text-slate-500 mt-1.5">
-                                                💡 Tipp: Stromkennzeichnungs-Seite des Anbieters manuell suchen, die
-                                                URL unten eintragen und direkt scrapen — sie wird beim Speichern als
-                                                skz_url für künftige Läufe hinterlegt.
+                                                💡 Tipp: Stromkennzeichnungs-Seite des Anbieters manuell suchen, die URL
+                                                unten eintragen und direkt scrapen — sie wird beim Speichern als skz_url
+                                                für künftige Läufe hinterlegt.
                                             </div>
                                         </div>
                                     </div>

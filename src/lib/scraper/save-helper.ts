@@ -59,8 +59,9 @@ export async function validateAndSaveMix(
                 coal_percentage, natural_gas_percentage, other_fossil_percentage,
                 eeg_funded_percentage, hkn_percentage, mieterstrom_percentage,
                 co2_emission_g_kwh, radioactive_waste_mg_kwh,
-                eeg_percentage, tariff_name, confidence, extraction_method, mix_type, source_status
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                eeg_percentage, tariff_name, confidence, extraction_method, mix_type,
+                raw_prompt, raw_response, model_name, prompt_version, validation_warnings, source_status
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 documentId,
                 providerId,
@@ -86,10 +87,33 @@ export async function validateAndSaveMix(
                 mix.confidence,
                 mix.extraction_method,
                 mix.mix_type ?? null,
+                mix.raw_prompt ?? null,
+                mix.raw_response ?? null,
+                mix.model_name ?? null,
+                mix.prompt_version ?? null,
+                mix.validation_warnings ? JSON.stringify(mix.validation_warnings) : null,
                 sourceUnverified ? 'unbestaetigt' : null,
             ]
         );
         const mixId = Number(insertResult.insertId);
+
+        // Update documents table with AI raw metadata
+        try {
+            await query(
+                `UPDATE documents SET 
+                    raw_prompt = ?, raw_response = ?, model_name = ?, prompt_version = ?, ai_extracted_at = NOW() 
+                 WHERE id = ?`,
+                [
+                    mix.raw_prompt ?? null,
+                    mix.raw_response ?? null,
+                    mix.model_name ?? null,
+                    mix.prompt_version ?? null,
+                    documentId,
+                ]
+            );
+        } catch (docErr: any) {
+            console.error(`  [${logPrefix}] Fehler beim Aktualisieren der document raw metadata: ${docErr.message}`);
+        }
 
         // Save HKN origin countries if present
         if (mix.hkn_origins && mix.hkn_origins.length > 0) {

@@ -56,7 +56,9 @@ export async function POST(_request: Request, { params }: { params: Promise<{ id
 
         return NextResponse.json({
             success: true,
-            message: domain ? `Quelle bestätigt — ${domain} ist jetzt für diesen Anbieter vertrauenswürdig` : 'Quelle bestätigt',
+            message: domain
+                ? `Quelle bestätigt — ${domain} ist jetzt für diesen Anbieter vertrauenswürdig`
+                : 'Quelle bestätigt',
         });
     } catch (error: any) {
         console.error('[API] Source confirm error:', error.message);

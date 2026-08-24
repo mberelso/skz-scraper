@@ -1,0 +1,18 @@
+Stromkennzeichnung der Stadtwerke Heidelberg GmbH für das Berichtsjahr 2022 (§ 42 EnWG)
+
+Gesamtenergieträgermix des Unternehmens:
+Erneuerbare Energien, gefördert nach dem EEG: 18.3 %
+Erneuerbare Energien mit Herkunftsnachweis, nicht gefördert nach dem EEG: 27.9 %
+(davon Photovoltaik: 12.1 %, Windkraft: 5.0 %, Wasserkraft: 10.8 %)
+Gesamtanteil Erneuerbare Energien: 46.2 %
+
+Fossile Energieträger:
+Erdgas: 38.0 %
+Steinkohle: 13.3 %
+Gesamtanteil Fossile Energien: 51.3 %
+
+Kernenergie: 2.5 %
+
+Umweltauswirkungen:
+CO2-Emissionen: 310 g/kWh
+Radioaktiver Abfall: 0.0007 g/kWh

@@ -12,10 +12,7 @@ export type FailureCategory =
     | 'bereinigt'
     | 'sonstige';
 
-export const FAILURE_CATEGORY_META: Record<
-    FailureCategory,
-    { label: string; hint: string }
-> = {
+export const FAILURE_CATEGORY_META: Record<FailureCategory, { label: string; hint: string }> = {
     suchmaschine_blockiert: {
         label: 'Suchmaschine blockiert',
         hint: 'Vorübergehend — später erneut scrapen',

@@ -7,15 +7,11 @@ async function main() {
          ORDER BY j.id DESC LIMIT 30`
     );
     for (const j of jobs) {
-        console.log(
-            `#${j.id} [${j.status}] ${j.name} | ${j.started_at?.toISOString?.() ?? j.started_at}`
-        );
+        console.log(`#${j.id} [${j.status}] ${j.name} | ${j.started_at?.toISOString?.() ?? j.started_at}`);
         if (j.log_message) console.log(`   LOG: ${j.log_message}`);
     }
 
-    const stats = await query(
-        `SELECT status, COUNT(*) AS cnt FROM scrape_jobs GROUP BY status ORDER BY cnt DESC`
-    );
+    const stats = await query(`SELECT status, COUNT(*) AS cnt FROM scrape_jobs GROUP BY status ORDER BY cnt DESC`);
     console.log('\nStatus-Verteilung:', JSON.stringify(stats));
     process.exit(0);
 }

@@ -18,11 +18,14 @@ Next.js App (Dashboard + API)
 └── Supabase Storage → archiviert PDFs und Screenshots (Cloud)
 ```
 
-### Parsing-Kaskade
+### Parsing-Kaskade & Validierung
 
 1. **Gemini Vision** (Primär): PDF als Bild an Gemini 2.0 Flash senden
 2. **Gemini Text** (Fallback 1): Extrahierten Text an Gemini senden
 3. **Regex** (Fallback 2): Keyword-basierte Extraktion ohne API
+4. **Zod Plausibilitäts-Check**: Mathematische Konsistenzprüfung (Summenprüfung ~100%, Unterkategorien $\le$ Hauptkategorie, CO₂-Korridor, Atomausstieg 2023) vor dem Speichern in der DB
+5. **KI Raw-Output Persistierung**: Vollständiges Revisions- und Audit-Logging (`raw_prompt`, `raw_response`, `model_name`, `prompt_version`, `validation_warnings`)
+6. **Golden-File-Testsuite**: Hermetischer Regressionsschutz für KI-Extraktionen (`tests/golden/`)
 
 ## Setup
 

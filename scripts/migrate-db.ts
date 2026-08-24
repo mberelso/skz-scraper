@@ -47,6 +47,11 @@ async function migrate() {
             { name: 'source_url', def: 'VARCHAR(1024) DEFAULT NULL' },
             { name: 'original_filename', def: 'VARCHAR(512) DEFAULT NULL' },
             { name: 'reporting_year', def: 'INT DEFAULT NULL' },
+            { name: 'raw_prompt', def: 'TEXT DEFAULT NULL' },
+            { name: 'raw_response', def: 'TEXT DEFAULT NULL' },
+            { name: 'model_name', def: 'VARCHAR(128) DEFAULT NULL' },
+            { name: 'prompt_version', def: 'VARCHAR(32) DEFAULT NULL' },
+            { name: 'ai_extracted_at', def: 'TIMESTAMP DEFAULT NULL' },
         ];
 
         for (const col of docColumns) {
@@ -88,6 +93,11 @@ async function migrate() {
             { name: 'tariff_name', def: 'VARCHAR(255) DEFAULT NULL' },
             { name: 'confidence', def: 'INT DEFAULT NULL' },
             { name: 'extraction_method', def: 'VARCHAR(50) DEFAULT NULL' },
+            { name: 'raw_prompt', def: 'TEXT DEFAULT NULL' },
+            { name: 'raw_response', def: 'TEXT DEFAULT NULL' },
+            { name: 'model_name', def: 'VARCHAR(128) DEFAULT NULL' },
+            { name: 'prompt_version', def: 'VARCHAR(32) DEFAULT NULL' },
+            { name: 'validation_warnings', def: 'JSON DEFAULT NULL' },
         ];
 
         for (const col of mixColumns) {

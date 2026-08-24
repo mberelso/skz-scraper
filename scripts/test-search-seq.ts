@@ -16,9 +16,7 @@ async function main() {
             console.log(`\n########## QUERY: ${q}`);
             const result = await engine.searchAndScrape(q);
             console.log(
-                result
-                    ? `>>> OK: isPdf=${result.isPdf} src=${result.sourceUrl}`
-                    : '>>> NULL (Keine Ergebnisse)'
+                result ? `>>> OK: isPdf=${result.isPdf} src=${result.sourceUrl}` : '>>> NULL (Keine Ergebnisse)'
             );
         } catch (e: any) {
             console.log(`>>> THREW: ${e.message}`);

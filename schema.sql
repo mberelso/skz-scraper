@@ -46,6 +46,14 @@ CREATE TABLE IF NOT EXISTS documents (
     source_url VARCHAR(1024) DEFAULT NULL,
     original_filename VARCHAR(512) DEFAULT NULL,
     reporting_year INT DEFAULT NULL,
+    
+    -- AI Persistierung & Metadaten
+    raw_prompt TEXT DEFAULT NULL,
+    raw_response TEXT DEFAULT NULL,
+    model_name VARCHAR(128) DEFAULT NULL,
+    prompt_version VARCHAR(32) DEFAULT NULL,
+    ai_extracted_at TIMESTAMP DEFAULT NULL,
+
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT unique_provider_file_hash UNIQUE (provider_id, file_hash)
 );
@@ -96,6 +104,13 @@ CREATE TABLE IF NOT EXISTS energy_mix (
     confidence INT DEFAULT NULL,
     extraction_method VARCHAR(50) DEFAULT NULL CHECK (extraction_method IN ('gemini_vision', 'gemini_text', 'regex', 'manual', 'ocr')),
     mix_type VARCHAR(50) DEFAULT NULL CHECK (mix_type IN ('gesamtmix', 'unternehmensmix', 'tarifmix', 'unbekannt')),
+
+    -- KI Rohdaten & Audit-Persistierung
+    raw_prompt TEXT DEFAULT NULL,
+    raw_response TEXT DEFAULT NULL,
+    model_name VARCHAR(128) DEFAULT NULL,
+    prompt_version VARCHAR(32) DEFAULT NULL,
+    validation_warnings JSON DEFAULT NULL,
 
     -- Quellen-Wächter: NULL = plausibel, 'unbestaetigt' = fremde Domain (prüfen!), 'bestaetigt' = manuell bestätigt
     source_status VARCHAR(20) DEFAULT NULL CHECK (source_status IN ('unbestaetigt', 'bestaetigt')),

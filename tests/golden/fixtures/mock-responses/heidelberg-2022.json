@@ -1,0 +1,14 @@
+{
+    "choices": [
+        {
+            "message": {
+                "content": "{\"is_skz\": true, \"year\": 2022, \"mix_type\": \"gesamtmix\", \"renewable\": 46.2, \"fossil\": 51.3, \"nuclear\": 2.5, \"solar\": 12.1, \"wind\": 5.0, \"hydro\": 10.8, \"biomass\": null, \"other_renewable\": null, \"coal\": 13.3, \"natural_gas\": 38.0, \"other_fossil\": null, \"eeg_funded\": 18.3, \"ee_with_hkn\": 27.9, \"mieterstrom\": null, \"co2\": 310, \"radioactive_waste\": 0.0007, \"eeg_percentage\": 18.3, \"tariff_name\": null, \"confidence\": 95, \"hkn_origins\": null, \"company_name\": \"Stadtwerke Heidelberg GmbH\", \"company_address\": null, \"company_zip\": null, \"company_city\": \"Heidelberg\"}"
+            }
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 420,
+        "completion_tokens": 180,
+        "total_tokens": 600
+    }
+}
